@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/login', function () {
+    return view('login');
 });
+
+// sign in -------------------------------------------------------------------------------------------
+Route::post('/checklogin','App\http\controllers\LoginController@checkLogin');
+//----------------------------------------------------------------------------------------------------
+
+Route::get('/hr', function () {
+    return view('hrview');
+});
+// view hr -------------------------------------------------------------------------------------------
+Route::post('/hr/{username}','App\http\controllers\PageController@viewHr');
+Route::get('/hr/{username}','App\http\controllers\PageController@viewHr');
+//----------------------------------------------------------------------------------------------------
+
+Route::get('/t', function () {
+    return view('test');
+});
+
+// view dashboard ------------------------------------------------------------------------------------
+Route::post('/dashboard/{username}','App\http\controllers\PageController@viewDashboard');
+Route::get('/dashboard/{username}','App\http\controllers\PageController@viewDashboard');
+//----------------------------------------------------------------------------------------------------
