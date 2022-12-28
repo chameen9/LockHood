@@ -26,9 +26,10 @@ Route::post('/checklogin','App\http\controllers\LoginController@checkLogin');
 Route::get('/hr', function () {
     return view('hrview');
 });
+
 // view hr -------------------------------------------------------------------------------------------
-Route::post('/hr/{username}','App\http\controllers\PageController@viewHr');
-Route::get('/hr/{username}','App\http\controllers\PageController@viewHr');
+Route::post('/viewhr','App\http\controllers\PageController@viewHr');
+Route::get('/viewhr','App\http\controllers\PageController@viewHr');
 //----------------------------------------------------------------------------------------------------
 
 Route::get('/t', function () {
@@ -36,6 +37,6 @@ Route::get('/t', function () {
 });
 
 // view dashboard ------------------------------------------------------------------------------------
-Route::post('/dashboard/{username}','App\http\controllers\PageController@viewDashboard');
-Route::get('/dashboard/{username}','App\http\controllers\PageController@viewDashboard');
+Route::post('/viewdashboard','App\http\controllers\PageController@viewDashboard');
+Route::get('/viewdashboard','App\http\controllers\PageController@viewDashboard');
 //----------------------------------------------------------------------------------------------------

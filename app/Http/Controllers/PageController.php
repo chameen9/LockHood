@@ -12,7 +12,7 @@ use DB;
 
 class PageController extends Controller
 {
-    function viewHr ($username){
+    function viewHr (Request $request){
         $internalUsersCount = DB::Table('users')->where([['type','=', '1']])->count();
         $externalUsersCount = DB::Table('users')->where([['type','=', '2']])->count();
         $activeUsersCount = DB::Table('users')->where([['status','=', 'ACTIVE']])->count();
@@ -20,6 +20,7 @@ class PageController extends Controller
         $internalUserPercentage = $internalUsersCount/$activeUsersCount * 100;
         $externalUserPercentage = $externalUsersCount/$activeUsersCount * 100;
 
+        $username = $request->input('username');
         $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
         $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
         $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
@@ -38,8 +39,9 @@ class PageController extends Controller
             'userRole'=>$userRole,
         ]);
     }
-    function viewDashboard ($username){
+    function viewDashboard (Request $request){
 
+        $username = $request->input('username');
         $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
         $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
         $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
