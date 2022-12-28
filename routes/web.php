@@ -40,3 +40,8 @@ Route::get('/t', function () {
 Route::post('/viewdashboard','App\http\controllers\PageController@viewDashboard');
 Route::get('/viewdashboard','App\http\controllers\PageController@viewDashboard');
 //----------------------------------------------------------------------------------------------------
+
+// viewsalesandmarketing -----------------------------------------------------------------------------
+Route::post('/viewsalesandmarketing','App\http\controllers\PageController@viewSales');
+Route::get('/viewsalesandmarketing','App\http\controllers\PageController@viewSales');
+//----------------------------------------------------------------------------------------------------
