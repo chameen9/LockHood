@@ -373,7 +373,7 @@
       <h1>Sales & Marketing</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+          <li class="breadcrumb-item"><a>Dashboard</a></li>
           <li class="breadcrumb-item active">Sales & Marketing</li>
         </ol>
       </nav>
@@ -384,7 +384,7 @@
         
         <!-- Left side columns -->
         <!-- Top Selling -->
-        <div class="col-lg-7 md-7">
+        <div class="col-lg-8 md-8">
             <div class="card top-selling overflow-auto">
 
               <div class="filter">
@@ -407,82 +407,93 @@
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
-                      <th scope="col">Product</th>
-                      <th scope="col">Price($)</th>
-                      <th scope="col">Sold</th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Actual Price($)</th>
+                      <th scope="col">Sold Price($)</th>
+                      <th scope="col">Quantity</th>
                       <th scope="col">Revenue($)</th>
                     </tr>
                   </thead>
                   <tbody>
                         <tr>
                             <td scope="row">{{$productIds[0]}}</td>
-                            <td><a class="text-primary fw-bold">{{$productNamesAndPrices[0][0]}}</a></td>
-                            <td align="right">{{$productNamesAndPrices[0][1]}}</td>
+                            <td><a class="text-primary fw-bold">{{Illuminate\Support\Str::limit($productNamesAndPrices[0][0], 30)}}</a></td>
+                            <td align="center">{{$productNamesAndPrices[0][1]}}</td>
+                            <td align="center">{{$topSoldPrices[0]}}</td>
                             <td class="fw-bold" align="center">{{$productQtys[0]}}</td>
-                            <td align="right">{{$productNamesAndPrices[0][1] * $productQtys[0]}}</td>
+                            <td align="center">{{$topSoldPrices[0] * $productQtys[0]}}</td>
                         </tr>
                         <tr>
                           <td scope="row">{{$productIds[1]}}</td>
-                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[1][0]}}</a></td>
-                          <td align="right">{{$productNamesAndPrices[1][1]}}</td>
+                          <td><a class="text-primary fw-bold">{{Illuminate\Support\Str::limit($productNamesAndPrices[1][0], 30)}}</a></td>
+                          <td align="center">{{$productNamesAndPrices[1][1]}}</td>
+                          <td align="center">{{$topSoldPrices[1]}}</td>
                           <td class="fw-bold" align="center">{{$productQtys[1]}}</td>
-                          <td align="right">{{$productNamesAndPrices[1][1] * $productQtys[1]}}</td>
+                          <td align="center">{{$topSoldPrices[1] * $productQtys[1]}}</td>
                         </tr>
                         <tr>
                           <td scope="row">{{$productIds[2]}}</td>
-                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[2][0]}}</a></td>
-                          <td align="right">{{$productNamesAndPrices[2][1]}}</td>
+                          <td><a class="text-primary fw-bold">{{Illuminate\Support\Str::limit($productNamesAndPrices[2][0], 30)}}</a></td>
+                          <td align="center">{{$productNamesAndPrices[2][1]}}</td>
+                          <td align="center">{{$topSoldPrices[2]}}</td>
                           <td class="fw-bold" align="center">{{$productQtys[2]}}</td>
-                          <td align="right">{{$productNamesAndPrices[2][1] * $productQtys[2]}}</td>
+                          <td align="center">{{$topSoldPrices[2] * $productQtys[2]}}</td>
                         </tr>
                         <tr>
                           <td scope="row">{{$productIds[3]}}</td>
-                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[3][0]}}</a></td>
-                          <td align="right">{{$productNamesAndPrices[3][1]}}</td>
+                          <td><a class="text-primary fw-bold">{{Illuminate\Support\Str::limit($productNamesAndPrices[3][0], 30)}}</a></td>
+                          <td align="center">{{$productNamesAndPrices[3][1]}}</td>
+                          <td align="center">{{$topSoldPrices[3]}}</td>
                           <td class="fw-bold" align="center">{{$productQtys[3]}}</td>
-                          <td align="right">{{$productNamesAndPrices[3][1] * $productQtys[3]}}</td>
+                          <td align="center">{{$topSoldPrices[3]* $productQtys[3]}}</td>
                         </tr>
                         <tr>
                           <td scope="row">{{$productIds[4]}}</td>
-                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[4][0]}}</a></td>
-                          <td align="right">{{$productNamesAndPrices[4][1]}}</td>
+                          <td><a class="text-primary fw-bold">{{Illuminate\Support\Str::limit($productNamesAndPrices[4][0], 30)}}</a></td>
+                          <td align="center">{{$productNamesAndPrices[4][1]}}</td>
+                          <td align="center">{{$topSoldPrices[4]}}</td>
                           <td class="fw-bold" align="center">{{$productQtys[4]}}</td>
-                          <td align="right">{{$productNamesAndPrices[4][1] * $productQtys[4]}}</td>
+                          <td align="center">{{$topSoldPrices[4] * $productQtys[4]}}</td>
                         </tr>
                         <tr>
                           <td scope="row">{{$productIds[5]}}</td>
-                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[5][0]}}</a></td>
-                          <td align="right">{{$productNamesAndPrices[5][1]}}</td>
+                          <td><a class="text-primary fw-bold">{{Illuminate\Support\Str::limit($productNamesAndPrices[5][0], 30)}}</a></td>
+                          <td align="center">{{$productNamesAndPrices[5][1]}}</td>
+                          <td align="center">{{$topSoldPrices[5]}}</td>
                           <td class="fw-bold" align="center">{{$productQtys[5]}}</td>
-                          <td align="right">{{$productNamesAndPrices[5][1] * $productQtys[5]}}</td>
+                          <td align="center">{{$topSoldPrices[5] * $productQtys[5]}}</td>
                         </tr>
                         <tr>
                           <td scope="row">{{$productIds[6]}}</td>
-                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[6][0]}}</a></td>
-                          <td align="right">{{$productNamesAndPrices[6][1]}}</td>
+                          <td><a class="text-primary fw-bold">{{Illuminate\Support\Str::limit($productNamesAndPrices[6][0], 30)}}</a></td>
+                          <td align="center">{{$productNamesAndPrices[6][1]}}</td>
+                          <td align="center">{{$topSoldPrices[6]}}</td>
                           <td class="fw-bold" align="center">{{$productQtys[6]}}</td>
-                          <td align="right">{{$productNamesAndPrices[6][1] * $productQtys[6]}}</td>
+                          <td align="center">{{$topSoldPrices[6] * $productQtys[6]}}</td>
                         </tr>
                         <tr>
                           <td scope="row">{{$productIds[7]}}</td>
-                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[7][0]}}</a></td>
-                          <td align="right">{{$productNamesAndPrices[7][1]}}</td>
+                          <td><a class="text-primary fw-bold">{{Illuminate\Support\Str::limit($productNamesAndPrices[7][0], 30)}}</a></td>
+                          <td align="center">{{$productNamesAndPrices[7][1]}}</td>
+                          <td align="center">{{$topSoldPrices[7]}}</td>
                           <td class="fw-bold" align="center">{{$productQtys[7]}}</td>
-                          <td align="right">{{$productNamesAndPrices[7][1] * $productQtys[7]}}</td>
+                          <td align="center">{{$topSoldPrices[7] * $productQtys[7]}}</td>
                         </tr>
                         <tr>
                           <td scope="row">{{$productIds[8]}}</td>
-                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[8][0]}}</a></td>
-                          <td align="right">{{$productNamesAndPrices[8][1]}}</td>
+                          <td><a class="text-primary fw-bold">{{Illuminate\Support\Str::limit($productNamesAndPrices[8][0], 30)}}</a></td>
+                          <td align="center">{{$productNamesAndPrices[8][1]}}</td>
+                          <td align="center">{{$topSoldPrices[8]}}</td>
                           <td class="fw-bold" align="center">{{$productQtys[8]}}</td>
-                          <td align="right">{{$productNamesAndPrices[8][1] * $productQtys[8]}}</td>
+                          <td align="center">{{$topSoldPrices[8] * $productQtys[8]}}</td>
                         </tr>
                         <tr>
                           <td scope="row">{{$productIds[9]}}</td>
-                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[9][0]}}</a></td>
-                          <td align="right">{{$productNamesAndPrices[9][1]}}</td>
+                          <td><a class="text-primary fw-bold">{{Illuminate\Support\Str::limit($productNamesAndPrices[9][0], 30)}}</a></td>
+                          <td align="center">{{$productNamesAndPrices[9][1]}}</td>
+                          <td align="center">{{$topSoldPrices[9]}}</td>
                           <td class="fw-bold" align="center">{{$productQtys[9]}}</td>
-                          <td align="right">{{$productNamesAndPrices[9][1] * $productQtys[9]}}</td>
+                          <td align="center">{{$topSoldPrices[9] * $productQtys[9]}}</td>
                         </tr>
                         <input type="hidden" name="arrayprice" value="ii">
                   </tbody>
@@ -494,7 +505,7 @@
           </div>
           <!-- End Top Selling -->
             
-          <div class="col-lg-5 md-7">
+          <div class="col-lg-4 md-4">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Products Top 10</h5>
@@ -577,7 +588,7 @@
                     </div>
                     <div class="ps-3">
                       <h6>{{$totalQuantity}}</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <!--<span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
 
                     </div>
                   </div>
@@ -585,42 +596,6 @@
 
               </div>
             </div><!-- End Sales Card -->
-
-            <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card revenue-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Revenue <span>| Total</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>${{$totalRevenue}}</h6>
-                      <!--<span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Revenue Card -->
-
             <!-- Customers Card -->
             <div class="col-xxl-4 col-xl-12">
 
@@ -648,7 +623,7 @@
                     </div>
                     <div class="ps-3">
                       <h6>{{$totalProducts}}</h6>
-                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+                      <!--<span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>-->
 
                     </div>
                   </div>
@@ -657,6 +632,92 @@
               </div>
 
             </div><!-- End Customers Card -->
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Revenue <span>| Total</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-currency-dollar"></i>
+                    </div>
+                    <div class="ps-3">
+                      @foreach($productSales as $productSale)
+                        <input type="hidden" name="totrevenue" value="{{$totalRevenue = $totalRevenue + $productSale->quantity * $productSale->sold_price}}">
+                      @endforeach
+                      <h6>${{$totalRevenue}}</h6>
+                      <!--<span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+            <!-- Recent Sales -->
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Best Sales Execetives <span>| This Month</span></h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Employee</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($saleEmployees as $saleEmployee)
+                      <tr>
+                        <input type="hidden" name="key[]" value="{{$saleEmployee->sold_by}}">
+                        <th scope="row"><a href="#">#2457</a></th>
+                        <td>{{$saleEmployees->sold_by}}</td>
+                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
+                        <td>$64</td>
+                        <td><span class="badge bg-success">Approved</span></td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Recent Sales -->
 
             <!-- Reports -->
             <div class="col-12">
@@ -740,81 +801,6 @@
               </div>
             </div><!-- End Reports -->
 
-            <!-- Recent Sales -->
-            <div class="col-12">
-              <div class="card recent-sales overflow-auto">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Recent Sales <span>| Today</span></h5>
-
-                  <table class="table table-borderless datatable">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row"><a href="#">#2457</a></th>
-                        <td>Brandon Jacob</td>
-                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                        <td>$64</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2147</a></th>
-                        <td>Bridie Kessler</td>
-                        <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                        <td>$47</td>
-                        <td><span class="badge bg-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2049</a></th>
-                        <td>Ashleigh Langosh</td>
-                        <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                        <td>$147</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Angus Grady</td>
-                        <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                        <td>$67</td>
-                        <td><span class="badge bg-danger">Rejected</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Raheem Lehner</td>
-                        <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                        <td>$165</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                </div>
-
-              </div>
-            </div><!-- End Recent Sales -->
-
-            
 
           </div>
         </div><!-- End Left side columns -->
