@@ -384,7 +384,7 @@
         
         <!-- Left side columns -->
         <!-- Top Selling -->
-        <div class="col-7">
+        <div class="col-lg-7 md-7">
             <div class="card top-selling overflow-auto">
 
               <div class="filter">
@@ -401,29 +401,90 @@
               </div>
 
               <div class="card-body pb-0">
-                <h5 class="card-title">Top Selling <span>| This Month</span></h5>
+                <h5 class="card-title">Top 10 Selling <span>| This Month</span></h5>
 
                 <table class="table table-borderless">
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
                       <th scope="col">Product</th>
-                      <th scope="col">Price</th>
+                      <th scope="col">Price($)</th>
                       <th scope="col">Sold</th>
-                      <th scope="col">Revenue</th>
+                      <th scope="col">Revenue($)</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($products as $product)
                         <tr>
-                            <td scope="row">{{$product->id}}</td>
-                            <td><a href="#" class="text-primary fw-bold">{{$product->name}}</a></td>
-                            <td>{{$product->price}}</td>
-                            <td class="fw-bold">raw</td>
-                            <td>$raw</td>
+                            <td scope="row">{{$productIds[0]}}</td>
+                            <td><a class="text-primary fw-bold">{{$productNamesAndPrices[0][0]}}</a></td>
+                            <td align="right">{{$productNamesAndPrices[0][1]}}</td>
+                            <td class="fw-bold" align="center">{{$productQtys[0]}}</td>
+                            <td align="right">{{$productNamesAndPrices[0][1] * $productQtys[0]}}</td>
                         </tr>
-                        <input type="hidden" name="arrayprice" value="{{$arrayprice = $product->price}}">
-                    @endforeach
+                        <tr>
+                          <td scope="row">{{$productIds[1]}}</td>
+                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[1][0]}}</a></td>
+                          <td align="right">{{$productNamesAndPrices[1][1]}}</td>
+                          <td class="fw-bold" align="center">{{$productQtys[1]}}</td>
+                          <td align="right">{{$productNamesAndPrices[1][1] * $productQtys[1]}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">{{$productIds[2]}}</td>
+                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[2][0]}}</a></td>
+                          <td align="right">{{$productNamesAndPrices[2][1]}}</td>
+                          <td class="fw-bold" align="center">{{$productQtys[2]}}</td>
+                          <td align="right">{{$productNamesAndPrices[2][1] * $productQtys[2]}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">{{$productIds[3]}}</td>
+                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[3][0]}}</a></td>
+                          <td align="right">{{$productNamesAndPrices[3][1]}}</td>
+                          <td class="fw-bold" align="center">{{$productQtys[3]}}</td>
+                          <td align="right">{{$productNamesAndPrices[3][1] * $productQtys[3]}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">{{$productIds[4]}}</td>
+                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[4][0]}}</a></td>
+                          <td align="right">{{$productNamesAndPrices[4][1]}}</td>
+                          <td class="fw-bold" align="center">{{$productQtys[4]}}</td>
+                          <td align="right">{{$productNamesAndPrices[4][1] * $productQtys[4]}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">{{$productIds[5]}}</td>
+                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[5][0]}}</a></td>
+                          <td align="right">{{$productNamesAndPrices[5][1]}}</td>
+                          <td class="fw-bold" align="center">{{$productQtys[5]}}</td>
+                          <td align="right">{{$productNamesAndPrices[5][1] * $productQtys[5]}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">{{$productIds[6]}}</td>
+                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[6][0]}}</a></td>
+                          <td align="right">{{$productNamesAndPrices[6][1]}}</td>
+                          <td class="fw-bold" align="center">{{$productQtys[6]}}</td>
+                          <td align="right">{{$productNamesAndPrices[6][1] * $productQtys[6]}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">{{$productIds[7]}}</td>
+                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[7][0]}}</a></td>
+                          <td align="right">{{$productNamesAndPrices[7][1]}}</td>
+                          <td class="fw-bold" align="center">{{$productQtys[7]}}</td>
+                          <td align="right">{{$productNamesAndPrices[7][1] * $productQtys[7]}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">{{$productIds[8]}}</td>
+                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[8][0]}}</a></td>
+                          <td align="right">{{$productNamesAndPrices[8][1]}}</td>
+                          <td class="fw-bold" align="center">{{$productQtys[8]}}</td>
+                          <td align="right">{{$productNamesAndPrices[8][1] * $productQtys[8]}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">{{$productIds[9]}}</td>
+                          <td><a class="text-primary fw-bold">{{$productNamesAndPrices[9][0]}}</a></td>
+                          <td align="right">{{$productNamesAndPrices[9][1]}}</td>
+                          <td class="fw-bold" align="center">{{$productQtys[9]}}</td>
+                          <td align="right">{{$productNamesAndPrices[9][1] * $productQtys[9]}}</td>
+                        </tr>
+                        <input type="hidden" name="arrayprice" value="ii">
                   </tbody>
                 </table>
 
@@ -433,10 +494,10 @@
           </div>
           <!-- End Top Selling -->
             
-          <div class="col-lg-5">
+          <div class="col-lg-5 md-7">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Products</h5>
+                <h5 class="card-title">Products Top 10</h5>
   
                 <!-- Bar Chart -->
                 <div id="barChart"></div>
@@ -446,34 +507,36 @@
 
                     //var array1 = $productsPrices;
                     //var array2 = $productsIds;
-                    var productIds = JSON.parse('<?= json_encode($productsIds);?>');
-                    var productPrices = JSON.parse('<?= json_encode($productsPrices);?>');
+                    var productIds = JSON.parse('<?= json_encode($productIds);?>');
+                    var productQtys = JSON.parse('<?= json_encode($productQtys);?>');
 
                     document.addEventListener("DOMContentLoaded", () => {
                         new ApexCharts(document.querySelector("#barChart"), {
                         series: [{
-                            data: [productPrices[0]['price'], productPrices[1]['price'], productPrices[2]['price'], productPrices[3]['price']
-                            , productPrices[4]['price'], productPrices[5]['price'], productPrices[6]['price'], productPrices[7]['price'], productPrices[8]['price']
-                            , productPrices[9]['price']
+                            name: "Quantity",
+                            data: [productQtys[0], productQtys[1], productQtys[2], productQtys[3]
+                            , productQtys[4], productQtys[5], productQtys[6], productQtys[7], productQtys[8]
+                            , productQtys[9]
                             ]
                         }],
                         chart: {
                             type: 'bar',
-                            height: 350
+                            height: 388
                         },
                         plotOptions: {
                             bar: {
                             borderRadius: 4,
-                            horizontal: true,
+                            horizontal: false,
                             }
                         },
                         dataLabels: {
-                            enabled: false
+                            enabled: true
                         },
                         xaxis: {
-                            categories: [productIds[0]['id'], productIds[1]['id'], productIds[2]['id'], productIds[3]['id']
-                            , productIds[4]['id'], productIds[5]['id'], productIds[6]['id'], productIds[7]['id'], productIds[8]['id']
-                            , productIds[9]['id']
+                            type:"Product Id",
+                            categories: [productIds[0], productIds[1], productIds[2], productIds[3]
+                            , productIds[4], productIds[5], productIds[6], productIds[7], productIds[8]
+                            , productIds[9]
                             ],
                         }
                         }).render();
@@ -506,14 +569,14 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Sales <span>| Today</span></h5>
+                  <h5 class="card-title">Sales <span>| Quantity</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-cart"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>145</h6>
+                      <h6>{{$totalQuantity}}</h6>
                       <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
 
                     </div>
@@ -541,15 +604,15 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                  <h5 class="card-title">Revenue <span>| Total</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$3,264</h6>
-                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <h6>${{$totalRevenue}}</h6>
+                      <!--<span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
 
                     </div>
                   </div>
@@ -577,14 +640,14 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Customers <span>| This Year</span></h5>
+                  <h5 class="card-title">Products <span>| Total</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1244</h6>
+                      <h6>{{$totalProducts}}</h6>
                       <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
 
                     </div>
