@@ -28,80 +28,35 @@
 
 </head>
 <body>
-          <div class="col-lg-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Column Chart</h5>
-
-                <!-- Column Chart -->
-                <div id="columnChart"></div>
-
-                <script>
-                  document.addEventListener("DOMContentLoaded", () => {
-                    new ApexCharts(document.querySelector("#columnChart"), {
-                      series: [{
-                        name: 'All',
-                        data: [44, 55]
-                      }, {
-                        name: 'Active',
-                        data: [76, 85]
-                      }],
-                      chart: {
-                        type: 'bar',
-                        height: 350
-                      },
-                      plotOptions: {
-                        bar: {
-                          horizontal: false,
-                          columnWidth: '55%',
-                          endingShape: 'rounded'
-                        },
-                      },
-                      dataLabels: {
-                        enabled: false
-                      },
-                      stroke: {
-                        show: true,
-                        width: 2,
-                        colors: ['transparent']
-                      },
-                      xaxis: {
-                        categories: ['Internal', 'External'],
-                      },
-                      yaxis: {
-                        title: {
-                          text: 'Users'
-                        }
-                      },
-                      fill: {
-                        opacity: 1
-                      },
-                      tooltip: {
-                        y: {
-                          formatter: function(val) {
-                            return "$ " + val + " thousands"
-                          }
-                        }
-                      }
-                    }).render();
-                  });
-                </script>
-                <!-- End Column Chart -->
-
-              </div>
-            </div>
-          </div>
+      
+    
+      <table>
+        <thead>
+          <tr>
+            <td>ID</td>
+            <td>Pro Name</td>
+            <td>actu price</td>
+            <td>sold price</td>
+            <td>qty</td>
+            <td>rev</td>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($topSellingProducts as $topSellingProduct)
+            <tr>
+              <th>{{$topSellingProduct->product_id}}</th>
+              <th>{{$topSellingProduct->name}}</th>
+              <th>{{$topSellingProduct->price}}</th>
+              <th>{{$topSellingProduct->sold_price}}</th>
+              <th>{{$topSellingProduct->quantity}}</th>
+              <th>{{$topSellingProduct->quantity * $topSellingProduct->sold_price}}</th>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    
 
 
-          <footer id="footer" class="footer">
-            <div class="copyright">
-              &copy; Copyright <strong><span>E-Apartments</span></strong>. All Rights Reserved
-            </div>
-            <div class="credits">
-            </div>
-          </footer><!-- End Footer -->
-
-          <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
           <!-- Vendor JS Files -->
           <script src="Assets/apexcharts/apexcharts.min.js"></script>

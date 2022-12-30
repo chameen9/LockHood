@@ -49,6 +49,7 @@ class PageController extends Controller
             'userRole'=>$userRole,
         ]);
     }
+
     function viewDashboard (Request $request){
 
         $username = $request->input('username');
@@ -65,6 +66,7 @@ class PageController extends Controller
             'userRole'=>$userRole,
         ]);
     }
+
     function viewSales (Request $request){
 
         if($request->input('username')==null){
@@ -79,39 +81,13 @@ class PageController extends Controller
             $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
             $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
     
-    
             $saleProducts = DB::Table('sales')->orderby('quantity','desc')->take(10)->get();
     
             $decodedArray = json_decode(json_encode($saleProducts), true);
     
             $products = DB::Table('products')->get();
             $productSales = DB::Table('sales')->get();
-    
-            $name0id = $decodedArray[0]['product_id'];
-            $name1id = $decodedArray[1]['product_id'];
-            $name2id = $decodedArray[2]['product_id'];
-            $name3id = $decodedArray[3]['product_id'];
-            $name4id = $decodedArray[4]['product_id'];
-            $name5id = $decodedArray[5]['product_id'];
-            $name6id = $decodedArray[6]['product_id'];
-            $name7id = $decodedArray[7]['product_id'];
-            $name8id = $decodedArray[8]['product_id'];
-            $name9id = $decodedArray[9]['product_id'];
-    
-            //$productNames = [$productName0,$productName1,$productName2,$productName3,$productName4,$productName5,$productName6,$productName7,$productName8,$productName9];
-            
-            $productNamesAndPrices = [
-                [DB::Table('products')->where('id',$name0id)->value('name'),DB::Table('products')->where('id',$name0id)->value('price')],
-                [DB::Table('products')->where('id',$name1id)->value('name'),DB::Table('products')->where('id',$name1id)->value('price')],
-                [DB::Table('products')->where('id',$name2id)->value('name'),DB::Table('products')->where('id',$name2id)->value('price')],
-                [DB::Table('products')->where('id',$name3id)->value('name'),DB::Table('products')->where('id',$name3id)->value('price')],
-                [DB::Table('products')->where('id',$name4id)->value('name'),DB::Table('products')->where('id',$name4id)->value('price')],
-                [DB::Table('products')->where('id',$name5id)->value('name'),DB::Table('products')->where('id',$name5id)->value('price')],
-                [DB::Table('products')->where('id',$name6id)->value('name'),DB::Table('products')->where('id',$name6id)->value('price')],
-                [DB::Table('products')->where('id',$name7id)->value('name'),DB::Table('products')->where('id',$name7id)->value('price')],
-                [DB::Table('products')->where('id',$name8id)->value('name'),DB::Table('products')->where('id',$name8id)->value('price')],
-                [DB::Table('products')->where('id',$name9id)->value('name'),DB::Table('products')->where('id',$name9id)->value('price')],
-            ];
+             
             $productIds = [
                 $decodedArray[0]['product_id'],
                 $decodedArray[1]['product_id'],
@@ -136,38 +112,9 @@ class PageController extends Controller
                 $decodedArray[8]['quantity'],
                 $decodedArray[9]['quantity'],
             ];
-            $topSoldPrices = [
-                $decodedArray[0]['sold_price'],
-                $decodedArray[1]['sold_price'],
-                $decodedArray[2]['sold_price'],
-                $decodedArray[3]['sold_price'],
-                $decodedArray[4]['sold_price'],
-                $decodedArray[5]['sold_price'],
-                $decodedArray[6]['sold_price'],
-                $decodedArray[7]['sold_price'],
-                $decodedArray[8]['sold_price'],
-                $decodedArray[9]['sold_price'],
-            ];
-
-            $totalRevenue = null;
     
-            $totalProducts = DB::Table('products')->count();
+            $totalProducts = DB::Table('products')->where('status','ACTIVE')->count();
             $totalQuantity = DB::Table('sales')->sum('quantity');
-            
-            /*$employees = DB::Table('sales')
-                ->select('sold_by', 'COUNT(sold_by) AS count')
-                ->orderBy('count','desc')
-                ->groupBy('sold_by')
-                ->get()
-                ;*/
-
-            /*$data = DB::table('sales')
-                ->select(DB::raw("COUNT(*) AS occurrences"))
-                ->groupBy('sold_by')
-                ->orderBy('occurrences', 'DESC')
-                ->get();*/
-
-            //$data = sale::all()->orderby('COUNT(*) DESC')->groupBy('sold_by')->get();
 
             $saleEmployees = DB::table('sales')
                 ->join('users', 'sales.sold_by', '=', 'users.id')
@@ -178,10 +125,17 @@ class PageController extends Controller
                 ->orderBy('count', 'desc')
                 ->get();
 
-            //dd($saleEmployees);
+            $topSellingProducts = DB::Table('sales')
+                ->join('products', 'sales.product_id','products.id')
+                ->select('sales.product_id','sales.quantity','sales.sold_price','products.name','products.price')
+                ->orderBy('sales.quantity','DESC')
+                ->take(10)
+                ->get();
+            
+            //dd($topSellingProducts);
 
             /*return view('test',[
-                'saleEmployees'=>$saleEmployees
+                'topSellingProducts'=>$topSellingProducts
             ]);*/
             return view('sales',[
                 'username'=>$username,
@@ -190,15 +144,12 @@ class PageController extends Controller
                 'userRole'=>$userRole,
                 'saleProducts'=>$saleProducts,
                 'productQtys'=>$productQtys,
-                'products'=>$products,
                 'productIds'=>$productIds,
-                'productNamesAndPrices'=>$productNamesAndPrices,
-                'totalRevenue'=>$totalRevenue,
+                'totalRevenue'=>null,
                 'totalProducts'=>$totalProducts,
                 'totalQuantity'=>$totalQuantity,
-                'topSoldPrices'=>$topSoldPrices,
-                'productSales'=>$productSales,
                 'saleEmployees'=>$saleEmployees,
+                'topSellingProducts'=>$topSellingProducts,
             ]);
         }
     }

@@ -608,7 +608,7 @@
                           data: ['{{$internalAllUsersCount}}', '{{$externalAllUsersCount}}']
                         }, {
                           name: 'Active',
-                          data: ['{{$internalActiveUsersCount}}', '{{$internalActiveUsersCount}}']
+                          data: ['{{$internalActiveUsersCount}}', '{{$externalActiveUsersCount}}']
                         }],
                         chart: {
                           type: 'bar',
