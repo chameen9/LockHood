@@ -17,12 +17,15 @@ use Illuminate\Support\Js;
 class PageController extends Controller
 {
     function viewHr (Request $request){
-        $internalUsersCount = DB::Table('users')->where([['type','=', '1']])->count();
-        $externalUsersCount = DB::Table('users')->where([['type','=', '2']])->count();
+        $internalActiveUsersCount = DB::Table('users')->where([['type','=', '1'],['status','=','ACTIVE']])->count();
+        $internalAllUsersCount = DB::Table('users')->where([['type','=', '1']])->count();
+        $externalActiveUsersCount = DB::Table('users')->where([['type','=', '2'],['status','=','ACTIVE']])->count();
+        $externalAllUsersCount = DB::Table('users')->where([['type','=', '2']])->count();
         $activeUsersCount = DB::Table('users')->where([['status','=', 'ACTIVE']])->count();
+        $allUsersCount = DB::Table('users')->count();
 
-        $internalUserPercentage = $internalUsersCount/$activeUsersCount * 100;
-        $externalUserPercentage = $externalUsersCount/$activeUsersCount * 100;
+        $internalActiveUserPercentage = round($internalActiveUsersCount/$internalAllUsersCount * 100 , 2);
+        $externalActiveUserPercentage = round($externalActiveUsersCount/$externalAllUsersCount * 100 , 2);
 
         $username = $request->input('username');
         $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
@@ -32,11 +35,14 @@ class PageController extends Controller
         $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
 
         return view('hrview',[
-            'internalUsersCount'=>$internalUsersCount,
-            'externalUsersCount'=>$externalUsersCount,
+            'internalActiveUsersCount'=>$internalActiveUsersCount,
+            'internalAllUsersCount'=>$internalAllUsersCount,
+            'externalActiveUsersCount'=>$externalActiveUsersCount,
+            'externalAllUsersCount'=>$externalAllUsersCount,
             'activeUsersCount'=>$activeUsersCount,
-            'internalUserPercentage'=>$internalUserPercentage,
-            'externalUserPercentage'=>$externalUserPercentage,
+            'allUsersCount'=>$allUsersCount,
+            'internalActiveUserPercentage'=>$internalActiveUserPercentage,
+            'externalActiveUserPercentage'=>$externalActiveUserPercentage,
             'username'=>$username,
             'userLastName'=>$userLastName,
             'userFirstName'=>$userFirstName,
@@ -161,15 +167,22 @@ class PageController extends Controller
                 ->orderBy('occurrences', 'DESC')
                 ->get();*/
 
-            $data = sale::all()->orderbyRaw('COUNT(*) DESC')->groupBy('sold_by')->get();
-            $data22 = DB::table('sales')
-                ->select('sold_by')
-                ->groupBy('sold_by')
-                ->orderByRaw('COUNT(*) DESC')
+            //$data = sale::all()->orderby('COUNT(*) DESC')->groupBy('sold_by')->get();
+
+            $saleEmployees = DB::table('sales')
+                ->join('users', 'sales.sold_by', '=', 'users.id')
+                ->join('department_users', 'users.id', '=', 'department_users.user_id')
+                ->join('departments', 'department_users.department_id', '=', 'departments.id')
+                ->select('sales.sold_by', 'users.first_name', 'users.last_name', 'users.status', 'departments.name', DB::raw('COUNT(users.id) AS count'))
+                ->groupBy('users.id')
+                ->orderBy('count', 'desc')
                 ->get();
 
-            $saleEmployees = json_decode(json_encode($data), true);
+            //dd($saleEmployees);
 
+            /*return view('test',[
+                'saleEmployees'=>$saleEmployees
+            ]);*/
             return view('sales',[
                 'username'=>$username,
                 'userLastName'=>$userLastName,
@@ -185,7 +198,7 @@ class PageController extends Controller
                 'totalQuantity'=>$totalQuantity,
                 'topSoldPrices'=>$topSoldPrices,
                 'productSales'=>$productSales,
-                'saleEmployees'=>$data,
+                'saleEmployees'=>$saleEmployees,
             ]);
         }
     }

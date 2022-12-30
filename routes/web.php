@@ -5,10 +5,12 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
 
 
-Route::get('/login', function () {
+Route::get('/', function () {
     return view('login');
 });
-
+Route::get('/test', function () {
+    return view('test');
+});
 // sign in -------------------------------------------------------------------------------------------
 Route::post('/checklogin','App\http\controllers\LoginController@checkLogin');
 //----------------------------------------------------------------------------------------------------

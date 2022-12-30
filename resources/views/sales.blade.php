@@ -675,40 +675,36 @@
               <div class="card recent-sales overflow-auto">
 
                 <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
+                  
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Best Sales Execetives <span>| This Month</span></h5>
+                  <h5 class="card-title">Best Sales Execetives <span>| All Time</span></h5>
 
-                  <table class="table table-borderless datatable">
+                  <table class="table table-borderless">
                     <thead>
                       <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Employee</th>
                         <th scope="col">Department</th>
-                        <th scope="col">Quantity</th>
+                        <th scope="col">Sold</th>
                         <th scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($saleEmployees as $saleEmployee)
+                      @foreach($saleEmployees as $employee)
                       <tr>
-                        <input type="hidden" name="key[]" value="{{$saleEmployee->sold_by}}">
-                        <th scope="row"><a href="#">#2457</a></th>
-                        <td>{{$saleEmployees->sold_by}}</td>
-                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                        <td>$64</td>
-                        <td><span class="badge bg-success">Approved</span></td>
+                        <th scope="row"><a>#{{$employee->sold_by}}</a></th>
+                        <td>{{$employee->first_name}} {{$employee->last_name}}</td>
+                        <td><a class="text-primary">{{$employee->name}}</a></td>
+                        <td>{{$employee->count}}</td>
+                        <td>
+                          @if($employee->status == "ACTIVE")
+                            <span class="badge bg-success">ACTIVE</span>
+                          @else
+                            <span class="badge bg-danger">NONE</span>
+                          @endif
+                        </td>
                       </tr>
                       @endforeach
                     </tbody>
