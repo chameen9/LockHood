@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PdfController;
 
 
 Route::get('/', function () {
@@ -48,4 +49,12 @@ Route::get('/finance', function () {
 Route::get('/404', function () {
     return view('404error');
 });
+//----------------------------------------------------------------------------------------------------
+
+// create  downloadtop10sellingproductspdf------------------------------------------------------------
+Route::post('/downloadtop10sellingproductspdf','App\http\controllers\PdfController@top10selling');
+//----------------------------------------------------------------------------------------------------
+
+// create  downloadbestsalesexecetivespdf-------------------------------------------------------------
+Route::post('/downloadbestsalesexecetivespdf','App\http\controllers\PdfController@bestSalesExecetives');
 //----------------------------------------------------------------------------------------------------

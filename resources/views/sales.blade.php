@@ -387,17 +387,15 @@
         <div class="col-lg-8 md-8">
             <div class="card top-selling overflow-auto">
 
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
+              <div class="filter"> <!--pdf for top 10 selling-->
+                <form action="{{ url('/downloadtop10sellingproductspdf') }}" method="post">
+                  {{csrf_field()}}
+                  <input type="hidden" name="created_by" value="{{$username}}">
+                  <input type="hidden" name="role" value="{{$userRole}}">
+                  <button type="submit" class="btn btn-light btn-icon" title="Downloald as pdf" data-toggle="tooltip" data-placement="top" style="color: #0074EE;">
+                    <i class="bi bi-filetype-pdf"></i>
+                  </button>
+                </form>
               </div>
 
               <div class="card-body pb-0">
@@ -483,9 +481,10 @@
 
                 </div>
               </div>
-            </div>
           </div>
           <!--End bar chart-->
+      </div>
+          
 
 
           <div class="row">
@@ -605,7 +604,14 @@
               <div class="card recent-sales overflow-auto">
 
                 <div class="filter">
-                  
+                  <form action="{{ url('/downloadbestsalesexecetivespdf') }}" method="post">
+                    {{csrf_field()}}
+                    <input type="hidden" name="created_by" value="{{$username}}">
+                    <input type="hidden" name="role" value="{{$userRole}}">
+                    <button type="submit" class="btn btn-light btn-icon" title="Downloald as pdf" data-toggle="tooltip" data-placement="top" style="color: #0074EE;">
+                      <i class="bi bi-filetype-pdf"></i>
+                    </button>
+                  </form>
                 </div>
 
                 <div class="card-body">
