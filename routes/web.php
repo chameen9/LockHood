@@ -39,6 +39,11 @@ Route::post('/viewsalesandmarketing','App\http\controllers\PageController@viewSa
 Route::get('/viewsalesandmarketing','App\http\controllers\PageController@viewSales');
 //----------------------------------------------------------------------------------------------------
 
+// viewsalesandmarketing - by id----------------------------------------------------------------------
+Route::post('/viewsalesandmarketingbytop20','App\http\controllers\PageController@viewsalesandmarketingbytop20');
+Route::get('/viewsalesandmarketingbytop20','App\http\controllers\PageController@viewsalesandmarketingbytop20');
+//----------------------------------------------------------------------------------------------------
+
 // Finance -------------------------------------------------------------------------------------------
 Route::get('/finance', function () {
     return view('finance_view');

@@ -32,7 +32,7 @@
 </head>
 <body>
   
-  <h3 align="center">Top 10 Selling Products Report</h3>
+  <h3 align="center">Top {{$takeNumber}} Selling Products Report</h3>
     <p>
       Report Created At  : {{$date}}&nbsp;&nbsp;&nbsp;{{$time}} <br>
       Reprot Created By : {{$name}} ({{$role}})

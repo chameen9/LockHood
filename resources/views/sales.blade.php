@@ -202,7 +202,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>{{$userFirstName}} {{$userLastName}}</h6>
-              <span>{{$userRole}}</span>
+              <span>{{$userRole}} ({{$userLevel}})</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -388,18 +388,58 @@
             <div class="card top-selling overflow-auto">
 
               <div class="filter"> <!--pdf for top 10 selling-->
-                <form action="{{ url('/downloadtop10sellingproductspdf') }}" method="post">
-                  {{csrf_field()}}
-                  <input type="hidden" name="created_by" value="{{$username}}">
-                  <input type="hidden" name="role" value="{{$userRole}}">
-                  <button type="submit" class="btn btn-light btn-icon" title="Downloald as pdf" data-toggle="tooltip" data-placement="top" style="color: #0074EE;">
-                    <i class="bi bi-filetype-pdf"></i>
-                  </button>
-                </form>
+                
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter By</h6>
+                  </li>
+
+                  <li>
+                    <form action="{{ url('/viewsalesandmarketing') }}" method="post">
+                      {{csrf_field()}}
+                      <input type="hidden" name="username" value="{{$username}}">
+                      <input type="hidden" name="role" value="{{$userRole}}">
+                      <input type="hidden" name="top10ProductFilterstaus" value="Top 10">
+                      <button class="dropdown-item" type="submit">Top 10</button>
+                    </form>
+                  </li>
+
+                  <li>
+                    <form action="{{ url('/viewsalesandmarketingbytop20') }}" method="post">
+                      {{csrf_field()}}
+                      <input type="hidden" name="username" value="{{$username}}">
+                      <input type="hidden" name="role" value="{{$userRole}}">
+                      <input type="hidden" name="top10ProductFilterstaus" value="Top 20">
+                      <button class="dropdown-item" type="submit">Top 20</button>
+                    </form>
+                  </li>
+
+                  <li class="dropdown-header text-start">
+                    <h6>Downloald</h6>
+                  </li>
+                  <li>
+                    <form action="{{ url('/downloadtop10sellingproductspdf') }}" method="post">
+                      {{csrf_field()}}
+                      <input type="hidden" name="created_by" value="{{$username}}">
+                      <input type="hidden" name="role" value="{{$userRole}}">
+                      <input type="hidden" name="top10ProductFilterstaus" value="{{$top10ProductFilterstaus}}">
+                      @if(2 >= $userLevel)
+                      <button type="submit" class="dropdown-item" title="Downloald as pdf" data-toggle="tooltip" data-placement="top">
+                        <i class="bi bi-filetype-pdf"></i>Pdf
+                      </button>
+                      @else
+                      <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                        <i class="bi bi-filetype-pdf"></i>Pdf
+                      </button>
+                      @endif
+                    </form>
+                  </li>
+                </ul>
               </div>
 
               <div class="card-body pb-0">
-                <h5 class="card-title">Top 10 Selling <span>| All time</span></h5>
+                <h5 class="card-title">Selling Products<span>| By {{$top10ProductFilterstaus}}</span></h5>
 
                 <table class="table table-borderless">
                   <thead>

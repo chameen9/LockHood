@@ -22,8 +22,16 @@ class PdfController extends Controller
         $role = $request->input('role');
         $date = Carbon::today('Asia/Colombo')->toDateString();
         $time = Carbon::now('Asia/Colombo')->toTimeString(); 
+        $top10ProductFilterstaus = $request->input('top10ProductFilterstaus');
+        
+        if($top10ProductFilterstaus == 'Top 10'){
+            $takeNumber = 10;
+        }
+        else{
+            $takeNumber = 20;
+        }
 
-        $topic = 'Top 10 Selling Products';
+        $topic = 'Top '.$takeNumber.' Selling Products';
         $format = '.pdf';
         $pdfName = $topic.' '.$date.' '.$time.''.$format;
 
@@ -31,15 +39,16 @@ class PdfController extends Controller
             ->join('products', 'sales.product_id','products.id')
             ->select('sales.product_id','sales.quantity','sales.sold_price','products.name','products.price')
             ->orderBy('sales.quantity','DESC')
-            ->take(10)
+            ->take($takeNumber)
              ->get();
         
-        $pdf = Pdf::loadview('pdf.top10sellingproductspdf',[
+        $pdf = Pdf::loadview('pdf.topsellingproductspdf',[
             'topSellingProducts'=>$topSellingProducts,
             'date'=>$date,
             'time'=>$time,
             'role'=>$role,
-            'name'=>$name
+            'name'=>$name,
+            'takeNumber'=>$takeNumber,
         ]);
         return $pdf->download($pdfName);
     }
