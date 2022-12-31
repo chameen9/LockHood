@@ -30,7 +30,13 @@ class LoginController extends Controller
         $userId = DB::Table('user_accounts')->where('user_name',$reqUsername)->value('user_id');
         $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
         $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
+        $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
         $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
+        $userLevelName = DB::table('user_roles')
+                ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
+                ->select('user_levels.level_name')
+                ->where('user_roles.id', $userRoleId)
+                ->value('level_name');
     
         if($gotUsername==$reqUsername){
             if($gotPassword==$reqPassword){
@@ -40,6 +46,8 @@ class LoginController extends Controller
                     'userLastName'=>$userLastName,
                     'userFirstName'=>$userFirstName,
                     'userRole'=>$userRole,
+                    'userLevel'=>$userLevel,
+                    'userLevelName'=>$userLevelName,
                 ]); 
                    
             }

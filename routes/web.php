@@ -65,6 +65,10 @@ Route::post('/downloadtopsellingproductspdf','App\http\controllers\PdfController
 Route::post('/downloadtopsellingproductsexcel','App\http\controllers\excelController@downloadtopsellingproductsexcel');
 //----------------------------------------------------------------------------------------------------
 
+// create  download20topsellingproductsexcel------------------------------------------------------------
+Route::post('/download20topsellingproductsexcel','App\http\controllers\excelController@download20topsellingproductsexcel');
+//----------------------------------------------------------------------------------------------------
+
 // create  downloadbestsalesexecetivespdf-------------------------------------------------------------
 Route::post('/downloadbestsalesexecetivespdf','App\http\controllers\PdfController@bestSalesExecetives');
 //----------------------------------------------------------------------------------------------------
