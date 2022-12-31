@@ -419,18 +419,35 @@
                     <h6>Downloald</h6>
                   </li>
                   <li>
-                    <form action="{{ url('/downloadtop10sellingproductspdf') }}" method="post">
+                    <form action="{{ url('/downloadtopsellingproductspdf') }}" method="post">
                       {{csrf_field()}}
                       <input type="hidden" name="created_by" value="{{$username}}">
                       <input type="hidden" name="role" value="{{$userRole}}">
                       <input type="hidden" name="top10ProductFilterstaus" value="{{$top10ProductFilterstaus}}">
                       @if(2 >= $userLevel)
                       <button type="submit" class="dropdown-item" title="Downloald as pdf" data-toggle="tooltip" data-placement="top">
-                        <i class="bi bi-filetype-pdf"></i>Pdf
+                        <i class="bi bi-filetype-pdf"></i>pdf
                       </button>
                       @else
                       <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
-                        <i class="bi bi-filetype-pdf"></i>Pdf
+                        <i class="bi bi-filetype-pdf"></i>pdf
+                      </button>
+                      @endif
+                    </form>
+                  </li>
+                  <li>
+                    <form action="{{ url('/downloadtopsellingproductsexcel') }}" method="post">
+                      {{csrf_field()}}
+                      <input type="hidden" name="created_by" value="{{$username}}">
+                      <input type="hidden" name="role" value="{{$userRole}}">
+                      <input type="hidden" name="top10ProductFilterstaus" value="{{$top10ProductFilterstaus}}">
+                      @if(2 >= $userLevel)
+                      <button type="submit" class="dropdown-item" title="Downloald as Excel sheet" data-toggle="tooltip" data-placement="top">
+                        <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
+                      </button>
+                      @else
+                      <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                        <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
                       </button>
                       @endif
                     </form>

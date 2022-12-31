@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\excelController;
 
 
 Route::get('/', function () {
@@ -56,8 +57,12 @@ Route::get('/404', function () {
 });
 //----------------------------------------------------------------------------------------------------
 
-// create  downloadtop10sellingproductspdf------------------------------------------------------------
-Route::post('/downloadtop10sellingproductspdf','App\http\controllers\PdfController@top10selling');
+// create  downloadtopsellingproductspdf------------------------------------------------------------
+Route::post('/downloadtopsellingproductspdf','App\http\controllers\PdfController@downloadtopsellingproductspdf');
+//----------------------------------------------------------------------------------------------------
+
+// create  downloadtopsellingproductsexcel------------------------------------------------------------
+Route::post('/downloadtopsellingproductsexcel','App\http\controllers\excelController@downloadtopsellingproductsexcel');
 //----------------------------------------------------------------------------------------------------
 
 // create  downloadbestsalesexecetivespdf-------------------------------------------------------------

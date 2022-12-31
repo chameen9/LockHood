@@ -17,7 +17,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PdfController extends Controller
 {
-    public function top10selling(Request $request){
+    public function downloadtopsellingproductspdf(Request $request){
         $name = $request->input('created_by');
         $role = $request->input('role');
         $date = Carbon::today('Asia/Colombo')->toDateString();
