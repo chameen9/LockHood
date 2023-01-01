@@ -157,6 +157,7 @@ class PageController extends Controller
                 ->get();
             
             $top10ProductFilterstaus = 'Top 10';
+            $BeastSalesExecetivesFilterstaus = 'Sold Quantity';
             //dd($userLevel);
             //dd($userLevelName);
 
@@ -180,6 +181,7 @@ class PageController extends Controller
                 'saleEmployees'=>$saleEmployees,
                 'topSellingProducts'=>$topSellingProducts,
                 'top10ProductFilterstaus'=>$top10ProductFilterstaus,
+                'BeastSalesExecetivesFilterstaus'=>$BeastSalesExecetivesFilterstaus,
             ]);
         }
     }
@@ -256,6 +258,7 @@ class PageController extends Controller
                 ->get();
             
             $top10ProductFilterstaus = 'Top 20';
+            $BeastSalesExecetivesFilterstaus = 'Sold Quantity';
             //dd($userLevel);
             //dd($userLevelName);
 
@@ -279,6 +282,197 @@ class PageController extends Controller
                 'saleEmployees'=>$saleEmployees,
                 'topSellingProducts'=>$topSellingProducts,
                 'top10ProductFilterstaus'=>$top10ProductFilterstaus,
+                'BeastSalesExecetivesFilterstaus'=>$BeastSalesExecetivesFilterstaus,
+            ]);
+        }
+    }
+
+    function viewsalesandmarketingbyempstatus(Request $request){
+        if($request->input('username')==null){
+            return view('404error');
+        }
+        else{
+            $username = $request->input('username');
+
+            $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
+            $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
+            $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
+            $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
+            $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
+            $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
+            $userLevelName = DB::table('user_roles')
+                ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
+                ->select('user_levels.level_name')
+                ->where('user_roles.id', $userRoleId)
+                ->value('level_name');
+    
+            $saleProducts = DB::Table('sales')->orderby('quantity','desc')->take(10)->get();
+    
+            $decodedArray = json_decode(json_encode($saleProducts), true);
+    
+            $products = DB::Table('products')->get();
+            $productSales = DB::Table('sales')->get();
+             
+            $productIds = [
+                $decodedArray[0]['product_id'],
+                $decodedArray[1]['product_id'],
+                $decodedArray[2]['product_id'],
+                $decodedArray[3]['product_id'],
+                $decodedArray[4]['product_id'],
+                $decodedArray[5]['product_id'],
+                $decodedArray[6]['product_id'],
+                $decodedArray[7]['product_id'],
+                $decodedArray[8]['product_id'],
+                $decodedArray[9]['product_id'],
+            ];
+            $productQtys = [
+                $decodedArray[0]['quantity'],
+                $decodedArray[1]['quantity'],
+                $decodedArray[2]['quantity'],
+                $decodedArray[3]['quantity'],
+                $decodedArray[4]['quantity'],
+                $decodedArray[5]['quantity'],
+                $decodedArray[6]['quantity'],
+                $decodedArray[7]['quantity'],
+                $decodedArray[8]['quantity'],
+                $decodedArray[9]['quantity'],
+            ];
+    
+            $totalProducts = DB::Table('products')->where('status','ACTIVE')->count();
+            $totalQuantity = DB::Table('sales')->sum('quantity');
+
+            $saleEmployees = DB::table('sales')
+                ->join('users', 'sales.sold_by', '=', 'users.id')
+                ->join('department_users', 'users.id', '=', 'department_users.user_id')
+                ->join('departments', 'department_users.department_id', '=', 'departments.id')
+                ->select('sales.sold_by', 'users.first_name', 'users.last_name', 'users.status', 'departments.name','sales.quantity', DB::raw('COUNT(users.id) AS count'))
+                ->groupBy('users.id','users.status')
+                ->orderBy('users.status', 'asc')
+                ->get();
+
+            $topSellingProducts = DB::Table('sales')
+                ->join('products', 'sales.product_id','products.id')
+                ->select('sales.product_id','sales.quantity','sales.sold_price','products.name','products.price')
+                ->orderBy('sales.quantity','DESC')
+                ->take(10)
+                ->get();
+            
+            $top10ProductFilterstaus = 'Top 10';
+            $BeastSalesExecetivesFilterstaus = 'Status';
+
+            return view('sales',[
+                'username'=>$username,
+                'userLastName'=>$userLastName,
+                'userFirstName'=>$userFirstName,
+                'userRole'=>$userRole,
+                'userRoleId'=>$userRoleId,
+                'userLevel'=>$userLevel,
+                'userLevelName'=>$userLevelName,
+                'saleProducts'=>$saleProducts,
+                'productQtys'=>$productQtys,
+                'productIds'=>$productIds,
+                'totalRevenue'=>null,
+                'totalProducts'=>$totalProducts,
+                'totalQuantity'=>$totalQuantity,
+                'saleEmployees'=>$saleEmployees,
+                'topSellingProducts'=>$topSellingProducts,
+                'top10ProductFilterstaus'=>$top10ProductFilterstaus,
+                'BeastSalesExecetivesFilterstaus'=>$BeastSalesExecetivesFilterstaus,
+            ]);
+        }
+    }
+
+    function viewsalesandmarketingbyempdepartment(Request $request){
+        if($request->input('username')==null){
+            return view('404error');
+        }
+        else{
+            $username = $request->input('username');
+
+            $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
+            $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
+            $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
+            $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
+            $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
+            $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
+            $userLevelName = DB::table('user_roles')
+                ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
+                ->select('user_levels.level_name')
+                ->where('user_roles.id', $userRoleId)
+                ->value('level_name');
+    
+            $saleProducts = DB::Table('sales')->orderby('quantity','desc')->take(10)->get();
+    
+            $decodedArray = json_decode(json_encode($saleProducts), true);
+    
+            $products = DB::Table('products')->get();
+            $productSales = DB::Table('sales')->get();
+             
+            $productIds = [
+                $decodedArray[0]['product_id'],
+                $decodedArray[1]['product_id'],
+                $decodedArray[2]['product_id'],
+                $decodedArray[3]['product_id'],
+                $decodedArray[4]['product_id'],
+                $decodedArray[5]['product_id'],
+                $decodedArray[6]['product_id'],
+                $decodedArray[7]['product_id'],
+                $decodedArray[8]['product_id'],
+                $decodedArray[9]['product_id'],
+            ];
+            $productQtys = [
+                $decodedArray[0]['quantity'],
+                $decodedArray[1]['quantity'],
+                $decodedArray[2]['quantity'],
+                $decodedArray[3]['quantity'],
+                $decodedArray[4]['quantity'],
+                $decodedArray[5]['quantity'],
+                $decodedArray[6]['quantity'],
+                $decodedArray[7]['quantity'],
+                $decodedArray[8]['quantity'],
+                $decodedArray[9]['quantity'],
+            ];
+    
+            $totalProducts = DB::Table('products')->where('status','ACTIVE')->count();
+            $totalQuantity = DB::Table('sales')->sum('quantity');
+
+            $saleEmployees = DB::table('sales')
+                ->join('users', 'sales.sold_by', '=', 'users.id')
+                ->join('department_users', 'users.id', '=', 'department_users.user_id')
+                ->join('departments', 'department_users.department_id', '=', 'departments.id')
+                ->select('sales.sold_by', 'users.first_name', 'users.last_name', 'users.status', 'departments.name','sales.quantity', DB::raw('COUNT(users.id) AS count'))
+                ->groupBy('users.id','users.status')
+                ->orderBy('departments.name', 'asc')
+                ->get();
+
+            $topSellingProducts = DB::Table('sales')
+                ->join('products', 'sales.product_id','products.id')
+                ->select('sales.product_id','sales.quantity','sales.sold_price','products.name','products.price')
+                ->orderBy('sales.quantity','DESC')
+                ->take(10)
+                ->get();
+            
+            $top10ProductFilterstaus = 'Top 10';
+            $BeastSalesExecetivesFilterstaus = 'Department';
+
+            return view('sales',[
+                'username'=>$username,
+                'userLastName'=>$userLastName,
+                'userFirstName'=>$userFirstName,
+                'userRole'=>$userRole,
+                'userRoleId'=>$userRoleId,
+                'userLevel'=>$userLevel,
+                'userLevelName'=>$userLevelName,
+                'saleProducts'=>$saleProducts,
+                'productQtys'=>$productQtys,
+                'productIds'=>$productIds,
+                'totalRevenue'=>null,
+                'totalProducts'=>$totalProducts,
+                'totalQuantity'=>$totalQuantity,
+                'saleEmployees'=>$saleEmployees,
+                'topSellingProducts'=>$topSellingProducts,
+                'top10ProductFilterstaus'=>$top10ProductFilterstaus,
+                'BeastSalesExecetivesFilterstaus'=>$BeastSalesExecetivesFilterstaus,
             ]);
         }
     }

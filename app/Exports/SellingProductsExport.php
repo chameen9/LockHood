@@ -18,7 +18,7 @@ class SellingProductsExport implements FromView
             ->take(10)
             ->get();
 
-        return view('excel.topsellingproducts',[
+        return view('excel.sales.topsellingproducts',[
             'topSellingProducts'=>$topSellingProducts
         ]);
     }

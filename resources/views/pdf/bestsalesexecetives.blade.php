@@ -29,12 +29,12 @@
             border: 1px solid black;
           }
           .active{
-            background: #F36464;
-            color: black;
+            background: white;
+            color: #00BA49;
           }
           .none{
-            background: #00BA49;
-            color: black;
+            background: white;
+            color: #F36464;
           }
         </style>
 </head>
@@ -43,7 +43,8 @@
   <h3 align="center">Best Sales Execetives Report</h3>
     <p>
       Report Created At  : {{$date}}&nbsp;&nbsp;&nbsp;{{$time}} <br>
-      Reprot Created By : {{$name}} ({{$role}})
+      Reprot Created By : {{$name}} ({{$role}})<br>
+      Report Filterd : By {{$BeastSalesExecetivesFilterstaus}}
     </p>
 
   <table cellspacing=0>

@@ -40,9 +40,19 @@ Route::post('/viewsalesandmarketing','App\http\controllers\PageController@viewSa
 Route::get('/viewsalesandmarketing','App\http\controllers\PageController@viewSales');
 //----------------------------------------------------------------------------------------------------
 
-// viewsalesandmarketing - by id----------------------------------------------------------------------
+// viewsalesandmarketing - by 20----------------------------------------------------------------------
 Route::post('/viewsalesandmarketingbytop20','App\http\controllers\PageController@viewsalesandmarketingbytop20');
 Route::get('/viewsalesandmarketingbytop20','App\http\controllers\PageController@viewsalesandmarketingbytop20');
+//----------------------------------------------------------------------------------------------------
+
+// viewsalesandmarketing - emp status-----------------------------------------------------------------
+Route::post('/viewsalesandmarketingbyempstatus','App\http\controllers\PageController@viewsalesandmarketingbyempstatus');
+Route::get('/viewsalesandmarketingbyempstatus','App\http\controllers\PageController@viewsalesandmarketingbyempstatus');
+//----------------------------------------------------------------------------------------------------
+
+// viewsalesandmarketing - emp department ------------------------------------------------------------
+Route::post('/viewsalesandmarketingbyempdepartment','App\http\controllers\PageController@viewsalesandmarketingbyempdepartment');
+Route::get('/viewsalesandmarketingbyempdepartment','App\http\controllers\PageController@viewsalesandmarketingbyempdepartment');
 //----------------------------------------------------------------------------------------------------
 
 // Finance -------------------------------------------------------------------------------------------
@@ -69,6 +79,19 @@ Route::post('/downloadtopsellingproductsexcel','App\http\controllers\excelContro
 Route::post('/download20topsellingproductsexcel','App\http\controllers\excelController@download20topsellingproductsexcel');
 //----------------------------------------------------------------------------------------------------
 
+
 // create  downloadbestsalesexecetivespdf-------------------------------------------------------------
 Route::post('/downloadbestsalesexecetivespdf','App\http\controllers\PdfController@bestSalesExecetives');
+//----------------------------------------------------------------------------------------------------
+
+// create  best sales excetives by sold quantity------------------------------------------------------
+Route::post('/download/excel/bestsalesexecetives/bysoldquantity','App\http\controllers\excelController@bestsalesexcetivesbysoldquantity');
+//----------------------------------------------------------------------------------------------------
+
+// create  best sales excetives by status-------------------------------------------------------------
+Route::post('/download/excel/bestsalesexecetives/bystatus','App\http\controllers\excelController@bestsalesexcetivesbystatus');
+//----------------------------------------------------------------------------------------------------
+
+// create  best sales excetives by department---------------------------------------------------------
+Route::post('/download/excel/bestsalesexecetives/bydepartment','App\http\controllers\excelController@bestsalesexcetivesbydepartment');
 //----------------------------------------------------------------------------------------------------

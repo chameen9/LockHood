@@ -19,7 +19,7 @@ class Selling20ProductsExport implements FromView
             ->take(20)
             ->get();
 
-        return view('excel.topselling20products',[
+        return view('excel.sales.topselling20products',[
             'topSellingProducts'=>$topSellingProducts
         ]);
     }

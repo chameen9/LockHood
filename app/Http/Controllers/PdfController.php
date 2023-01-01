@@ -56,11 +56,25 @@ class PdfController extends Controller
         $name = $request->input('created_by');
         $role = $request->input('role');
         $date = Carbon::today('Asia/Colombo')->toDateString();
-        $time = Carbon::now('Asia/Colombo')->toTimeString(); 
+        $time = Carbon::now('Asia/Colombo')->toTimeString();
+        $BeastSalesExecetivesFilterstaus = $request->input('BeastSalesExecetivesFilterstaus');
+
+        if($BeastSalesExecetivesFilterstaus == 'Sold Quantity'){
+            $orderBy = 'count';
+            $order = 'desc';
+        }
+        else if($BeastSalesExecetivesFilterstaus == 'Department'){
+            $orderBy = 'departments.name';
+            $order = 'asc';
+        }
+        else{
+            $orderBy = 'users.status';
+            $order = 'asc';
+        }
 
         $topic = 'Best sales Execetives';
         $format = '.pdf';
-        $pdfName = $topic.' '.$date.' '.$time.''.$format;
+        $pdfName = $topic.' ['.$BeastSalesExecetivesFilterstaus.'] '.$date.' '.$time.''.$format;
 
         $saleEmployees = DB::table('sales')
             ->join('users', 'sales.sold_by', '=', 'users.id')
@@ -68,7 +82,7 @@ class PdfController extends Controller
             ->join('departments', 'department_users.department_id', '=', 'departments.id')
             ->select('sales.sold_by', 'users.first_name', 'users.last_name', 'users.status', 'departments.name', DB::raw('COUNT(users.id) AS count'))
             ->groupBy('users.id')
-            ->orderBy('count', 'desc')
+            ->orderBy($orderBy, $order)
             ->get();
 
         $pdf = Pdf::loadview('pdf.bestsalesexecetives',[
@@ -76,7 +90,8 @@ class PdfController extends Controller
             'date'=>$date,
             'time'=>$time,
             'role'=>$role,
-            'name'=>$name
+            'name'=>$name,
+            'BeastSalesExecetivesFilterstaus'=>$BeastSalesExecetivesFilterstaus
         ]);
         return $pdf->download($pdfName);
     }
