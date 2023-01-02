@@ -13,6 +13,8 @@ use App\Models\product;
 use App\Models\product_sale;
 use App\Models\sale;
 use Illuminate\Support\Js;
+use Illuminate\Support\Str;
+
 
 class PageController extends Controller
 {
@@ -40,6 +42,75 @@ class PageController extends Controller
                 ->where('user_roles.id', $userRoleId)
                 ->value('level_name');
 
+        $departmentuserscountandname = DB::table('department_users')
+            ->join('departments', 'department_users.department_id', '=', 'departments.id')
+            ->select('departments.name',DB::raw('COUNT(*) as num_users')) //'departments.name',
+            ->where('department_users.status','ACTIVE')
+            ->groupBy('departments.name')
+            ->get();            //filter by status
+
+        $departmentuserscounttoarray = [];
+        $departmentnamestoarray = [];
+        foreach ($departmentuserscountandname as $dall) {
+            $departmentuserscounttoarray[] = $dall->num_users;
+            $departmentnamestoarray[] = Str::limit($dall->name, 10);
+        }
+
+        $today = Carbon::today('Asia/Colombo')->toDateString();
+        $yesterday = Carbon::yesterday('Asia/Colombo')->toDateString();
+
+        $todayattendance = DB::table('attendance_log')
+            ->join('users', 'attendance_log.user_id', '=', 'users.id')
+            ->join('department_users', 'users.id', '=', 'department_users.user_id')
+            ->join('departments', 'department_users.department_id', '=', 'departments.id')
+            ->select(DB::raw('COUNT(*) as num_users')) //'departments.name',
+            ->where([['attendance_log.date', $today],['department_users.status','ACTIVE']])
+            ->groupBy('departments.name')
+            ->get();
+
+        $todayattendancetoarray = [];
+        foreach ($todayattendance as $dall) {
+            $todayattendancetoarray[] = $dall->num_users;
+        }
+
+        $yesterdayattendance = DB::table('attendance_log')
+            ->join('users', 'attendance_log.user_id', '=', 'users.id')
+            ->join('department_users', 'users.id', '=', 'department_users.user_id')
+            ->join('departments', 'department_users.department_id', '=', 'departments.id')
+            ->select(DB::raw('COUNT(*) as num_users')) //'departments.name',
+            ->where([['attendance_log.date', $yesterday],['department_users.status','ACTIVE']]) 
+            ->groupBy('departments.name')
+            ->get();
+
+        $yesterdayattendancetoarray = [];
+        foreach ($yesterdayattendance as $dall) {
+            $yesterdayattendancetoarray[] = $dall->num_users;
+        }
+
+        // $attendencedepartmentnames = DB::table('attendance_log')
+        //     ->join('users', 'attendance_log.user_id', '=', 'users.id')
+        //     ->join('department_users', 'users.id', '=', 'department_users.user_id')
+        //     ->join('departments', 'department_users.department_id', '=', 'departments.id')
+        //     ->select('departments.name') //'departments.name',
+        //     ->where('attendance_log.date', $yesterday) 
+        //     ->groupBy('departments.name')
+        //     ->get();
+
+            $testdata = [];
+
+            foreach ($departmentuserscountandname as $dall) {
+                $testdata[] = $dall->num_users;
+            }
+
+            //print_r($data);
+        // foreach ($departmentuserscount as $row) {
+        //     echo $row->name . ': ' . $row->num_users . '<br>';
+        // }
+        // echo '<br>';
+        // foreach ($attendance as $row) {
+        //     echo $row->name . ': ' . $row->num_users . '<br>';
+        // }
+        
         return view('hrview',[
             'internalActiveUsersCount'=>$internalActiveUsersCount,
             'internalAllUsersCount'=>$internalAllUsersCount,
@@ -56,6 +127,11 @@ class PageController extends Controller
             'userRoleId'=>$userRoleId,
             'userLevel'=>$userLevel,
             'userLevelName'=>$userLevelName,
+            'departmentuserscounttoarray'=>$departmentuserscounttoarray,
+            'departmentnamestoarray'=>$departmentnamestoarray,
+            'todayattendancetoarray'=>$todayattendancetoarray,
+            'yesterdayattendancetoarray'=>$yesterdayattendancetoarray,
+            'testdata'=>$testdata,
         ]);
     }
 

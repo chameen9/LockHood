@@ -392,6 +392,7 @@
 
         <!-- Left side columns -->
         <div class="col-lg-8">
+          <!--First row-->
           <div class="row">
 
             <!-- Internal Card -->
@@ -513,6 +514,159 @@
 
             </div><!-- End All Card -->
 
+          </div>
+          <!--End - First row-->
+          
+          <!--second row-->
+          <div class="row">
+            <div class="col-xxl-12 col-md-12">
+              <div class="card">
+                <div class="container">
+                  <div class="card-boady">
+                    <div class="card-title">&nbsp;&nbsp;&nbsp;Attendence</div>
+                    <!-- Column Chart -->
+                    <div id="Attendence"></div>
+                    
+                    <script>
+                      var departmentuserscount = JSON.parse('<?= json_encode($departmentuserscounttoarray);?>');
+                      var todayattendance = JSON.parse('<?= json_encode($todayattendancetoarray);?>');
+                      var yesterdayattendance = JSON.parse('<?= json_encode($yesterdayattendancetoarray);?>');
+                      var departmentsnames = JSON.parse('<?= json_encode($departmentnamestoarray);?>');
+
+
+                      document.addEventListener("DOMContentLoaded", () => {
+                        new ApexCharts(document.querySelector("#Attendence"), {
+                          series: [{
+                            name: 'All',
+                            data: departmentuserscount
+                          }, {
+                            name: 'Today',
+                            data: todayattendance
+                          },{
+                            name: 'Yesterday',
+                            data: yesterdayattendance
+                          }
+                        ],
+                          chart: {
+                            type: 'bar',
+                            height: 300
+                          },
+                          plotOptions: {
+                            bar: {
+                              horizontal: false,
+                              columnWidth: '55%',
+                              endingShape: 'rounded'
+                            },
+                          },
+                          dataLabels: {
+                            enabled: false
+                          },
+                          stroke: {
+                            show: true,
+                            width: 3,
+                            colors: ['transparent']
+                          },
+                          xaxis: {
+                            categories: departmentsnames,
+                          },
+                          yaxis: {
+                            title: {
+                              text: 'Users'
+                            }
+                          },
+                          fill: {
+                            opacity: 1
+                          },
+                          tooltip: {
+                            y: {
+                              formatter: function(val) {
+                                return val + " Users"
+                              }
+                            }
+                          }
+                        }).render();
+                      });
+                    </script>
+                    <!-- End Column Chart -->
+                  </div>
+                </div>
+                
+                
+              </div>
+            </div>
+          </div>
+          <!--End - second row-->
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+            <!-- User Variotions -->
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">User Variotions</h5>
+
+                  <!-- Column Chart -->
+                  <div id="columnChart"></div>
+
+                  <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                      new ApexCharts(document.querySelector("#columnChart"), {
+                        series: [{
+                          name: 'All',
+                          data: ['{{$internalAllUsersCount}}', '{{$externalAllUsersCount}}']
+                        }, {
+                          name: 'Active',
+                          data: ['{{$internalActiveUsersCount}}', '{{$externalActiveUsersCount}}']
+                        }],
+                        chart: {
+                          type: 'bar',
+                          height: 473
+                        },
+                        plotOptions: {
+                          bar: {
+                            horizontal: false,
+                            columnWidth: '55%',
+                            endingShape: 'rounded'
+                          },
+                        },
+                        dataLabels: {
+                          enabled: true
+                        },
+                        stroke: {
+                          show: true,
+                          width: 3,
+                          colors: ['transparent']
+                        },
+                        xaxis: {
+                          categories: ['Internal', 'External'],
+                        },
+                        yaxis: {
+                          title: {
+                            text: 'Users'
+                          }
+                        },
+                        fill: {
+                          opacity: 1
+                        },
+                        tooltip: {
+                          y: {
+                            formatter: function(val) {
+                              return val + " Users"
+                            }
+                          }
+                        }
+                      }).render();
+                    });
+                  </script>
+                  <!-- End Column Chart -->
+
+                </div>
+              </div>
+            <!-- End user Variotions -->
+        </div><!-- End Right side columns -->
+
+      </div>
+      <div class="row">
             <!-- Recent Sales -->
             <div class="col-12">
               <div class="card recent-sales overflow-auto">
@@ -586,77 +740,6 @@
 
               </div>
             </div><!-- End Recent Sales -->
-
-          </div>
-        </div><!-- End Left side columns -->
-
-        <!-- Right side columns -->
-        <div class="col-lg-4">
-            <!-- User Variotions -->
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">User Variotions</h5>
-
-                  <!-- Column Chart -->
-                  <div id="columnChart"></div>
-
-                  <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#columnChart"), {
-                        series: [{
-                          name: 'All',
-                          data: ['{{$internalAllUsersCount}}', '{{$externalAllUsersCount}}']
-                        }, {
-                          name: 'Active',
-                          data: ['{{$internalActiveUsersCount}}', '{{$externalActiveUsersCount}}']
-                        }],
-                        chart: {
-                          type: 'bar',
-                          height: 400
-                        },
-                        plotOptions: {
-                          bar: {
-                            horizontal: false,
-                            columnWidth: '55%',
-                            endingShape: 'rounded'
-                          },
-                        },
-                        dataLabels: {
-                          enabled: true
-                        },
-                        stroke: {
-                          show: true,
-                          width: 3,
-                          colors: ['transparent']
-                        },
-                        xaxis: {
-                          categories: ['Internal', 'External'],
-                        },
-                        yaxis: {
-                          title: {
-                            text: 'Users'
-                          }
-                        },
-                        fill: {
-                          opacity: 1
-                        },
-                        tooltip: {
-                          y: {
-                            formatter: function(val) {
-                              return val + " Users"
-                            }
-                          }
-                        }
-                      }).render();
-                    });
-                  </script>
-                  <!-- End Column Chart -->
-
-                </div>
-              </div>
-            <!-- End user Variotions -->
-        </div><!-- End Right side columns -->
-
       </div>
     </section>
 
