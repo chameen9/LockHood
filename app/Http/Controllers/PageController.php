@@ -96,11 +96,11 @@ class PageController extends Controller
         //     ->groupBy('departments.name')
         //     ->get();
 
-            $testdata = [];
+        // $testdata = [];
 
-            foreach ($departmentuserscountandname as $dall) {
-                $testdata[] = $dall->num_users;
-            }
+        // foreach ($departmentuserscountandname as $dall) {
+        //     $testdata[] = $dall->num_users;
+        // }
 
             //print_r($data);
         // foreach ($departmentuserscount as $row) {
@@ -131,7 +131,6 @@ class PageController extends Controller
             'departmentnamestoarray'=>$departmentnamestoarray,
             'todayattendancetoarray'=>$todayattendancetoarray,
             'yesterdayattendancetoarray'=>$yesterdayattendancetoarray,
-            'testdata'=>$testdata,
         ]);
     }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 02, 2023 at 02:40 PM
+-- Generation Time: Jan 02, 2023 at 04:29 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -290,13 +290,21 @@ INSERT INTO `factory_department_details` (`id`, `factory_id`, `department_id`, `
 
 CREATE TABLE `inventory_items` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `status` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `available_qty` int(10) DEFAULT NULL,
+  `warehouse_id` int(11) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_by` int(11) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `inventory_items`
+--
+
+INSERT INTO `inventory_items` (`id`, `product_id`, `available_qty`, `warehouse_id`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(1, 1, 253, 1, NULL, '2023-01-02 15:16:09', NULL, '2023-01-02 15:16:35');
 
 -- --------------------------------------------------------
 
@@ -697,6 +705,9 @@ CREATE TABLE `user_tasks` (
   `component_process_id` bigint(20) DEFAULT NULL,
   `description` varchar(200) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `task_status` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `estimated_time` int(11) DEFAULT NULL,
+  `completed_time` int(11) DEFAULT NULL,
+  `man_day_rate` int(10) DEFAULT NULL,
   `start_time` timestamp NULL DEFAULT NULL,
   `end_time` timestamp NULL DEFAULT NULL,
   `status` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
@@ -710,10 +721,10 @@ CREATE TABLE `user_tasks` (
 -- Dumping data for table `user_tasks`
 --
 
-INSERT INTO `user_tasks` (`id`, `kanban_card_id`, `assignee_id`, `component_process_id`, `description`, `task_status`, `start_time`, `end_time`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 2, 3, 2, '20', 'IN_PROGRESS', '2022-12-27 16:43:54', '2023-01-04 16:43:56', 'ACTIVE', NULL, '2022-12-27 16:42:30', NULL, '2022-12-27 16:44:08'),
-(3, 1, 2, 1, '10', 'IN_PROGRESS', '2022-12-28 16:41:56', '2023-01-04 16:41:59', 'ACTIVE', NULL, '2022-12-27 16:42:06', NULL, '2022-12-27 16:43:19'),
-(4, 3, 4, 3, '13', 'COMPLETED', '2022-12-23 16:43:59', '2022-12-30 16:44:02', 'ACTIVE', NULL, '2022-12-27 16:43:50', NULL, '2022-12-27 16:44:12');
+INSERT INTO `user_tasks` (`id`, `kanban_card_id`, `assignee_id`, `component_process_id`, `description`, `task_status`, `estimated_time`, `completed_time`, `man_day_rate`, `start_time`, `end_time`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(1, 2, 3, 2, '20', 'IN_PROGRESS', NULL, NULL, NULL, '2022-12-27 16:43:54', '2023-01-04 16:43:56', 'ACTIVE', NULL, '2022-12-27 16:42:30', NULL, '2022-12-27 16:44:08'),
+(3, 1, 2, 1, '10', 'IN_PROGRESS', NULL, NULL, NULL, '2022-12-28 16:41:56', '2023-01-04 16:41:59', 'ACTIVE', NULL, '2022-12-27 16:42:06', NULL, '2022-12-27 16:43:19'),
+(4, 3, 4, 3, '13', 'COMPLETED', NULL, NULL, NULL, '2022-12-23 16:43:59', '2022-12-30 16:44:02', 'ACTIVE', NULL, '2022-12-27 16:43:50', NULL, '2022-12-27 16:44:12');
 
 -- --------------------------------------------------------
 
@@ -753,6 +764,7 @@ CREATE TABLE `warehouse_stock` (
   `material_item_id` int(11) DEFAULT NULL,
   `reorder_level` int(11) DEFAULT NULL,
   `max_stock_limit` int(11) DEFAULT NULL,
+  `available_qty` int(11) DEFAULT NULL,
   `status` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -764,9 +776,9 @@ CREATE TABLE `warehouse_stock` (
 -- Dumping data for table `warehouse_stock`
 --
 
-INSERT INTO `warehouse_stock` (`id`, `warehouse_id`, `material_item_id`, `reorder_level`, `max_stock_limit`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 1, 1, 5, 1000, 'ACTIVE', NULL, '2022-12-27 16:36:07', NULL, '2022-12-27 16:36:07'),
-(2, 4, 3, 5, 1000, 'ACTIVE', NULL, '2022-12-27 16:36:27', NULL, '2022-12-27 16:36:29');
+INSERT INTO `warehouse_stock` (`id`, `warehouse_id`, `material_item_id`, `reorder_level`, `max_stock_limit`, `available_qty`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(1, 1, 1, 5, 1000, NULL, 'ACTIVE', NULL, '2022-12-27 16:36:07', NULL, '2022-12-27 16:36:07'),
+(2, 4, 3, 5, 1000, NULL, 'ACTIVE', NULL, '2022-12-27 16:36:27', NULL, '2022-12-27 16:36:29');
 
 -- --------------------------------------------------------
 
@@ -908,7 +920,9 @@ ALTER TABLE `factory_department_details`
 ALTER TABLE `inventory_items`
   ADD PRIMARY KEY (`id`) USING BTREE,
   ADD KEY `warehouse_items_created_by_fk_idx` (`created_by`) USING BTREE,
-  ADD KEY `warehouse_items_updated_by_fk_idx` (`updated_by`) USING BTREE;
+  ADD KEY `warehouse_items_updated_by_fk_idx` (`updated_by`) USING BTREE,
+  ADD KEY `inventory_items_created_by_fk3` (`product_id`) USING BTREE,
+  ADD KEY `inventory_items_created_by_fk4` (`warehouse_id`) USING BTREE;
 
 --
 -- Indexes for table `kanban_card`
@@ -1121,7 +1135,7 @@ ALTER TABLE `factory_department_details`
 -- AUTO_INCREMENT for table `inventory_items`
 --
 ALTER TABLE `inventory_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `kanban_card`
@@ -1279,6 +1293,8 @@ ALTER TABLE `factory_department_details`
 --
 ALTER TABLE `inventory_items`
   ADD CONSTRAINT `inventory_items_created_by_fk` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `inventory_items_created_by_fk3` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `inventory_items_created_by_fk4` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouse` (`id`),
   ADD CONSTRAINT `inventory_items_updated_by_fk` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
 
 --

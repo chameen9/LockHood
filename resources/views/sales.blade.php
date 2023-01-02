@@ -796,7 +796,7 @@
                 <div class="card-body">
                   <h5 class="card-title">Best Sales Execetives <span>| By {{$BeastSalesExecetivesFilterstaus}}</span></h5>
 
-                  <table class="table table-borderless">
+                  <table class="table table-borderless datatable">
                     <thead>
                       <tr>
                         <th scope="col">ID</th>
