@@ -487,10 +487,6 @@
             <div class="card recent-sales overflow-auto">
 
               <div class="filter">
-                <a class="icon" href="" data-bs-toggle="dropdown" title="Filters and Downloald options" data-toggle="tooltip" data-placement="top"><i class="bi bi-three-dots"></i></a>
-                
-
-
               </div>
 
               <div class="card-body">
@@ -511,7 +507,7 @@
                       <td>{{$matitem->name}}</td>
                       <td>
                         @if($matitem->reorder_level >= $matitem->available_qty)
-                            <a href="{{url('send/mail/purchasingorder/'.$matitem->id.'')}}" class="link link-danger">ORDER</a>
+                            <a href="{{url('send/mail/purchasingorder/'.$matitem->id.'/'.$matitem->sup_id.'/'.$username.'')}}" class="link link-danger">ORDER</a>
                         @else
                             <a class="badge bg-success">ACTIVE</a>
                         @endif
@@ -535,7 +531,7 @@
                 <div class="card-body pb-0">
                     <h5 class="card-title">Suppliers<span> | Default  </span></h5>
 
-                    <table class="table table-borderless">
+                    <table class="table table-borderless datatable">
                     <thead>
                         <tr>
                         <th scope="col">ID</th>

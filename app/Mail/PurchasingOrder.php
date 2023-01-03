@@ -15,7 +15,7 @@ class PurchasingOrder extends Mailable
 
     public $details;
 
-    public function __construct()
+    public function __construct($details)
     {
         $this->details=$details;
     }
@@ -23,6 +23,6 @@ class PurchasingOrder extends Mailable
     
     public function build()
     {
-        return $this->subject('Purchasing Order Mail is Sent !')->view('orderMail');
+        return $this->subject('Purchasing Order Request')->view('mail.purchasingordermail');
     }
 }
