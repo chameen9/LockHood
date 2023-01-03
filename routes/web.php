@@ -10,6 +10,9 @@ use App\Http\Controllers\excelController;
 Route::get('/', function () {
     return view('login');
 });
+Route::get('/login', function () {
+    return view('login');
+});
 Route::get('/test', function () {
     return view('test');
 });
@@ -94,4 +97,15 @@ Route::post('/download/excel/bestsalesexecetives/bystatus','App\http\controllers
 
 // create  best sales excetives by department---------------------------------------------------------
 Route::post('/download/excel/bestsalesexecetives/bydepartment','App\http\controllers\excelController@bestsalesexcetivesbydepartment');
+//----------------------------------------------------------------------------------------------------
+
+// view finance ------------------------------------------------------------------------------------
+Route::post('/viewfinance','App\http\controllers\PageController@viewfinance');
+Route::get('/viewfinance','App\http\controllers\PageController@viewfinance');
+//----------------------------------------------------------------------------------------------------
+
+
+// view purchasing -----------------------------------------------------------------------------------
+Route::post('/viewpurchasing','App\http\controllers\PageController@viewpurchasing');
+Route::get('/viewpurchasing','App\http\controllers\PageController@viewpurchasing');
 //----------------------------------------------------------------------------------------------------

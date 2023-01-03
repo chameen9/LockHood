@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Lock Hood</title>
+  <title>Lock Hood | Finance</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -41,6 +41,13 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
+
+    <!--<div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div> End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -194,19 +201,19 @@
 
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{URL::asset('/images/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{$userLastName}}</span>
-          </a><!-- End Profile Iamge Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-                <h6>{{$userFirstName}} {{$userLastName}}</h6>
-                <span>{{$userRole}} ({{$userLevel}})</span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                <img src="{{URL::asset('/images/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
+                <span class="d-none d-md-block dropdown-toggle ps-2">ABC</span>
+              </a><!-- End Profile Iamge Icon -->
+    
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                <li class="dropdown-header">
+                  <h6>John Fenando</h6>
+                  <span>Finance Manager</span>
+                </li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
@@ -261,12 +268,13 @@
       <li class="nav-item">
         <form action="{{ url('/viewdashboard') }}" method="post">
             {{csrf_field()}}
-            <input type="hidden" name="username" value="{{$username}}">
+            <input type="hidden" name="username" value="">
             <button class="btn btn-navstyle" type="submit">
                 <i class="bi bi-grid"></i>&nbsp;&nbsp;&nbsp;Dashboard
             </button>
         </form>
-      </li><!-- End Dashboard Nav -->
+      </li>
+      <!-- End Dashboard Nav -->
       <li><br></li>
       <li class="nav-item">
         <button class="btn btn-navstyle" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -303,29 +311,21 @@
             <i class="bi bi-chevron-down ms-auto"></i>
         </button>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        <li>
-                <form action="{{url('/viewfactory')}}" method="post">
-                  {{csrf_field()}}
-                  <input type="hidden" name="username" value="{{$username}}">
-                  <button type="submit"  class="btn btn-navstyle">
+            <li>
+                <button type="submit"  class="btn btn-navstyle">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <i class="bi bi-buildings"></i>
                     &nbsp;&nbsp;&nbsp;
-                    <span>Factory</span>
-                  </button>
-                </form>
+                  <span>Factory</span>
+                </button>
               </li>
               <li>
-                <form action="{{url('/viewpurchasing')}}" method="post">
-                  {{csrf_field()}}
-                  <input type="hidden" name="username" value="{{$username}}">
-                  <button type="submit"  class="btn btn-navstyle">
+                <button type="submit"  class="btn btn-navstyle">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <i class="bi bi-cart-plus"></i>
                     &nbsp;&nbsp;&nbsp;
-                    <span>Purchasing</span>
-                  </button>
-                </form>
+                  <span>Purchasing</span>
+                </button>
               </li>
         </ul>
       </li><!-- End test Nav -->
@@ -334,40 +334,37 @@
       <!--<li class="nav-heading">Pages</li>-->
 
       <li class="nav-item">
-        <form action="{{ url('/viewhr') }}" method="post">
+      <form action="{{ url('/viewhr') }}" method="post">
             {{csrf_field()}}
-            <input type="hidden" name="username" value="{{$username}}">
+            <input type="hidden" name="username" value="">
             <button class="btn btn-navstyle" type="submit">
-                <i class="bi bi-person-vcard"></i>&nbsp;&nbsp;&nbsp;Human Resources
+                <i class="bi bi-cash-coin"></i>&nbsp;&nbsp;&nbsp;Human Resources
             </button>
         </form>
       </li><!-- End hr Nav -->
 
       <li><br></li>
       <li class="nav-item">
-      <form action="{{ url('/viewsalesandmarketing') }}" method="post">
+        <form action="{{ url('/viewsalesandmarketing') }}" method="post">
             {{csrf_field()}}
-            <input type="hidden" name="username" value="{{$username}}">
+            <input type="hidden" name="username" value="">
             <button class="btn btn-navstyle" type="submit">
-                <i class="bi bi-person-vcard"></i>&nbsp;&nbsp;&nbsp;Sales & Marketing
+                <i class="bi bi-box2-heart"></i>&nbsp;&nbsp;&nbsp;Sales & Marketing
             </button>
         </form>
       </li><!-- End s & m Nav -->
       <li><br></li>
       <li class="nav-item">
-        <form action="{{ url('/viewfinance') }}" method="post">
-            {{csrf_field()}}
-            <input type="hidden" name="username" value="{{$username}}">
-            <button class="btn btn-navstyle" type="submit">
-                <i class="bi bi-cash-coin"></i>&nbsp;&nbsp;&nbsp;Finance
-            </button>
-        </form>
+        <a class="nav-link">
+            <i class="bi bi-person-vcard"></i>
+            <span>Finance</span>
+        </a>
       </li><!-- End finance Nav -->
       <li><br></li>
       <li class="nav-item">
         <form action="{{ url('/viewradnd') }}" method="post">
             {{csrf_field()}}
-            <input type="hidden" name="username" value="{{$username}}">
+            <input type="hidden" name="username" value="">
             <button class="btn btn-navstyle" type="submit">
                 <i class="bi bi-graph-up-arrow"></i>&nbsp;&nbsp;&nbsp;R & D
             </button>
@@ -381,12 +378,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Purchasing</h1>
+      <h1>Finance</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a>Dashboard</a></li>
-          <li class="breadcrumb-item">Management</li>
-          <li class="breadcrumb-item active">Purchasing</li>
+          <li class="breadcrumb-item active">Finance</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -394,150 +390,152 @@
     <section class="section dashboard">
       <div class="row">
 
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
 
-          <!--bar chart-->
-          <div class="col-lg-8">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Stock Levels</h5>
-                <div id="barChart"></div>
-         
-                    <script>
+            <!-- Reports -->
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Month</h5>  
 
-                    //var array1 = $productsPrices;
-                    //var array2 = $productsIds;
-                    
-                        document.addEventListener("DOMContentLoaded", () => {
-                        new ApexCharts(document.querySelector("#barChart"), {
+                  <!-- Line Chart -->
+                  <div id="reportsChart"></div>
+
+                  <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                      new ApexCharts(document.querySelector("#reportsChart"), {
                         series: [{
-                            name: "Quantity",
-                            data: [1,2,3,4,5,6,7,8,9,9,1,2,3]
+                          name: 'Profit',
+                          data: [31, 40, 28, 51, 42, 82, 56],
+                        }, {
+                          name: 'Sales',
+                          data: [11, 32, 45, 32, 34, 52, 41]
+                        }, {
+                          name: 'Cost',
+                          data: [15, 11, 32, 18, 9, 24, 11]
                         }],
                         chart: {
-                            type: 'bar',
-                            height: 268
+                          height: 350,
+                          type: 'area',
+                          toolbar: {
+                            show: false
+                          },
                         },
-                        plotOptions: {
-                            bar: {
-                            borderRadius: 4,
-                            horizontal: false,
-                            }
+                        markers: {
+                          size: 4
+                        },
+                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                        fill: {
+                          type: "gradient",
+                          gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.3,
+                            opacityTo: 0.4,
+                            stops: [0, 90, 100]
+                          }
                         },
                         dataLabels: {
-                            enabled: true
+                          enabled: false
+                        },
+                        stroke: {
+                          curve: 'smooth',
+                          width: 2
                         },
                         xaxis: {
-                            type:"Product Id",
-                            categories: [1,2,3,4,5,6,7,8,9,9,1,2,3],
+                          type: 'datetime',
+                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                        },
+                        tooltip: {
+                          x: {
+                            format: 'dd/MM/yy HH:mm'
+                          },
                         }
-                        }).render();
+                      }).render();
                     });
-                    </script>
+                  </script>
+                  <!-- End Line Chart -->
 
                 </div>
-              </div>
-          </div><!--End bar chart-->
-
-          <div class="col-lg-4">
-            <!-- Supplier Payment -->
-            <div class="card">
-                <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                        </li>
-
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                    </ul>
-                </div>
-
-                <div class="card-body pb-0">
-                    <h5 class="card-title">Supplier Payments <span>| Month</span></h5>
-
-                    <div id="trafficChart" style="min-height: 300px;" class="echart"></div>
-
-                    <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                        echarts.init(document.querySelector("#trafficChart")).setOption({
-                            tooltip: {
-                            trigger: 'item'
-                            },
-                            legend: {
-                            top: '5%',
-                            left: 'center'
-                            },
-                            series: [{
-                            name: 'Access From',
-                            type: 'pie',
-                            radius: ['40%', '70%'],
-                            avoidLabelOverlap: false,
-                            label: {
-                                show: false,
-                                position: 'center'
-                            },
-                            emphasis: {
-                                label: {
-                                show: true,
-                                fontSize: '18',
-                                fontWeight: 'bold'
-                                }
-                            },
-                            labelLine: {
-                                show: false
-                            },
-                            data: [{
-                                value: 1248,
-                                name: 'Completed'
-                                },
-                                {
-                                value: 535,
-                                name: 'Part'
-                                },
-                                {
-                                value: 300,
-                                name: 'Not-pay'
-                                }
-                            ]
-                            }]
-                        });
-                        });
-                    </script>
-                </div>
-            </div>
-            <!-- End Supplier Paymen -->
-        </div>
-
-      </div>
-      <div class="row">
-        <!-- Suppliers -->
-        <div class="col-lg-12 md-12">
-            <div class="card top-selling overflow-auto">
-              <div class="card-body pb-0">
-                <h5 class="card-title">Suppliers<span> | By  </span></h5>
-
-                <table class="table table-borderless">
-                  <thead>
-                    <tr>
-                      <th scope="col">ID</th>
-                      <th scope="col">Spplier Name</th>
-                      <th scope="col">Material Type</th>
-                      <th scope="col">Quantity(Kg)</th>
-                      <th scope="col">Price($)</th>
-                      <th scope="col">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      
-                  </tbody>
-                </table>
 
               </div>
+            </div><!-- End Reports -->
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+
+         <!-- Order payments -->
+         <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+                </li>
+
+                <li><a class="dropdown-item" href="#">This Month</a></li>
+                <li><a class="dropdown-item" href="#">This Year</a></li>
+              </ul>
+            </div>
+
+            <div class="card-body pb-0">
+              <h5 class="card-title">Order Payments <span>| Month</span></h5>
+
+              <div id="trafficChart" style="min-height: 300px;" class="echart"></div>
+
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  echarts.init(document.querySelector("#trafficChart")).setOption({
+                    tooltip: {
+                      trigger: 'item'
+                    },
+                    legend: {
+                      top: '5%',
+                      left: 'center'
+                    },
+                    series: [{
+                      name: 'Access From',
+                      type: 'pie',
+                      radius: ['40%', '70%'],
+                      avoidLabelOverlap: false,
+                      label: {
+                        show: false,
+                        position: 'center'
+                      },
+                      emphasis: {
+                        label: {
+                          show: true,
+                          fontSize: '18',
+                          fontWeight: 'bold'
+                        }
+                      },
+                      labelLine: {
+                        show: false
+                      },
+                      data: [{
+                          value: 1248,
+                          name: 'Completed'
+                        },
+                        {
+                          value: 535,
+                          name: 'Part'
+                        },
+                        {
+                          value: 300,
+                          name: 'Not-pay'
+                        }
+                      ]
+                    }]
+                  });
+                });
+              </script>
 
             </div>
-        </div>
-          <!-- End Suppliers -->
+        </div><!-- End Right side columns -->
+
       </div>
     </section>
 

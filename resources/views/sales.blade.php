@@ -303,21 +303,29 @@
             <i class="bi bi-chevron-down ms-auto"></i>
         </button>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li>
-                <button type="submit"  class="btn btn-navstyle">
+        <li>
+                <form action="{{url('/viewfactory')}}" method="post">
+                  {{csrf_field()}}
+                  <input type="hidden" name="username" value="{{$username}}">
+                  <button type="submit"  class="btn btn-navstyle">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <i class="bi bi-buildings"></i>
                     &nbsp;&nbsp;&nbsp;
-                  <span>Factory</span>
-                </button>
+                    <span>Factory</span>
+                  </button>
+                </form>
               </li>
               <li>
-                <button type="submit"  class="btn btn-navstyle">
+                <form action="{{url('/viewpurchasing')}}" method="post">
+                  {{csrf_field()}}
+                  <input type="hidden" name="username" value="{{$username}}">
+                  <button type="submit"  class="btn btn-navstyle">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <i class="bi bi-cart-plus"></i>
                     &nbsp;&nbsp;&nbsp;
-                  <span>Purchasing</span>
-                </button>
+                    <span>Purchasing</span>
+                  </button>
+                </form>
               </li>
         </ul>
       </li><!-- End test Nav -->

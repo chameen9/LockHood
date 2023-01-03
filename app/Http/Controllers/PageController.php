@@ -19,119 +19,125 @@ use Illuminate\Support\Str;
 class PageController extends Controller
 {
     function viewHr (Request $request){
-        $internalActiveUsersCount = DB::Table('users')->where([['type','=', '1'],['status','=','ACTIVE']])->count();
-        $internalAllUsersCount = DB::Table('users')->where([['type','=', '1']])->count();
-        $externalActiveUsersCount = DB::Table('users')->where([['type','=', '2'],['status','=','ACTIVE']])->count();
-        $externalAllUsersCount = DB::Table('users')->where([['type','=', '2']])->count();
-        $activeUsersCount = DB::Table('users')->where([['status','=', 'ACTIVE']])->count();
-        $allUsersCount = DB::Table('users')->count();
 
-        $internalActiveUserPercentage = round($internalActiveUsersCount/$internalAllUsersCount * 100 , 2);
-        $externalActiveUserPercentage = round($externalActiveUsersCount/$externalAllUsersCount * 100 , 2);
-
-        $username = $request->input('username');
-        $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
-        $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
-        $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
-        $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
-        $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
-        $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
-        $userLevelName = DB::table('user_roles')
-                ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
-                ->select('user_levels.level_name')
-                ->where('user_roles.id', $userRoleId)
-                ->value('level_name');
-
-        $departmentuserscountandname = DB::table('department_users')
-            ->join('departments', 'department_users.department_id', '=', 'departments.id')
-            ->select('departments.name',DB::raw('COUNT(*) as num_users')) //'departments.name',
-            ->where('department_users.status','ACTIVE')
-            ->groupBy('departments.name')
-            ->get();            //filter by status
-
-        $departmentuserscounttoarray = [];
-        $departmentnamestoarray = [];
-        foreach ($departmentuserscountandname as $dall) {
-            $departmentuserscounttoarray[] = $dall->num_users;
-            $departmentnamestoarray[] = Str::limit($dall->name, 10);
+        if($request->input('username')==null){
+            return view('404error');
         }
-
-        $today = Carbon::today('Asia/Colombo')->toDateString();
-        $yesterday = Carbon::yesterday('Asia/Colombo')->toDateString();
-
-        $todayattendance = DB::table('attendance_log')
-            ->join('users', 'attendance_log.user_id', '=', 'users.id')
-            ->join('department_users', 'users.id', '=', 'department_users.user_id')
-            ->join('departments', 'department_users.department_id', '=', 'departments.id')
-            ->select(DB::raw('COUNT(*) as num_users')) //'departments.name',
-            ->where([['attendance_log.date', $today],['department_users.status','ACTIVE']])
-            ->groupBy('departments.name')
-            ->get();
-
-        $todayattendancetoarray = [];
-        foreach ($todayattendance as $dall) {
-            $todayattendancetoarray[] = $dall->num_users;
+        else{
+            $internalActiveUsersCount = DB::Table('users')->where([['type','=', '1'],['status','=','ACTIVE']])->count();
+            $internalAllUsersCount = DB::Table('users')->where([['type','=', '1']])->count();
+            $externalActiveUsersCount = DB::Table('users')->where([['type','=', '2'],['status','=','ACTIVE']])->count();
+            $externalAllUsersCount = DB::Table('users')->where([['type','=', '2']])->count();
+            $activeUsersCount = DB::Table('users')->where([['status','=', 'ACTIVE']])->count();
+            $allUsersCount = DB::Table('users')->count();
+    
+            $internalActiveUserPercentage = round($internalActiveUsersCount/$internalAllUsersCount * 100 , 2);
+            $externalActiveUserPercentage = round($externalActiveUsersCount/$externalAllUsersCount * 100 , 2);
+    
+            $username = $request->input('username');
+            $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
+            $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
+            $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
+            $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
+            $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
+            $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
+            $userLevelName = DB::table('user_roles')
+                    ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
+                    ->select('user_levels.level_name')
+                    ->where('user_roles.id', $userRoleId)
+                    ->value('level_name');
+    
+            $departmentuserscountandname = DB::table('department_users')
+                ->join('departments', 'department_users.department_id', '=', 'departments.id')
+                ->select('departments.name',DB::raw('COUNT(*) as num_users')) //'departments.name',
+                ->where('department_users.status','ACTIVE')
+                ->groupBy('departments.name')
+                ->get();            //filter by status
+    
+            $departmentuserscounttoarray = [];
+            $departmentnamestoarray = [];
+            foreach ($departmentuserscountandname as $dall) {
+                $departmentuserscounttoarray[] = $dall->num_users;
+                $departmentnamestoarray[] = Str::limit($dall->name, 10);
+            }
+    
+            $today = Carbon::today('Asia/Colombo')->toDateString();
+            $yesterday = Carbon::yesterday('Asia/Colombo')->toDateString();
+    
+            $todayattendance = DB::table('attendance_log')
+                ->join('users', 'attendance_log.user_id', '=', 'users.id')
+                ->join('department_users', 'users.id', '=', 'department_users.user_id')
+                ->join('departments', 'department_users.department_id', '=', 'departments.id')
+                ->select(DB::raw('COUNT(*) as num_users')) //'departments.name',
+                ->where([['attendance_log.date', $today],['department_users.status','ACTIVE']])
+                ->groupBy('departments.name')
+                ->get();
+    
+            $todayattendancetoarray = [];
+            foreach ($todayattendance as $dall) {
+                $todayattendancetoarray[] = $dall->num_users;
+            }
+    
+            $yesterdayattendance = DB::table('attendance_log')
+                ->join('users', 'attendance_log.user_id', '=', 'users.id')
+                ->join('department_users', 'users.id', '=', 'department_users.user_id')
+                ->join('departments', 'department_users.department_id', '=', 'departments.id')
+                ->select(DB::raw('COUNT(*) as num_users')) //'departments.name',
+                ->where([['attendance_log.date', $yesterday],['department_users.status','ACTIVE']]) 
+                ->groupBy('departments.name')
+                ->get();
+    
+            $yesterdayattendancetoarray = [];
+            foreach ($yesterdayattendance as $dall) {
+                $yesterdayattendancetoarray[] = $dall->num_users;
+            }
+    
+            // $attendencedepartmentnames = DB::table('attendance_log')
+            //     ->join('users', 'attendance_log.user_id', '=', 'users.id')
+            //     ->join('department_users', 'users.id', '=', 'department_users.user_id')
+            //     ->join('departments', 'department_users.department_id', '=', 'departments.id')
+            //     ->select('departments.name') //'departments.name',
+            //     ->where('attendance_log.date', $yesterday) 
+            //     ->groupBy('departments.name')
+            //     ->get();
+    
+            // $testdata = [];
+    
+            // foreach ($departmentuserscountandname as $dall) {
+            //     $testdata[] = $dall->num_users;
+            // }
+    
+                //print_r($data);
+            // foreach ($departmentuserscount as $row) {
+            //     echo $row->name . ': ' . $row->num_users . '<br>';
+            // }
+            // echo '<br>';
+            // foreach ($attendance as $row) {
+            //     echo $row->name . ': ' . $row->num_users . '<br>';
+            // }
+            
+            return view('hrview',[
+                'internalActiveUsersCount'=>$internalActiveUsersCount,
+                'internalAllUsersCount'=>$internalAllUsersCount,
+                'externalActiveUsersCount'=>$externalActiveUsersCount,
+                'externalAllUsersCount'=>$externalAllUsersCount,
+                'activeUsersCount'=>$activeUsersCount,
+                'allUsersCount'=>$allUsersCount,
+                'internalActiveUserPercentage'=>$internalActiveUserPercentage,
+                'externalActiveUserPercentage'=>$externalActiveUserPercentage,
+                'username'=>$username,
+                'userLastName'=>$userLastName,
+                'userFirstName'=>$userFirstName,
+                'userRole'=>$userRole,
+                'userRoleId'=>$userRoleId,
+                'userLevel'=>$userLevel,
+                'userLevelName'=>$userLevelName,
+                'departmentuserscounttoarray'=>$departmentuserscounttoarray,
+                'departmentnamestoarray'=>$departmentnamestoarray,
+                'todayattendancetoarray'=>$todayattendancetoarray,
+                'yesterdayattendancetoarray'=>$yesterdayattendancetoarray,
+            ]);
         }
-
-        $yesterdayattendance = DB::table('attendance_log')
-            ->join('users', 'attendance_log.user_id', '=', 'users.id')
-            ->join('department_users', 'users.id', '=', 'department_users.user_id')
-            ->join('departments', 'department_users.department_id', '=', 'departments.id')
-            ->select(DB::raw('COUNT(*) as num_users')) //'departments.name',
-            ->where([['attendance_log.date', $yesterday],['department_users.status','ACTIVE']]) 
-            ->groupBy('departments.name')
-            ->get();
-
-        $yesterdayattendancetoarray = [];
-        foreach ($yesterdayattendance as $dall) {
-            $yesterdayattendancetoarray[] = $dall->num_users;
-        }
-
-        // $attendencedepartmentnames = DB::table('attendance_log')
-        //     ->join('users', 'attendance_log.user_id', '=', 'users.id')
-        //     ->join('department_users', 'users.id', '=', 'department_users.user_id')
-        //     ->join('departments', 'department_users.department_id', '=', 'departments.id')
-        //     ->select('departments.name') //'departments.name',
-        //     ->where('attendance_log.date', $yesterday) 
-        //     ->groupBy('departments.name')
-        //     ->get();
-
-        // $testdata = [];
-
-        // foreach ($departmentuserscountandname as $dall) {
-        //     $testdata[] = $dall->num_users;
-        // }
-
-            //print_r($data);
-        // foreach ($departmentuserscount as $row) {
-        //     echo $row->name . ': ' . $row->num_users . '<br>';
-        // }
-        // echo '<br>';
-        // foreach ($attendance as $row) {
-        //     echo $row->name . ': ' . $row->num_users . '<br>';
-        // }
-        
-        return view('hrview',[
-            'internalActiveUsersCount'=>$internalActiveUsersCount,
-            'internalAllUsersCount'=>$internalAllUsersCount,
-            'externalActiveUsersCount'=>$externalActiveUsersCount,
-            'externalAllUsersCount'=>$externalAllUsersCount,
-            'activeUsersCount'=>$activeUsersCount,
-            'allUsersCount'=>$allUsersCount,
-            'internalActiveUserPercentage'=>$internalActiveUserPercentage,
-            'externalActiveUserPercentage'=>$externalActiveUserPercentage,
-            'username'=>$username,
-            'userLastName'=>$userLastName,
-            'userFirstName'=>$userFirstName,
-            'userRole'=>$userRole,
-            'userRoleId'=>$userRoleId,
-            'userLevel'=>$userLevel,
-            'userLevelName'=>$userLevelName,
-            'departmentuserscounttoarray'=>$departmentuserscounttoarray,
-            'departmentnamestoarray'=>$departmentnamestoarray,
-            'todayattendancetoarray'=>$todayattendancetoarray,
-            'yesterdayattendancetoarray'=>$yesterdayattendancetoarray,
-        ]);
     }
 
     function viewDashboard (Request $request){
@@ -550,5 +556,34 @@ class PageController extends Controller
                 'BeastSalesExecetivesFilterstaus'=>$BeastSalesExecetivesFilterstaus,
             ]);
         }
+    }
+
+    function viewfinance(){
+        return view('financeview');
+    }
+
+    function viewpurchasing(Request $request){
+        $username = $request->input('username');
+        $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
+        $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
+        $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
+        $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
+        $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
+        $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
+        $userLevelName = DB::table('user_roles')
+            ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
+            ->select('user_levels.level_name')
+            ->where('user_roles.id', $userRoleId)
+            ->value('level_name');
+        
+        return view('purchasing',[
+            'username'=>$username,
+            'userLastName'=>$userLastName,
+            'userFirstName'=>$userFirstName,
+            'userRole'=>$userRole,
+            'userRoleId'=>$userRoleId,
+            'userLevel'=>$userLevel,
+            'userLevelName'=>$userLevelName,
+        ]);
     }
 }
