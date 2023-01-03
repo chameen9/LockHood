@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\excelController;
+use App\Http\Controllers\MailController;
 
 
 Route::get('/', function () {
@@ -108,4 +109,9 @@ Route::get('/viewfinance','App\http\controllers\PageController@viewfinance');
 // view purchasing -----------------------------------------------------------------------------------
 Route::post('/viewpurchasing','App\http\controllers\PageController@viewpurchasing');
 Route::get('/viewpurchasing','App\http\controllers\PageController@viewpurchasing');
+//----------------------------------------------------------------------------------------------------
+
+// send purchasing order mail-------------------------------------------------------------------------
+Route::post('/send/mail/purchasingorder/{matid}','App\http\controllers\MailController@sendpurchasingorder');
+Route::get('/send/mail/purchasingorder/{matid}','App\http\controllers\MailController@sendpurchasingorder');
 //----------------------------------------------------------------------------------------------------

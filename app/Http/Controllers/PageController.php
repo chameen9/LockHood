@@ -576,6 +576,34 @@ class PageController extends Controller
             ->where('user_roles.id', $userRoleId)
             ->value('level_name');
         
+        $defaultsuppliers = DB::Table('default_suppliers')
+            ->join('suppliers','suppliers.id','=','default_suppliers.supplier_id')
+            ->join('material_item', 'material_item.id', '=', 'default_suppliers.material_id')
+            ->select('default_suppliers.supplier_id','suppliers.supplier_name','suppliers.price','material_item.name','material_item.id')
+            ->get();
+
+        $stocks = DB::Table('stock')->get();
+        $materials = DB::Table('stock')
+            ->join('material_item', 'material_item.id', '=', 'stock.material_item_id')
+            ->select('material_item.id','material_item.name','stock.reorder_level','stock.available_qty')
+            ->get();
+
+        $stocksmetidstoarray = [];
+        foreach ($stocks as $data) {
+            $stocksmetidstoarray[] = $data->material_item_id;
+        }
+        $stocksmaxleveltoarray = [];
+        foreach ($stocks as $data) {
+            $stocksmaxleveltoarray[] = $data->max_stock_limit;
+        }
+        $stockscurrentleveltoarray = [];
+        foreach ($stocks as $data) {
+            $stockscurrentleveltoarray[] = $data->available_qty;
+        }
+        $stocksreorderleveltoarray = [];
+        foreach ($stocks as $data) {
+            $stocksreorderleveltoarray[] = $data->reorder_level;
+        }
         return view('purchasing',[
             'username'=>$username,
             'userLastName'=>$userLastName,
@@ -584,6 +612,12 @@ class PageController extends Controller
             'userRoleId'=>$userRoleId,
             'userLevel'=>$userLevel,
             'userLevelName'=>$userLevelName,
+            'stocksmetidstoarray'=>$stocksmetidstoarray,
+            'stocksmaxleveltoarray'=>$stocksmaxleveltoarray,
+            'stockscurrentleveltoarray'=>$stockscurrentleveltoarray,
+            'stocksreorderleveltoarray'=>$stocksreorderleveltoarray,
+            'materials'=>$materials,
+            'defaultsuppliers'=>$defaultsuppliers,
         ]);
     }
 }

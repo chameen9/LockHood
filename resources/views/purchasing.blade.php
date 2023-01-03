@@ -349,7 +349,7 @@
             {{csrf_field()}}
             <input type="hidden" name="username" value="{{$username}}">
             <button class="btn btn-navstyle" type="submit">
-                <i class="bi bi-person-vcard"></i>&nbsp;&nbsp;&nbsp;Sales & Marketing
+            <i class="bi bi-box2-heart"></i>&nbsp;&nbsp;&nbsp;Sales & Marketing
             </button>
         </form>
       </li><!-- End s & m Nav -->
@@ -392,56 +392,14 @@
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
-      <div class="row">
+        <div class="row">
 
 
-          <!--bar chart-->
-          <div class="col-lg-8">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Stock Levels</h5>
-                <div id="barChart"></div>
-         
-                    <script>
+          <!--stock level chart-->
+            <div class="col-lg-7 md-7">
+                <div class="card">
 
-                    //var array1 = $productsPrices;
-                    //var array2 = $productsIds;
-                    
-                        document.addEventListener("DOMContentLoaded", () => {
-                        new ApexCharts(document.querySelector("#barChart"), {
-                        series: [{
-                            name: "Quantity",
-                            data: [1,2,3,4,5,6,7,8,9,9,1,2,3]
-                        }],
-                        chart: {
-                            type: 'bar',
-                            height: 268
-                        },
-                        plotOptions: {
-                            bar: {
-                            borderRadius: 4,
-                            horizontal: false,
-                            }
-                        },
-                        dataLabels: {
-                            enabled: true
-                        },
-                        xaxis: {
-                            type:"Product Id",
-                            categories: [1,2,3,4,5,6,7,8,9,9,1,2,3],
-                        }
-                        }).render();
-                    });
-                    </script>
-
-                </div>
-              </div>
-          </div><!--End bar chart-->
-
-          <div class="col-lg-4">
-            <!-- Supplier Payment -->
-            <div class="card">
-                <div class="filter">
+                    <div class="filter">
                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                         <li class="dropdown-header text-start">
@@ -451,94 +409,232 @@
                         <li><a class="dropdown-item" href="#">This Month</a></li>
                         <li><a class="dropdown-item" href="#">This Year</a></li>
                     </ul>
-                </div>
+                    </div>
 
-                <div class="card-body pb-0">
-                    <h5 class="card-title">Supplier Payments <span>| Month</span></h5>
+                    <div class="card-body">
+                    <h5 class="card-title">Stock Levels <span>| Current</span></h5>
 
-                    <div id="trafficChart" style="min-height: 300px;" class="echart"></div>
+                    <!-- Line Chart -->
+                    <div id="reportsChart"></div>
 
                     <script>
+                        var stocksmetidstoarray = JSON.parse('<?= json_encode($stocksmetidstoarray);?>');
+                        var stocksmaxleveltoarray = JSON.parse('<?= json_encode($stocksmaxleveltoarray);?>');
+                        var stockscurrentleveltoarray = JSON.parse('<?= json_encode($stockscurrentleveltoarray);?>');
+                        var stocksreorderleveltoarray = JSON.parse('<?= json_encode($stocksreorderleveltoarray);?>');
                         document.addEventListener("DOMContentLoaded", () => {
-                        echarts.init(document.querySelector("#trafficChart")).setOption({
-                            tooltip: {
-                            trigger: 'item'
-                            },
-                            legend: {
-                            top: '5%',
-                            left: 'center'
-                            },
+                        new ApexCharts(document.querySelector("#reportsChart"), {
                             series: [{
-                            name: 'Access From',
-                            type: 'pie',
-                            radius: ['40%', '70%'],
-                            avoidLabelOverlap: false,
-                            label: {
-                                show: false,
-                                position: 'center'
+                            name: 'Max Limit',
+                            data: stocksmaxleveltoarray,
+                            }, {
+                            name: 'Current Level',
+                            data: stockscurrentleveltoarray
+                            }, {
+                            name: 'Re-Order Level',
+                            data: stocksreorderleveltoarray
+                            }],
+                            chart: {
+                            height: 432,
+                            type: 'area',
+                            toolbar: {
+                                show: true
                             },
-                            emphasis: {
-                                label: {
-                                show: true,
-                                fontSize: '18',
-                                fontWeight: 'bold'
+                            },
+                            markers: {
+                            size: 4
+                            },
+                            colors: ['#4154f1', '#2eca6a', '#FF4069'],
+                            fill: {
+                            type: "gradient",
+                            gradient: {
+                                shadeIntensity: 1,
+                                opacityFrom: 0.3,
+                                opacityTo: 0.4,
+                                stops: [0, 90, 100]
+                            }
+                            },
+                            dataLabels: {
+                            enabled: false
+                            },
+                            stroke: {
+                            curve: 'smooth',
+                            width: 2
+                            },
+                            xaxis: {
+                                categories: stocksmetidstoarray
+                            },
+                            tooltip: {
+                            x: {
+                                formatter: function(val) {
+                                    return "Material ID : " + val
                                 }
                             },
-                            labelLine: {
-                                show: false
-                            },
-                            data: [{
-                                value: 1248,
-                                name: 'Completed'
-                                },
-                                {
-                                value: 535,
-                                name: 'Part'
-                                },
-                                {
-                                value: 300,
-                                name: 'Not-pay'
-                                }
-                            ]
-                            }]
-                        });
+                            }
+                        }).render();
                         });
                     </script>
+                    <!-- End Line Chart -->
+
+                    </div>
+
                 </div>
             </div>
-            <!-- End Supplier Paymen -->
-        </div>
+          <!--End stock level chart-->
 
-      </div>
-      <div class="row">
-        <!-- Suppliers -->
-        <div class="col-lg-12 md-12">
-            <div class="card top-selling overflow-auto">
-              <div class="card-body pb-0">
-                <h5 class="card-title">Suppliers<span> | By  </span></h5>
+          <!--Material names-->
+          <div class="col-lg-5 md-5">
+            <div class="card recent-sales overflow-auto">
 
-                <table class="table table-borderless">
+              <div class="filter">
+                <a class="icon" href="" data-bs-toggle="dropdown" title="Filters and Downloald options" data-toggle="tooltip" data-placement="top"><i class="bi bi-three-dots"></i></a>
+                
+
+
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Materials <span>| By Id</span></h5>
+
+                <table class="table table-borderless datatable">
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
-                      <th scope="col">Spplier Name</th>
-                      <th scope="col">Material Type</th>
-                      <th scope="col">Quantity(Kg)</th>
-                      <th scope="col">Price($)</th>
-                      <th scope="col">Status</th>
+                      <th scope="col">Material Name</th>
+                      <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                      
+                    @foreach($materials as $matitem)
+                    <tr>
+                      <th scope="row"><a>#{{$matitem->id}}</a></th>
+                      <td>{{$matitem->name}}</td>
+                      <td>
+                        @if($matitem->reorder_level >= $matitem->available_qty)
+                            <a href="{{url('send/mail/purchasingorder/'.$matitem->id.'')}}" class="link link-danger">ORDER</a>
+                        @else
+                            <a class="badge bg-success">ACTIVE</a>
+                        @endif
+                      </td>
+                    </tr>
+                    @endforeach
                   </tbody>
                 </table>
 
               </div>
 
             </div>
+          </div><!-- End Best Sales Execetives -->
+          <!--END-Material names-->
+
         </div>
-          <!-- End Suppliers -->
-      </div>
+        <div class="row">
+            <!-- Suppliers -->
+            <div class="col-lg-8 md-8">
+                <div class="card top-selling overflow-auto">
+                <div class="card-body pb-0">
+                    <h5 class="card-title">Suppliers<span> | Default  </span></h5>
+
+                    <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Supplier Name</th>
+                        <th scope="col">Material Type</th>
+                        <th scope="col">Quantity(Kg)</th>
+                        <th scope="col">Price($)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($defaultsuppliers as $sup)
+                        <tr>
+                        <th scope="row"><a>#{{$sup->supplier_id}}</a></th>
+                        <td>{{$sup->supplier_name}}</td>
+                        <td>({{$sup->id}}) {{$sup->name}}</td>
+                        <td>1</td>
+                        <td>{{$sup->price}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    </table>
+
+                </div>
+
+                </div>
+            </div>
+            <!-- End Suppliers -->
+
+            <div class="col-lg-4 md-4">
+                <!-- Supplier Payment -->
+                <div class="card">
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                            <h6>Filter</h6>
+                            </li>
+
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body pb-0">
+                        <h5 class="card-title">Supplier Payments <span>| Month</span></h5>
+
+                        <div id="trafficChart" style="min-height: 300px;" class="echart"></div>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                            echarts.init(document.querySelector("#trafficChart")).setOption({
+                                tooltip: {
+                                trigger: 'item'
+                                },
+                                legend: {
+                                top: '5%',
+                                left: 'center'
+                                },
+                                series: [{
+                                name: 'Access From',
+                                type: 'pie',
+                                radius: ['40%', '70%'],
+                                avoidLabelOverlap: false,
+                                label: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    label: {
+                                    show: true,
+                                    fontSize: '18',
+                                    fontWeight: 'bold'
+                                    }
+                                },
+                                labelLine: {
+                                    show: false
+                                },
+                                data: [{
+                                    value: 1248,
+                                    name: 'Completed'
+                                    },
+                                    {
+                                    value: 535,
+                                    name: 'Part'
+                                    },
+                                    {
+                                    value: 300,
+                                    name: 'Not-pay'
+                                    }
+                                ]
+                                }]
+                            });
+                            });
+                        </script>
+                    </div>
+                </div>
+                <!-- End Supplier Paymen -->
+            </div>
+        </div>
     </section>
 
   </main><!-- End #main -->
