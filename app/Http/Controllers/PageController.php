@@ -172,12 +172,6 @@ class PageController extends Controller
                 ->select('departments.name as department_name','kanban_card.id as card_id','kanban_card.name as card_name','kanban_card.status as card_status','kanban_card.date as card_date','kanban_card.completed_precentage as card_progress')
                 ->where('kanban_card.status','TODO')
                 ->get();
-            $todokanbancardscount = DB::Table('kanban_card')
-                ->join('workshops_units','workshops_units.id','=','kanban_card.workshop_unit_id')
-                ->join('departments','departments.id','=','workshops_units.department_id')
-                ->select('departments.name as department_name','kanban_card.id as card_id','kanban_card.name as card_name','kanban_card.status as card_status','kanban_card.date as card_date','kanban_card.completed_precentage as card_progress')
-                ->where('kanban_card.status','ACTIVE')
-                ->count();
 
             $inreviewkanbancards = DB::Table('kanban_card')
                 ->join('workshops_units','workshops_units.id','=','kanban_card.workshop_unit_id')
@@ -199,7 +193,6 @@ class PageController extends Controller
                 'userLevel'=>$userLevel,
                 'userLevelName'=>$userLevelName,
                 'todokanbancards'=>$todokanbancards,
-                'todokanbancardscount'=>$todokanbancardscount,
                 'activekanbancards'=>$activekanbancards,
                 'inreviewkanbancards'=>$inreviewkanbancards,
             ]);

@@ -37,6 +37,37 @@ class LoginController extends Controller
                 ->select('user_levels.level_name')
                 ->where('user_roles.id', $userRoleId)
                 ->value('level_name');
+
+        //cards
+        $activekanbancards = DB::Table('kanban_card')
+            ->join('workshops_units','workshops_units.id','=','kanban_card.workshop_unit_id')
+            ->join('departments','departments.id','=','workshops_units.department_id')
+            ->select('departments.name as department_name','kanban_card.id as card_id','kanban_card.name as card_name','kanban_card.status as card_status','kanban_card.date as card_date','kanban_card.completed_precentage as card_progress')
+            ->where('kanban_card.status','ACTIVE')
+            ->get();
+
+        $todokanbancards = DB::Table('kanban_card')
+            ->join('workshops_units','workshops_units.id','=','kanban_card.workshop_unit_id')
+            ->join('departments','departments.id','=','workshops_units.department_id')
+            ->select('departments.name as department_name','kanban_card.id as card_id','kanban_card.name as card_name','kanban_card.status as card_status','kanban_card.date as card_date','kanban_card.completed_precentage as card_progress')
+            ->where('kanban_card.status','TODO')
+            ->get();
+        $todokanbancardscount = DB::Table('kanban_card')
+            ->join('workshops_units','workshops_units.id','=','kanban_card.workshop_unit_id')
+            ->join('departments','departments.id','=','workshops_units.department_id')
+            ->select('departments.name as department_name','kanban_card.id as card_id','kanban_card.name as card_name','kanban_card.status as card_status','kanban_card.date as card_date','kanban_card.completed_precentage as card_progress')
+            ->where('kanban_card.status','ACTIVE')
+            ->count();
+
+        $inreviewkanbancards = DB::Table('kanban_card')
+            ->join('workshops_units','workshops_units.id','=','kanban_card.workshop_unit_id')
+            ->join('departments','departments.id','=','workshops_units.department_id')
+            ->select('departments.name as department_name','kanban_card.id as card_id','kanban_card.name as card_name','kanban_card.status as card_status','kanban_card.date as card_date','kanban_card.completed_precentage as card_progress')
+            ->where('kanban_card.status','INREVIEW')
+            ->get();
+
+
+        // end-cards
     
         if($gotUsername==$reqUsername){
             if($gotPassword==$reqPassword){
@@ -48,6 +79,9 @@ class LoginController extends Controller
                     'userRole'=>$userRole,
                     'userLevel'=>$userLevel,
                     'userLevelName'=>$userLevelName,
+                    'todokanbancards'=>$todokanbancards,
+                    'activekanbancards'=>$activekanbancards,
+                    'inreviewkanbancards'=>$inreviewkanbancards,
                 ]); 
                    
             }
