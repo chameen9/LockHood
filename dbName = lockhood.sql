@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2023 at 05:54 AM
+-- Generation Time: Jan 04, 2023 at 05:49 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -107,6 +107,33 @@ INSERT INTO `components_processors` (`id`, `component_id`, `process_id`, `proces
 (1, 1, 1, 10, 100, 'ACTIVE', NULL, '2022-12-27 15:40:04', NULL, '2022-12-27 15:40:04'),
 (2, 2, 2, 36, 196, 'ACTIVE', NULL, '2022-12-27 15:46:14', NULL, '2022-12-27 15:46:16'),
 (3, 9, 4, 2, 11, 'ACTIVE', NULL, '2022-12-27 15:46:32', NULL, '2022-12-27 15:46:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `default_suppliers`
+--
+
+CREATE TABLE `default_suppliers` (
+  `id` int(11) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
+  `material_id` int(11) NOT NULL,
+  `status` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `default_suppliers`
+--
+
+INSERT INTO `default_suppliers` (`id`, `supplier_id`, `material_id`, `status`) VALUES
+(1, 1, 1, 'ACTIVE'),
+(2, 2, 2, 'ACTIVE'),
+(3, 3, 3, 'ACTIVE'),
+(4, 4, 4, 'ACTIVE'),
+(5, 5, 5, 'ACTIVE'),
+(6, 6, 6, 'ACTIVE'),
+(7, 7, 7, 'ACTIVE'),
+(8, 8, 8, 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -317,6 +344,7 @@ CREATE TABLE `kanban_card` (
   `workshop_unit_id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `date` date DEFAULT NULL,
+  `completed_precentage` decimal(10,2) DEFAULT NULL,
   `status` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -328,10 +356,12 @@ CREATE TABLE `kanban_card` (
 -- Dumping data for table `kanban_card`
 --
 
-INSERT INTO `kanban_card` (`id`, `workshop_unit_id`, `name`, `date`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 1, 'Lock Barrel Card', '2022-12-27', 'ACTIVE', NULL, '2022-12-27 16:38:46', NULL, '2022-12-27 16:38:46'),
-(2, 2, ' Key Setting', '2022-12-27', 'ACTIVE', NULL, '2022-12-27 16:39:01', NULL, '2022-12-27 16:39:03'),
-(3, 7, 'Painting & Chemical Treatment', '2022-12-27', 'ACTIVE', NULL, '2022-12-27 16:39:36', NULL, '2022-12-27 16:39:36');
+INSERT INTO `kanban_card` (`id`, `workshop_unit_id`, `name`, `date`, `completed_precentage`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(1, 1, 'Lock Barrel Card', '2022-12-27', '80.00', 'ACTIVE', NULL, '2022-12-27 11:08:46', NULL, '2023-01-04 15:20:48'),
+(2, 2, ' Key Setting', '2022-12-27', '65.00', 'ACTIVE', NULL, '2022-12-27 11:09:01', NULL, '2023-01-04 10:48:50'),
+(3, 7, 'Painting & Chemical Treatment', '2022-12-27', '42.00', 'ACTIVE', NULL, '2022-12-27 11:09:36', NULL, '2023-01-04 15:20:54'),
+(4, 12, 'Repair No.23', '2023-01-05', '0.00', 'TODO', NULL, '2023-01-04 15:44:21', NULL, '2023-01-04 15:44:21'),
+(5, 3, 'Assemble No.44', '2023-01-01', '90.00', 'INREVIEW', NULL, '2023-01-04 15:45:05', NULL, '2023-01-04 15:45:52');
 
 -- --------------------------------------------------------
 
@@ -360,7 +390,11 @@ INSERT INTO `material_item` (`id`, `name`, `material_item`, `unit_type`, `unit_c
 (1, 'Brass ', 'brass ', 'g', 2, 'ACTIVE', NULL, '2022-12-27 16:01:12', NULL, '2022-12-27 16:02:32'),
 (2, 'Die-cast zinc', 'die-cast zinc', 'g', 10, 'ACTIVE', NULL, '2022-12-27 16:01:33', NULL, '2022-12-27 16:02:37'),
 (3, 'Copper', 'copper', 'g', 5, 'ACTIVE', NULL, '2022-12-27 16:02:18', NULL, '2022-12-27 16:02:39'),
-(4, 'Iron', 'Iron', 'g', 1, 'ACTIVE', NULL, '2022-12-27 16:02:28', NULL, '2022-12-27 16:02:28');
+(4, 'Iron', 'Iron', 'g', 1, 'ACTIVE', NULL, '2022-12-27 16:02:28', NULL, '2022-12-27 16:02:28'),
+(5, 'Plastic', 'Plastic', 'g', 2, 'ACTIVE', NULL, '2023-01-03 10:13:42', NULL, '2023-01-03 10:13:42'),
+(6, 'Foam', 'Foam', 'g', 2, 'ACTIVE', NULL, '2023-01-03 10:16:40', NULL, '2023-01-03 10:16:40'),
+(7, 'Metals', 'Metals', 'g', 2, 'ACTIVE', NULL, '2023-01-03 10:16:40', NULL, '2023-01-03 10:16:40'),
+(8, 'Rubber', 'Rubber', 'g', 2, 'ACTIVE', NULL, '2023-01-03 10:16:40', NULL, '2023-01-03 10:16:40');
 
 -- --------------------------------------------------------
 
@@ -574,6 +608,95 @@ INSERT INTO `standard_process` (`id`, `process`, `status`, `created_by`, `create
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `stock`
+--
+
+CREATE TABLE `stock` (
+  `id` bigint(20) NOT NULL,
+  `material_item_id` int(11) DEFAULT NULL,
+  `reorder_level` int(11) DEFAULT NULL,
+  `max_stock_limit` int(11) DEFAULT NULL,
+  `available_qty` int(11) DEFAULT NULL,
+  `status` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `stock`
+--
+
+INSERT INTO `stock` (`id`, `material_item_id`, `reorder_level`, `max_stock_limit`, `available_qty`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(1, 1, 50, 1000, 750, 'ACTIVE', NULL, '2022-12-27 16:36:07', NULL, '2023-01-03 09:44:34'),
+(2, 2, 75, 1100, 350, 'ACTIVE', NULL, '2022-12-27 16:36:07', NULL, '2023-01-03 09:44:34'),
+(3, 3, 60, 980, 250, 'ACTIVE', NULL, '2022-12-27 16:36:07', NULL, '2023-01-03 09:44:34'),
+(4, 4, 55, 900, 55, 'ACTIVE', NULL, '2022-12-27 16:36:27', NULL, '2023-01-03 09:44:38'),
+(5, 5, 40, 990, 650, 'ACTIVE', NULL, '2022-12-27 11:06:07', NULL, '2023-01-03 04:14:34'),
+(6, 6, 80, 1050, 350, 'ACTIVE', NULL, '2022-12-27 11:06:07', NULL, '2023-01-03 04:14:34'),
+(7, 7, 65, 970, 250, 'ACTIVE', NULL, '2022-12-27 11:06:07', NULL, '2023-01-03 04:14:34'),
+(8, 8, 60, 920, 60, 'ACTIVE', NULL, '2022-12-27 11:06:27', NULL, '2023-01-03 04:14:38');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `suppliers`
+--
+
+CREATE TABLE `suppliers` (
+  `id` int(11) NOT NULL,
+  `supplier_name` varchar(200) DEFAULT NULL,
+  `qty_kg` int(11) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `supplier_name`, `qty_kg`, `price`, `status`) VALUES
+(1, 'Terra', 1, '500.00', 'ACTIVE'),
+(2, 'Maxim', 1, '600.00', 'ACTIVE'),
+(3, 'Kelvin', 1, '650.00', 'ACTIVE'),
+(4, 'Silver', 1, '490.00', 'ACTIVE'),
+(5, 'Viper', 1, '150.00', 'ACTIVE'),
+(6, 'Star', 1, '100.00', 'ACTIVE'),
+(7, 'Estate', 1, '400.00', 'ACTIVE'),
+(8, 'Spin', 1, '200.00', 'ACTIVE');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier_payments`
+--
+
+CREATE TABLE `supplier_payments` (
+  `id` int(11) NOT NULL,
+  `suppler_id` int(11) DEFAULT NULL,
+  `total_amount` decimal(10,2) DEFAULT NULL,
+  `paid_amount` decimal(10,2) DEFAULT NULL,
+  `status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `supplier_payments`
+--
+
+INSERT INTO `supplier_payments` (`id`, `suppler_id`, `total_amount`, `paid_amount`, `status`) VALUES
+(1, 1, '75000.00', '25000.00', 'ACTIVE'),
+(2, 2, '80000.00', '10000.00', 'ACTIVE'),
+(3, 3, '65000.00', '10000.00', 'ACTIVE'),
+(4, 4, '100000.00', '30000.00', 'ACTIVE'),
+(5, 5, '60000.00', '15000.00', 'ACTIVE'),
+(6, 6, '25000.00', '25000.00', 'ACTIVE'),
+(7, 7, '45000.00', '45000.00', 'COMPLETED'),
+(8, 8, '50000.00', '0.00', 'NONE');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -628,6 +751,7 @@ CREATE TABLE `user_accounts` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `user_name` varchar(100) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `password` varchar(100) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `status` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `created_by` int(11) DEFAULT NULL,
@@ -641,10 +765,11 @@ CREATE TABLE `user_accounts` (
 -- Dumping data for table `user_accounts`
 --
 
-INSERT INTO `user_accounts` (`id`, `user_id`, `user_name`, `password`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`, `user_role`) VALUES
-(1, 1, 'admin', '12345678', 'ACTIVE', 1, '2022-12-21 15:23:25', NULL, '2022-12-27 05:59:42', 1),
-(2, 2, 'middle', '12345678', 'ACTIVE', NULL, '2022-12-31 12:39:21', NULL, '2022-12-31 13:13:14', 2),
-(3, 3, 'lower', '12345678', 'ACTIVE', NULL, '2022-12-31 13:14:42', NULL, '2022-12-31 13:14:42', 3);
+INSERT INTO `user_accounts` (`id`, `user_id`, `user_name`, `email`, `password`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`, `user_role`) VALUES
+(1, 1, 'admin', NULL, '12345678', 'ACTIVE', 1, '2022-12-21 15:23:25', NULL, '2022-12-27 05:59:42', 1),
+(2, 2, 'middle', NULL, '12345678', 'ACTIVE', NULL, '2022-12-31 12:39:21', NULL, '2022-12-31 13:13:14', 2),
+(3, 3, 'lower', NULL, '12345678', 'ACTIVE', NULL, '2022-12-31 13:14:42', NULL, '2022-12-31 13:14:42', 3),
+(4, 21, 'user', 'chameensandeepa9@gmail.com', '12345678', 'ACTIVE', NULL, '2023-01-03 17:01:04', NULL, '2023-01-03 17:01:04', 4);
 
 -- --------------------------------------------------------
 
@@ -690,7 +815,8 @@ CREATE TABLE `user_roles` (
 INSERT INTO `user_roles` (`id`, `role`, `user_level`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
 (1, 'Administrator', 1, 'ACTIVE', 1, '2022-12-21 15:22:57', NULL, '2022-12-21 15:22:57'),
 (2, 'Employee', 2, 'ACTIVE', NULL, '2022-12-31 12:38:45', NULL, '2022-12-31 12:38:45'),
-(3, 'Worker', 3, 'ACTIVE', NULL, '2022-12-31 13:14:14', NULL, '2022-12-31 13:14:14');
+(3, 'Worker', 3, 'ACTIVE', NULL, '2022-12-31 13:14:14', NULL, '2022-12-31 13:14:14'),
+(4, 'Purchasing Officer', 2, 'ACTIVE', NULL, '2023-01-03 16:58:16', NULL, '2023-01-03 16:58:16');
 
 -- --------------------------------------------------------
 
@@ -777,8 +903,8 @@ CREATE TABLE `warehouse_stock` (
 --
 
 INSERT INTO `warehouse_stock` (`id`, `warehouse_id`, `material_item_id`, `reorder_level`, `max_stock_limit`, `available_qty`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 1, 1, 5, 1000, NULL, 'ACTIVE', NULL, '2022-12-27 16:36:07', NULL, '2022-12-27 16:36:07'),
-(2, 4, 3, 5, 1000, NULL, 'ACTIVE', NULL, '2022-12-27 16:36:27', NULL, '2022-12-27 16:36:29');
+(1, 1, 1, 5, 1000, 350, 'ACTIVE', NULL, '2022-12-27 16:36:07', NULL, '2023-01-03 09:44:34'),
+(2, 4, 3, 5, 1000, 400, 'ACTIVE', NULL, '2022-12-27 16:36:27', NULL, '2023-01-03 09:44:38');
 
 -- --------------------------------------------------------
 
@@ -802,18 +928,18 @@ CREATE TABLE `workshops_units` (
 --
 
 INSERT INTO `workshops_units` (`id`, `department_id`, `name`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 2, 'Lock Barrel', 'ACTIVE', NULL, '2022-12-27 07:44:58', NULL, '2022-12-27 16:20:33'),
-(2, 2, 'Key Setting', 'ACTIVE', NULL, '2022-12-27 07:45:07', NULL, '2022-12-27 16:20:34'),
-(3, 2, 'Lock Assembly', 'ACTIVE', NULL, '2022-12-27 07:45:14', NULL, '2022-12-27 16:20:34'),
-(4, 2, 'Lock Machining', 'ACTIVE', NULL, '2022-12-27 07:45:19', NULL, '2022-12-27 16:20:34'),
-(5, 2, 'Moulding', 'ACTIVE', NULL, '2022-12-27 07:45:26', NULL, '2022-12-27 16:20:35'),
-(6, 2, 'Recycling', 'ACTIVE', NULL, '2022-12-27 07:45:30', NULL, '2022-12-27 16:20:35'),
-(7, 2, 'Electrical & Electronics', 'ACTIVE', NULL, '2022-12-27 07:45:36', NULL, '2022-12-27 16:20:35'),
-(8, 4, 'Waste Disposal', 'ACTIVE', NULL, '2022-12-27 07:45:43', NULL, '2022-12-27 16:21:16'),
-(9, 2, 'R&D workshop', 'ACTIVE', NULL, '2022-12-27 07:45:51', NULL, '2022-12-27 16:20:35'),
-(10, 2, 'Fabrication', 'ACTIVE', NULL, '2022-12-27 07:45:52', NULL, '2022-12-27 16:20:36'),
-(11, 2, 'Painting & Chemical Treatment', 'ACTIVE', NULL, '2022-12-27 07:45:58', NULL, '2022-12-27 16:20:36'),
-(12, 4, 'Machine Repair', 'ACTIVE', NULL, '2022-12-27 07:46:08', NULL, '2022-12-27 16:21:12');
+(1, 2, 'Lock Barrel', 'ACTIVE', NULL, '2022-12-27 02:14:58', NULL, '2022-12-27 10:50:33'),
+(2, 2, 'Key Setting', 'ACTIVE', NULL, '2022-12-27 02:15:07', NULL, '2022-12-27 10:50:34'),
+(3, 2, 'Lock Assembly', 'ACTIVE', NULL, '2022-12-27 02:15:14', NULL, '2022-12-27 10:50:34'),
+(4, 2, 'Lock Machining', 'ACTIVE', NULL, '2022-12-27 02:15:19', NULL, '2022-12-27 10:50:34'),
+(5, 2, 'Moulding', 'ACTIVE', NULL, '2022-12-27 02:15:26', NULL, '2022-12-27 10:50:35'),
+(6, 2, 'Recycling', 'ACTIVE', NULL, '2022-12-27 02:15:30', NULL, '2022-12-27 10:50:35'),
+(7, 2, 'Electrical & Electronics', 'ACTIVE', NULL, '2022-12-27 02:15:36', NULL, '2022-12-27 10:50:35'),
+(8, 4, 'Waste Disposal', 'ACTIVE', NULL, '2022-12-27 02:15:43', NULL, '2022-12-27 10:51:16'),
+(9, 2, 'R&D workshop', 'ACTIVE', NULL, '2022-12-27 02:15:51', NULL, '2022-12-27 10:50:35'),
+(10, 2, 'Fabrication', 'ACTIVE', NULL, '2022-12-27 02:15:52', NULL, '2022-12-27 10:50:36'),
+(11, 2, 'Painting & Chemical Treatment', 'ACTIVE', NULL, '2022-12-27 02:15:58', NULL, '2022-12-27 10:50:36'),
+(12, 4, 'Machine Repair', 'ACTIVE', NULL, '2022-12-27 02:16:08', NULL, '2022-12-27 10:51:12');
 
 -- --------------------------------------------------------
 
@@ -860,6 +986,14 @@ ALTER TABLE `components_processors`
   ADD KEY `components_processors_updated_by_fk_idx` (`updated_by`) USING BTREE,
   ADD KEY `components_processors_component_id_fk_idx` (`component_id`) USING BTREE,
   ADD KEY `components_processors_process_id_fk_idx` (`process_id`) USING BTREE;
+
+--
+-- Indexes for table `default_suppliers`
+--
+ALTER TABLE `default_suppliers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `supplier_id` (`supplier_id`),
+  ADD KEY `material_id` (`material_id`);
 
 --
 -- Indexes for table `departments`
@@ -999,6 +1133,28 @@ ALTER TABLE `standard_process`
   ADD PRIMARY KEY (`id`) USING BTREE,
   ADD KEY `tasks_material_created_by_fk_idx` (`created_by`) USING BTREE,
   ADD KEY `tasks_material_updated_by_fk_idx` (`updated_by`) USING BTREE;
+
+--
+-- Indexes for table `stock`
+--
+ALTER TABLE `stock`
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `stock_created_by_fk_idx` (`created_by`) USING BTREE,
+  ADD KEY `stock_updated_by_fk_idx` (`updated_by`) USING BTREE,
+  ADD KEY `stock_material_item_id_fk_idx` (`material_item_id`) USING BTREE;
+
+--
+-- Indexes for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `supplier_payments`
+--
+ALTER TABLE `supplier_payments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `suppler_id` (`suppler_id`);
 
 --
 -- Indexes for table `users`
@@ -1141,13 +1297,13 @@ ALTER TABLE `inventory_items`
 -- AUTO_INCREMENT for table `kanban_card`
 --
 ALTER TABLE `kanban_card`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `material_item`
 --
 ALTER TABLE `material_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `plants`
@@ -1186,6 +1342,18 @@ ALTER TABLE `standard_process`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `stock`
+--
+ALTER TABLE `stock`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -1195,7 +1363,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_tasks`
@@ -1213,7 +1381,7 @@ ALTER TABLE `warehouse`
 -- AUTO_INCREMENT for table `warehouse_stock`
 --
 ALTER TABLE `warehouse_stock`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `workshops_units`
@@ -1245,6 +1413,13 @@ ALTER TABLE `components_processors`
   ADD CONSTRAINT `components_processors_created_by_fk` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `components_processors_process_id_fk` FOREIGN KEY (`process_id`) REFERENCES `standard_process` (`id`),
   ADD CONSTRAINT `components_processors_updated_by_fk` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `default_suppliers`
+--
+ALTER TABLE `default_suppliers`
+  ADD CONSTRAINT `default_suppliers_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`),
+  ADD CONSTRAINT `default_suppliers_ibfk_2` FOREIGN KEY (`material_id`) REFERENCES `material_item` (`id`);
 
 --
 -- Constraints for table `departments`
@@ -1363,6 +1538,20 @@ ALTER TABLE `sales`
 ALTER TABLE `standard_process`
   ADD CONSTRAINT `standard_process_created_by_fk` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `standard_process_updated_by_fk` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `stock`
+--
+ALTER TABLE `stock`
+  ADD CONSTRAINT `stock_created_by_fk` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `stock_material_item_id_fk` FOREIGN KEY (`material_item_id`) REFERENCES `material_item` (`id`),
+  ADD CONSTRAINT `stock_updated_by_fk` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `supplier_payments`
+--
+ALTER TABLE `supplier_payments`
+  ADD CONSTRAINT `supplier_payments_ibfk_1` FOREIGN KEY (`suppler_id`) REFERENCES `suppliers` (`id`);
 
 --
 -- Constraints for table `users`
