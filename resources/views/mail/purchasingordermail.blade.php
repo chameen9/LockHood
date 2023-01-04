@@ -11,8 +11,9 @@
     <p>{{$details['line1']}}</p>
     <p>{{$details['line2']}}</p>
     <p>{{$details['line3']}} <b>[{{$details['matid']}}] {{$details['materialname']}}</b></p>
-    <p>{{$details['line4']}} <b>[{{$details['supid']}}] {{$details['suppliername']}}</b></p>
+    <p>{{$details['line4']}} <b>[{{$details['supid']}}] {{$details['suppliername']}} Suppliers</b></p>
     <p>{{$details['line5']}} <b>{{$details['currentstock']}}</b></p>
+    <p>{{$details['line6']}} <b>${{$details['supplierprice']}}</b></p>
     <br>
     <br>
     <br>

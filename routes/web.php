@@ -111,7 +111,12 @@ Route::post('/viewpurchasing','App\http\controllers\PageController@viewpurchasin
 Route::get('/viewpurchasing','App\http\controllers\PageController@viewpurchasing');
 //----------------------------------------------------------------------------------------------------
 
+// view purchasing -----------------------------------------------------------------------------------
+Route::post('/viewpurchasingwithparameters','App\http\controllers\PageController@viewpurchasingwithparameters');
+Route::get('/viewpurchasingwithparameters','App\http\controllers\PageController@viewpurchasingwithparameters');
+//----------------------------------------------------------------------------------------------------
+
 // send purchasing order mail-------------------------------------------------------------------------
-Route::post('/send/mail/purchasingorder/{matid}/{supid}/{username}','App\http\controllers\MailController@sendpurchasingorder');
-Route::get('/send/mail/purchasingorder/{matid}/{supid}/{username}','App\http\controllers\MailController@sendpurchasingorder');
+Route::post('/send/mail/purchasingorder/request','App\http\controllers\MailController@sendpurchasingorder');
+Route::get('/send/mail/purchasingorder/request','App\http\controllers\MailController@sendpurchasingorder');
 //----------------------------------------------------------------------------------------------------

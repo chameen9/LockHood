@@ -400,15 +400,7 @@
                 <div class="card">
 
                     <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                        </li>
-
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                    </ul>
+                    
                     </div>
 
                     <div class="card-body">
@@ -505,11 +497,17 @@
                     <tr>
                       <th scope="row"><a>#{{$matitem->id}}</a></th>
                       <td>{{$matitem->name}}</td>
-                      <td>
+                      <td align="center">
                         @if($matitem->reorder_level >= $matitem->available_qty)
-                            <a href="{{url('send/mail/purchasingorder/'.$matitem->id.'/'.$matitem->sup_id.'/'.$username.'')}}" class="link link-danger">ORDER</a>
+                        <form action="{{url('/send/mail/purchasingorder/request')}}" method="post">
+                          {{csrf_field()}}
+                          <input type="hidden" name="matid" value="{{$matitem->id}}">
+                          <input type="hidden" name="supid" value="{{$matitem->sup_id}}">
+                          <input type="hidden" name="username" value="{{$username}}">
+                          <button type="submit" class="btn btn-danger badge badge-pill border-0">ORDER</button>
+                        </form>
                         @else
-                            <a class="badge bg-success">ACTIVE</a>
+                            <button class="btn btn-success badge badge-pill border-0">Active</button>
                         @endif
                       </td>
                     </tr>
@@ -564,34 +562,26 @@
                 <!-- Supplier Payment -->
                 <div class="card">
                     <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                            <h6>Filter</h6>
-                            </li>
-
-                            <li><a class="dropdown-item" href="#">This Month</a></li>
-                            <li><a class="dropdown-item" href="#">This Year</a></li>
-                        </ul>
+                        
                     </div>
 
                     <div class="card-body pb-0">
-                        <h5 class="card-title">Supplier Payments <span>| Month</span></h5>
+                        <h5 class="card-title">Supplier Payments Count <span>| Current</span></h5>
 
-                        <div id="trafficChart" style="min-height: 300px;" class="echart"></div>
+                        <div id="paymentschart" style="min-height: 455px;" class="echart"></div>
 
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
-                            echarts.init(document.querySelector("#trafficChart")).setOption({
+                            echarts.init(document.querySelector("#paymentschart")).setOption({
                                 tooltip: {
                                 trigger: 'item'
                                 },
                                 legend: {
-                                top: '5%',
+                                top: '1%',
                                 left: 'center'
                                 },
                                 series: [{
-                                name: 'Access From',
+                                name: 'Payments',
                                 type: 'pie',
                                 radius: ['40%', '70%'],
                                 avoidLabelOverlap: false,
@@ -610,16 +600,16 @@
                                     show: false
                                 },
                                 data: [{
-                                    value: 1248,
+                                    value: '{{$paidsupplierscount}}',
                                     name: 'Completed'
                                     },
                                     {
-                                    value: 535,
-                                    name: 'Part'
+                                    value: '{{$activesupplierscount}}',
+                                    name: 'Active'
                                     },
                                     {
-                                    value: 300,
-                                    name: 'Not-pay'
+                                    value: '{{$unpaidsupplierscount}}',
+                                    name: 'Unpaid'
                                     }
                                 ]
                                 }]

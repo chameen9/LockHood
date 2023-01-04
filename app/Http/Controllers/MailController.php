@@ -11,8 +11,10 @@ use App\Http\Controllers\PageController;
 
 class MailController extends Controller
 {
-    function sendpurchasingorder($matid, $supid, $requsername){
-
+    function sendpurchasingorder(Request $request){
+        $matid = $request->input('matid');
+        $supid = $request->input('supid');
+        $requsername = $request->input('username');
         //for the mail
         $purchasingofficerfirstname = DB::Table('user_accounts')
             ->join('user_roles','user_roles.id','=','user_accounts.user_role')
@@ -32,6 +34,7 @@ class MailController extends Controller
 
         $materialname = DB::Table('material_item')->where('id',$matid)->value('name');
         $suppliername = DB::Table('suppliers')->where('id',$supid)->value('supplier_name');
+        $supplierprice = DB::Table('suppliers')->where('id',$supid)->value('price');
         $currentstock = DB::Table('stock')->where('material_item_id',$matid)->value('available_qty');
 
         $details = [
@@ -39,21 +42,30 @@ class MailController extends Controller
             'line1'=>'The re-orderlevel of some items has been reached !',
             'line3'=>'Re-order level reached material :',
             'line2'=>'Please make sure to place a purchasing order for this item.',
-            'line4'=>'Default supplier: ',
-            'line5'=>'Current Stock: ',
+            'line4'=>'Default supplier : ',
+            'line5'=>'Current Stock : ',
+            'line6'=>'Price per 1KG : ',
             'materialname'=>$materialname,
             'matid'=>$matid,
             'suppliername'=>$suppliername,
+            'supplierprice'=>$supplierprice,
             'supid'=>$supid,
             'currentstock'=>$currentstock,
             'email'=>$purchasingofficeremail,
         ];
         Mail::to($purchasingofficeremail)->send(new PurchasingOrder($details));
+        return view('mailsent',[
+            'username'=>$requsername
+        ]);
         //end for the mail
+        //return redirect('/viewpurchasingwithparameters')->with('username', $requsername);
+        //return \Redirect::route('/viewpurchasingwithparameters')->with('username', $requsername);
+        
 
-        $username = $requsername;
-        $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
-        $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
+    }
+    function abcd(){
+        $userRoleId = DB::Table('user_accounts')->where('user_name',$requsername)->value('user_role');
+        $userId = DB::Table('user_accounts')->where('user_name',$requsername)->value('user_id');
         $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
         $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
         $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
@@ -96,7 +108,7 @@ class MailController extends Controller
             $stocksreorderleveltoarray[] = $data->reorder_level;
         }
         return view('purchasing',[
-            'username'=>$username,
+            'username'=>$requsername,
             'userLastName'=>$userLastName,
             'userFirstName'=>$userFirstName,
             'userRole'=>$userRole,
@@ -110,8 +122,5 @@ class MailController extends Controller
             'materials'=>$materials,
             'defaultsuppliers'=>$defaultsuppliers,
         ]);
-
-
-        //return redirect()->action('App\http\controllers\PageController@viewpurchasing');
     }
 }

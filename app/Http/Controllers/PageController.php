@@ -142,28 +142,69 @@ class PageController extends Controller
 
     function viewDashboard (Request $request){
 
-        $username = $request->input('username');
-        $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
-        $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
-        $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
-        $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
-        $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
-        $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
-        $userLevelName = DB::table('user_roles')
-                ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
-                ->select('user_levels.level_name')
-                ->where('user_roles.id', $userRoleId)
-                ->value('level_name');
+        if($request->input('username')==null){
+            return view('404error');
+        }
+        else{
+            $username = $request->input('username');
+            $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
+            $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
+            $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
+            $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
+            $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
+            $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
+            $userLevelName = DB::table('user_roles')
+                    ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
+                    ->select('user_levels.level_name')
+                    ->where('user_roles.id', $userRoleId)
+                    ->value('level_name');
+            //cards
+            $activekanbancards = DB::Table('kanban_card')
+                ->join('workshops_units','workshops_units.id','=','kanban_card.workshop_unit_id')
+                ->join('departments','departments.id','=','workshops_units.department_id')
+                ->select('departments.name as department_name','kanban_card.id as card_id','kanban_card.name as card_name','kanban_card.status as card_status','kanban_card.date as card_date','kanban_card.completed_precentage as card_progress')
+                ->where('kanban_card.status','ACTIVE')
+                ->get();
 
-        return view('index',[
-            'username'=>$username,
-            'userLastName'=>$userLastName,
-            'userFirstName'=>$userFirstName,
-            'userRole'=>$userRole,
-            'userRoleId'=>$userRoleId,
-            'userLevel'=>$userLevel,
-            'userLevelName'=>$userLevelName,
-        ]);
+            $todokanbancards = DB::Table('kanban_card')
+                ->join('workshops_units','workshops_units.id','=','kanban_card.workshop_unit_id')
+                ->join('departments','departments.id','=','workshops_units.department_id')
+                ->select('departments.name as department_name','kanban_card.id as card_id','kanban_card.name as card_name','kanban_card.status as card_status','kanban_card.date as card_date','kanban_card.completed_precentage as card_progress')
+                ->where('kanban_card.status','TODO')
+                ->get();
+            $todokanbancardscount = DB::Table('kanban_card')
+                ->join('workshops_units','workshops_units.id','=','kanban_card.workshop_unit_id')
+                ->join('departments','departments.id','=','workshops_units.department_id')
+                ->select('departments.name as department_name','kanban_card.id as card_id','kanban_card.name as card_name','kanban_card.status as card_status','kanban_card.date as card_date','kanban_card.completed_precentage as card_progress')
+                ->where('kanban_card.status','ACTIVE')
+                ->count();
+
+            $inreviewkanbancards = DB::Table('kanban_card')
+                ->join('workshops_units','workshops_units.id','=','kanban_card.workshop_unit_id')
+                ->join('departments','departments.id','=','workshops_units.department_id')
+                ->select('departments.name as department_name','kanban_card.id as card_id','kanban_card.name as card_name','kanban_card.status as card_status','kanban_card.date as card_date','kanban_card.completed_precentage as card_progress')
+                ->where('kanban_card.status','INREVIEW')
+                ->get();
+
+
+            // end-cards
+
+            //dd($activekanbancardscount);
+            return view('index',[
+                'username'=>$username,
+                'userLastName'=>$userLastName,
+                'userFirstName'=>$userFirstName,
+                'userRole'=>$userRole,
+                'userRoleId'=>$userRoleId,
+                'userLevel'=>$userLevel,
+                'userLevelName'=>$userLevelName,
+                'todokanbancards'=>$todokanbancards,
+                'todokanbancardscount'=>$todokanbancardscount,
+                'activekanbancards'=>$activekanbancards,
+                'inreviewkanbancards'=>$inreviewkanbancards,
+            ]);
+        }
+        
     }
 
     function viewSales (Request $request){
@@ -563,64 +604,86 @@ class PageController extends Controller
     }
 
     function viewpurchasing(Request $request){
-        $username = $request->input('username');
-        $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
-        $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
-        $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
-        $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
-        $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
-        $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
-        $userLevelName = DB::table('user_roles')
-            ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
-            ->select('user_levels.level_name')
-            ->where('user_roles.id', $userRoleId)
-            ->value('level_name');
+        if($request->input('username')==null){
+            return view('404error');
+        }
+        else{
+            $username = $request->input('username');
+            $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
+            $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
+            $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
+            $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
+            $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
+            $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
+            $userLevelName = DB::table('user_roles')
+                ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
+                ->select('user_levels.level_name')
+                ->where('user_roles.id', $userRoleId)
+                ->value('level_name');
+            
+            $defaultsuppliers = DB::Table('default_suppliers')
+                ->join('suppliers','suppliers.id','=','default_suppliers.supplier_id')
+                ->join('material_item', 'material_item.id', '=', 'default_suppliers.material_id')
+                ->select('default_suppliers.supplier_id','suppliers.supplier_name','suppliers.price','material_item.name','material_item.id')
+                ->get();
+    
+            $stocks = DB::Table('stock')->get();
+    
+            $materials = DB::Table('stock')
+                ->join('material_item', 'material_item.id', '=', 'stock.material_item_id')
+                ->join('default_suppliers','default_suppliers.id','=','material_item.id')
+                ->join('suppliers','suppliers.id','=','default_suppliers.supplier_id')
+                ->select('material_item.id','material_item.name','stock.reorder_level','stock.available_qty','suppliers.id as sup_id')
+                ->get();
+    
+            $stocksmetidstoarray = [];
+            foreach ($stocks as $data) {
+                $stocksmetidstoarray[] = $data->material_item_id;
+            }
+            $stocksmaxleveltoarray = [];
+            foreach ($stocks as $data) {
+                $stocksmaxleveltoarray[] = $data->max_stock_limit;
+            }
+            $stockscurrentleveltoarray = [];
+            foreach ($stocks as $data) {
+                $stockscurrentleveltoarray[] = $data->available_qty;
+            }
+            $stocksreorderleveltoarray = [];
+            foreach ($stocks as $data) {
+                $stocksreorderleveltoarray[] = $data->reorder_level;
+            }
+    
+            $paidsupplierscount = DB::table('supplier_payments')
+                ->where('status', '=', 'COMPLETED')
+                ->count();
         
-        $defaultsuppliers = DB::Table('default_suppliers')
-            ->join('suppliers','suppliers.id','=','default_suppliers.supplier_id')
-            ->join('material_item', 'material_item.id', '=', 'default_suppliers.material_id')
-            ->select('default_suppliers.supplier_id','suppliers.supplier_name','suppliers.price','material_item.name','material_item.id')
-            ->get();
-
-        $stocks = DB::Table('stock')->get();
-
-        $materials = DB::Table('stock')
-            ->join('material_item', 'material_item.id', '=', 'stock.material_item_id')
-            ->join('default_suppliers','default_suppliers.id','=','material_item.id')
-            ->join('suppliers','suppliers.id','=','default_suppliers.supplier_id')
-            ->select('material_item.id','material_item.name','stock.reorder_level','stock.available_qty','suppliers.id as sup_id')
-            ->get();
-
-        $stocksmetidstoarray = [];
-        foreach ($stocks as $data) {
-            $stocksmetidstoarray[] = $data->material_item_id;
+            $activesupplierscount = DB::table('supplier_payments')
+                ->where('status', '=', 'ACTIVE')
+                ->count();
+    
+            $unpaidsupplierscount = DB::table('supplier_payments')
+                ->where('status', '=', 'NONE')
+                ->count();
+    
+            
+            return view('purchasing',[
+                'username'=>$username,
+                'userLastName'=>$userLastName,
+                'userFirstName'=>$userFirstName,
+                'userRole'=>$userRole,
+                'userRoleId'=>$userRoleId,
+                'userLevel'=>$userLevel,
+                'userLevelName'=>$userLevelName,
+                'stocksmetidstoarray'=>$stocksmetidstoarray,
+                'stocksmaxleveltoarray'=>$stocksmaxleveltoarray,
+                'stockscurrentleveltoarray'=>$stockscurrentleveltoarray,
+                'stocksreorderleveltoarray'=>$stocksreorderleveltoarray,
+                'materials'=>$materials,
+                'defaultsuppliers'=>$defaultsuppliers,
+                'paidsupplierscount'=>$paidsupplierscount,
+                'activesupplierscount'=>$activesupplierscount,
+                'unpaidsupplierscount'=>$unpaidsupplierscount,
+            ]);
         }
-        $stocksmaxleveltoarray = [];
-        foreach ($stocks as $data) {
-            $stocksmaxleveltoarray[] = $data->max_stock_limit;
-        }
-        $stockscurrentleveltoarray = [];
-        foreach ($stocks as $data) {
-            $stockscurrentleveltoarray[] = $data->available_qty;
-        }
-        $stocksreorderleveltoarray = [];
-        foreach ($stocks as $data) {
-            $stocksreorderleveltoarray[] = $data->reorder_level;
-        }
-        return view('purchasing',[
-            'username'=>$username,
-            'userLastName'=>$userLastName,
-            'userFirstName'=>$userFirstName,
-            'userRole'=>$userRole,
-            'userRoleId'=>$userRoleId,
-            'userLevel'=>$userLevel,
-            'userLevelName'=>$userLevelName,
-            'stocksmetidstoarray'=>$stocksmetidstoarray,
-            'stocksmaxleveltoarray'=>$stocksmaxleveltoarray,
-            'stockscurrentleveltoarray'=>$stockscurrentleveltoarray,
-            'stocksreorderleveltoarray'=>$stocksreorderleveltoarray,
-            'materials'=>$materials,
-            'defaultsuppliers'=>$defaultsuppliers,
-        ]);
     }
 }
