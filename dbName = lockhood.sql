@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2023 at 05:40 PM
+-- Generation Time: Jan 05, 2023 at 07:20 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -308,6 +308,34 @@ CREATE TABLE `factory_department_details` (
 
 INSERT INTO `factory_department_details` (`id`, `factory_id`, `department_id`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
 (1, 1, 1, 'ACTIVE', NULL, '2022-12-27 07:55:44', NULL, '2022-12-27 07:55:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `income_lastweek`
+--
+
+CREATE TABLE `income_lastweek` (
+  `id` int(11) NOT NULL,
+  `revenue` decimal(10,0) NOT NULL,
+  `cost` decimal(10,0) NOT NULL,
+  `profit` decimal(10,0) NOT NULL,
+  `date` date NOT NULL,
+  `updated_by` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `income_lastweek`
+--
+
+INSERT INTO `income_lastweek` (`id`, `revenue`, `cost`, `profit`, `date`, `updated_by`) VALUES
+(1, '22300', '15750', '6550', '2023-01-02', 1),
+(2, '24700', '16000', '8700', '2023-01-03', 1),
+(3, '20100', '12000', '8100', '2023-01-04', 1),
+(4, '19500', '13300', '6200', '2023-01-05', 1),
+(5, '28500', '18900', '9600', '2023-01-06', 1),
+(6, '24300', '14400', '9900', '2023-01-07', 1),
+(7, '27295', '17845', '9450', '2023-01-08', 1);
 
 -- --------------------------------------------------------
 
@@ -1049,6 +1077,13 @@ ALTER TABLE `factory_department_details`
   ADD KEY `factory_department_details_ibfk_4` (`department_id`) USING BTREE;
 
 --
+-- Indexes for table `income_lastweek`
+--
+ALTER TABLE `income_lastweek`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `updated_by` (`updated_by`);
+
+--
 -- Indexes for table `inventory_items`
 --
 ALTER TABLE `inventory_items`
@@ -1462,6 +1497,12 @@ ALTER TABLE `factory_department_details`
   ADD CONSTRAINT `factory_department_details_ibfk_2` FOREIGN KEY (`factory_id`) REFERENCES `factories` (`id`),
   ADD CONSTRAINT `factory_department_details_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `factory_department_details_ibfk_4` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`);
+
+--
+-- Constraints for table `income_lastweek`
+--
+ALTER TABLE `income_lastweek`
+  ADD CONSTRAINT `income_lastweek_ibfk_1` FOREIGN KEY (`updated_by`) REFERENCES `user_accounts` (`id`);
 
 --
 -- Constraints for table `inventory_items`
