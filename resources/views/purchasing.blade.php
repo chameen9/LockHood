@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Lock Hood</title>
+  <title>Lock Hood | Purchasing</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -404,47 +404,47 @@
 
                     <div class="filter"> <!--pdf,excel -->
                 
-                    <a class="icon" href="" data-bs-toggle="dropdown" title="Filters and Downloald options" data-toggle="tooltip" data-placement="top"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <a class="icon" href="" data-bs-toggle="dropdown" title="Filters and Downloald options" data-toggle="tooltip" data-placement="top"><i class="bi bi-three-dots"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 
-                      <li class="dropdown-header text-start">
-                        <h6>Downloald</h6>
-                      </li>
-                      <li>
-                        <form action="{{ url('/download/pdf/stocks') }}" method="post">
-                          {{csrf_field()}}
-                          <input type="hidden" name="created_by" value="{{$username}}">
-                          <input type="hidden" name="role" value="{{$userRole}}">
-                          <input type="hidden" name="reportstatus" value="Current">
-                          @if(2 >= $userLevel)
-                          <button type="submit" class="dropdown-item" title="Downloald as pdf" data-toggle="tooltip" data-placement="top">
-                            <i class="bi bi-filetype-pdf"></i>pdf
-                          </button>
-                          @else
-                          <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
-                            <i class="bi bi-filetype-pdf"></i>pdf
-                          </button>
-                          @endif
-                        </form>
-                      </li>
-                      <li>
-                        <form action="{{ url('/download/excel/stock') }}" method="post">
-                          {{csrf_field()}}
-                          <input type="hidden" name="created_by" value="{{$username}}">
-                          <input type="hidden" name="role" value="{{$userRole}}">
-                          @if(2 >= $userLevel)
-                          <button type="submit" class="dropdown-item" title="Downloald as Excel sheet" data-toggle="tooltip" data-placement="top">
-                            <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
-                          </button>
-                          @else
-                          <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
-                            <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
-                          </button>
-                          @endif
-                        </form>
-                      </li>
-                    </ul>
-                  </div>
+                        <li class="dropdown-header text-start">
+                          <h6>Downloald</h6>
+                        </li>
+                        <li>
+                          <form action="{{ url('/download/pdf/stocks') }}" method="post">
+                            {{csrf_field()}}
+                            <input type="hidden" name="created_by" value="{{$username}}">
+                            <input type="hidden" name="role" value="{{$userRole}}">
+                            <input type="hidden" name="reportstatus" value="Current">
+                            @if(2 >= $userLevel)
+                            <button type="submit" class="dropdown-item" title="Downloald as pdf" data-toggle="tooltip" data-placement="top">
+                              <i class="bi bi-filetype-pdf"></i>pdf
+                            </button>
+                            @else
+                            <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                              <i class="bi bi-filetype-pdf"></i>pdf
+                            </button>
+                            @endif
+                          </form>
+                        </li>
+                        <li>
+                          <form action="{{ url('/download/excel/stock') }}" method="post">
+                            {{csrf_field()}}
+                            <input type="hidden" name="created_by" value="{{$username}}">
+                            <input type="hidden" name="role" value="{{$userRole}}">
+                            @if(2 >= $userLevel)
+                            <button type="submit" class="dropdown-item" title="Downloald as Excel sheet" data-toggle="tooltip" data-placement="top">
+                              <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
+                            </button>
+                            @else
+                            <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                              <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
+                            </button>
+                            @endif
+                          </form>
+                        </li>
+                      </ul>
+                    </div>
 
                     <!-- Line Chart -->
                     <div id="reportsChart"></div>
@@ -610,6 +610,51 @@
             <div class="col-lg-8 md-8">
                 <div class="card top-selling overflow-auto">
                 <div class="card-body pb-0">
+
+                <div class="filter"> <!--pdf,excel -->
+                
+                  <a class="icon" href="" data-bs-toggle="dropdown" title="Filters and Downloald options" data-toggle="tooltip" data-placement="top"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+                    <li class="dropdown-header text-start">
+                      <h6>Downloald</h6>
+                    </li>
+                    <li>
+                      <form action="{{ url('/download/pdf/suppliers') }}" method="post">
+                        {{csrf_field()}}
+                        <input type="hidden" name="created_by" value="{{$username}}">
+                        <input type="hidden" name="role" value="{{$userRole}}">
+                        <input type="hidden" name="reportstatus" value="Default">
+                        @if(2 >= $userLevel)
+                        <button type="submit" class="dropdown-item" title="Downloald as pdf" data-toggle="tooltip" data-placement="top">
+                          <i class="bi bi-filetype-pdf"></i>pdf
+                        </button>
+                        @else
+                        <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                          <i class="bi bi-filetype-pdf"></i>pdf
+                        </button>
+                        @endif
+                      </form>
+                    </li>
+                    <li>
+                      <form action="{{ url('/download/excel/suppliers') }}" method="post">
+                        {{csrf_field()}}
+                        <input type="hidden" name="created_by" value="{{$username}}">
+                        <input type="hidden" name="role" value="{{$userRole}}">
+                        @if(2 >= $userLevel)
+                        <button type="submit" class="dropdown-item" title="Downloald as Excel sheet" data-toggle="tooltip" data-placement="top">
+                          <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
+                        </button>
+                        @else
+                        <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                          <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
+                        </button>
+                        @endif
+                      </form>
+                    </li>
+                  </ul>
+                </div>
+
                     <h5 class="card-title">Suppliers<span> | Default  </span></h5>
 
                     <table class="table table-borderless datatable">

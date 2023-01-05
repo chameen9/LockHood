@@ -136,3 +136,11 @@ Route::post('/download/pdf/stocks','App\http\controllers\PdfController@downloads
 // create  downloadstocksexcel------------------------------------------------------------------------
 Route::post('/download/excel/stock','App\http\controllers\excelController@downloadstocksexcel');
 //----------------------------------------------------------------------------------------------------
+
+// create  downloadsupplierspdf-----------------------------------------------------------------------
+Route::post('/download/pdf/suppliers','App\http\controllers\PdfController@downloadsupplierspdf');
+//----------------------------------------------------------------------------------------------------
+
+// create  downloadsuppliersexcel---------------------------------------------------------------------
+Route::post('/download/excel/suppliers','App\http\controllers\excelController@downloadsuppliersexcel');
+//----------------------------------------------------------------------------------------------------

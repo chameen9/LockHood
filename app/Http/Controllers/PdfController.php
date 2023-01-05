@@ -148,4 +148,31 @@ class PdfController extends Controller
         ]);
         return $pdf->download($pdfName);
     }
+    public function downloadsupplierspdf(Request $request){
+        $name = $request->input('created_by');
+        $role = $request->input('role');
+        $date = Carbon::today('Asia/Colombo')->toDateString();
+        $time = Carbon::now('Asia/Colombo')->toTimeString();
+        $reportstatus = $request->input('reportstatus');
+
+        $defaultsuppliers = DB::Table('default_suppliers')
+            ->join('suppliers','suppliers.id','=','default_suppliers.supplier_id')
+            ->join('material_item', 'material_item.id', '=', 'default_suppliers.material_id')
+            ->select('default_suppliers.supplier_id','suppliers.supplier_name','suppliers.price','material_item.name','material_item.id')
+            ->get();
+        
+        $topic = 'Default Suppliers';
+        $format = '.pdf';
+        $pdfName = $topic.' ['.$date.' '.$time.']'.$format;
+
+        $pdf = Pdf::loadview('pdf.suppliers',[
+            'defaultsuppliers'=>$defaultsuppliers,
+            'date'=>$date,
+            'time'=>$time,
+            'role'=>$role,
+            'name'=>$name,
+            'reportstatus'=>$reportstatus
+        ]);
+        return $pdf->download($pdfName);
+    }
 }
