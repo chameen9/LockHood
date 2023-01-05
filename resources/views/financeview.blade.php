@@ -203,13 +203,13 @@
 
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                 <img src="{{URL::asset('/images/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
-                <span class="d-none d-md-block dropdown-toggle ps-2">ABC</span>
+                <span class="d-none d-md-block dropdown-toggle ps-2">{{$userLastName}}</span>
               </a><!-- End Profile Iamge Icon -->
     
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li class="dropdown-header">
-                  <h6>John Fenando</h6>
-                  <span>Finance Manager</span>
+                  <h6>{{$userFirstName}} {{$userLastName}}</h6>
+                  <span>{{$userRole}} ({{$userLevel}})</span>
                 </li>
                 <li>
                   <hr class="dropdown-divider">
@@ -268,7 +268,7 @@
       <li class="nav-item">
         <form action="{{ url('/viewdashboard') }}" method="post">
             {{csrf_field()}}
-            <input type="hidden" name="username" value="">
+            <input type="hidden" name="username" value="{{$username}}">
             <button class="btn btn-navstyle" type="submit">
                 <i class="bi bi-grid"></i>&nbsp;&nbsp;&nbsp;Dashboard
             </button>
@@ -311,21 +311,29 @@
             <i class="bi bi-chevron-down ms-auto"></i>
         </button>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li>
-                <button type="submit"  class="btn btn-navstyle">
+        <li>
+                <form action="{{url('/viewfactory')}}" method="post">
+                  {{csrf_field()}}
+                  <input type="hidden" name="username" value="{{$username}}">
+                  <button type="submit"  class="btn btn-navstyle">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <i class="bi bi-buildings"></i>
                     &nbsp;&nbsp;&nbsp;
-                  <span>Factory</span>
-                </button>
+                    <span>Factory</span>
+                  </button>
+                </form>
               </li>
               <li>
-                <button type="submit"  class="btn btn-navstyle">
+                <form action="{{url('/viewpurchasing')}}" method="post">
+                  {{csrf_field()}}
+                  <input type="hidden" name="username" value="{{$username}}">
+                  <button type="submit"  class="btn btn-navstyle">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <i class="bi bi-cart-plus"></i>
                     &nbsp;&nbsp;&nbsp;
-                  <span>Purchasing</span>
-                </button>
+                    <span>Purchasing</span>
+                  </button>
+                </form>
               </li>
         </ul>
       </li><!-- End test Nav -->
@@ -336,7 +344,7 @@
       <li class="nav-item">
       <form action="{{ url('/viewhr') }}" method="post">
             {{csrf_field()}}
-            <input type="hidden" name="username" value="">
+            <input type="hidden" name="username" value="{{$username}}">
             <button class="btn btn-navstyle" type="submit">
                 <i class="bi bi-cash-coin"></i>&nbsp;&nbsp;&nbsp;Human Resources
             </button>
@@ -347,7 +355,7 @@
       <li class="nav-item">
         <form action="{{ url('/viewsalesandmarketing') }}" method="post">
             {{csrf_field()}}
-            <input type="hidden" name="username" value="">
+            <input type="hidden" name="username" value="{{$username}}">
             <button class="btn btn-navstyle" type="submit">
                 <i class="bi bi-box2-heart"></i>&nbsp;&nbsp;&nbsp;Sales & Marketing
             </button>
@@ -364,7 +372,7 @@
       <li class="nav-item">
         <form action="{{ url('/viewradnd') }}" method="post">
             {{csrf_field()}}
-            <input type="hidden" name="username" value="">
+            <input type="hidden" name="username" value="{{$username}}">
             <button class="btn btn-navstyle" type="submit">
                 <i class="bi bi-graph-up-arrow"></i>&nbsp;&nbsp;&nbsp;R & D
             </button>
@@ -391,150 +399,139 @@
       <div class="row">
 
         <!-- Left side columns -->
-        <div class="col-lg-8">
-          <div class="row">
+        <div class="col-lg-7">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Income Status <span>| Weekly</span></h5>
 
-            <!-- Reports -->
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Month</h5>  
-
-                  <!-- Line Chart -->
-                  <div id="reportsChart"></div>
-
-                  <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Profit',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: 'Sales',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }, {
-                          name: 'Cost',
-                          data: [15, 11, 32, 18, 9, 24, 11]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
-                        }
-                      }).render();
-                    });
-                  </script>
-                  <!-- End Line Chart -->
-
-                </div>
-
-              </div>
-            </div><!-- End Reports -->
-          </div>
-        </div><!-- End Left side columns -->
-
-        <!-- Right side columns -->
-        <div class="col-lg-4">
-
-         <!-- Order payments -->
-         <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
-            <div class="card-body pb-0">
-              <h5 class="card-title">Order Payments <span>| Month</span></h5>
-
-              <div id="trafficChart" style="min-height: 300px;" class="echart"></div>
+              <!-- Line Chart -->
+              <div id="lineChart"></div>
 
               <script>
+                var datesarray = JSON.parse('<?= json_encode($datesarray);?>');
+                var revenuearray = JSON.parse('<?= json_encode($revenuearray);?>');
+                var profitarray = JSON.parse('<?= json_encode($profitarray);?>');
+                var costarray = JSON.parse('<?= json_encode($costarray);?>');
                 document.addEventListener("DOMContentLoaded", () => {
-                  echarts.init(document.querySelector("#trafficChart")).setOption({
-                    tooltip: {
-                      trigger: 'item'
-                    },
-                    legend: {
-                      top: '5%',
-                      left: 'center'
-                    },
+                  new ApexCharts(document.querySelector("#lineChart"), {
                     series: [{
-                      name: 'Access From',
-                      type: 'pie',
-                      radius: ['40%', '70%'],
-                      avoidLabelOverlap: false,
-                      label: {
-                        show: false,
-                        position: 'center'
+                      name: 'Revenue',
+                      data: revenuearray,
+                      }, {
+                      name: 'Cost',
+                      data: costarray
+                      }
+                    ],
+                    chart: {
+                      height: 400,
+                      type: 'line',
+                      zoom: {
+                        enabled: false
                       },
-                      emphasis: {
-                        label: {
-                          show: true,
-                          fontSize: '18',
-                          fontWeight: 'bold'
-                        }
+                    },
+                    subtitle: {
+                      text: 'Income/Cost Status',
+                      align: 'right'
+                    },
+                    dataLabels: {
+                      enabled: false
+                    },
+                    stroke: {
+                      curve: 'straight'
+                    },
+                    grid: {
+                      row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.5
                       },
-                      labelLine: {
-                        show: false
-                      },
-                      data: [{
-                          value: 1248,
-                          name: 'Completed'
-                        },
-                        {
-                          value: 535,
-                          name: 'Part'
-                        },
-                        {
-                          value: 300,
-                          name: 'Not-pay'
-                        }
-                      ]
-                    }]
-                  });
+                    },
+                    xaxis: {
+                      categories: datesarray,
+                    },
+                    yaxis: {
+                          title: {
+                            text: 'USD ($)'
+                          }
+                    },
+                  }).render();
                 });
               </script>
+              <!-- End Line Chart -->
 
             </div>
-        </div><!-- End Right side columns -->
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Profit Status <span>| Weekly</span></h5>
+
+                <div id="profitchart"></div>
+
+                <script>
+                  
+                  var limiteddatesarray = JSON.parse('<?= json_encode($limiteddatesarray);?>');
+                  var profitarray = JSON.parse('<?= json_encode($profitarray);?>');
+                  document.addEventListener("DOMContentLoaded", () => {
+                  new ApexCharts(document.querySelector("#profitchart"), {
+                      series: [{
+                      name: 'Current Level',
+                      data: profitarray
+                      }],
+                      chart: {
+                      height: 400,
+                      type: 'area',
+                      toolbar: {
+                          show: true
+                      },
+                      },
+                      markers: {
+                      size: 4
+                      },
+                      colors: ['#F14F74', '#2eca6a', '#FF4069'],
+                      fill: {
+                      type: "gradient",
+                      gradient: {
+                          shadeIntensity: 1,
+                          opacityFrom: 0.4,
+                          opacityTo: 0.6,
+                          stops: [0, 90, 100]
+                      }
+                      },
+                      subtitle: {
+                      text: 'Profit Status',
+                      align: 'right'
+                      },
+                      dataLabels: {
+                      enabled: false
+                      },
+                      stroke: {
+                      curve: 'smooth',
+                      width: 2
+                      },
+                      xaxis: {
+                          categories: limiteddatesarray
+                      },
+                      yaxis: {
+                          title: {
+                            text: 'USD ($)'
+                          }
+                      },
+                      tooltip: {
+                      x: {
+                          
+                      },
+                      }
+                  }).render();
+                  });
+              </script>
+            </div>
+          </div>
+        </div>
+        <!-- End Left side columns -->
+
+        
 
       </div>
     </section>

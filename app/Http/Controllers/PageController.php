@@ -592,8 +592,67 @@ class PageController extends Controller
         }
     }
 
-    function viewfinance(){
-        return view('financeview');
+    function viewfinance(Request $request){
+        if($request->input('username')==null){
+            return view('404error');
+        }
+        else{
+            $username = $request->input('username');
+            $userRoleId = DB::Table('user_accounts')->where('user_name',$username)->value('user_role');
+            $userId = DB::Table('user_accounts')->where('user_name',$username)->value('user_id');
+            $userLastName = DB::Table('users')->where('id',$userId)->value('last_name');
+            $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
+            $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
+            $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
+            $userLevelName = DB::table('user_roles')
+                ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
+                ->select('user_levels.level_name')
+                ->where('user_roles.id', $userRoleId)
+                ->value('level_name');
+
+            $incomestatus = DB::table('income_lastweek')
+                ->where('date', '>=', DB::raw('DATE_SUB(CURDATE(), INTERVAL 7 DAY)'))
+                ->orderBy('date', 'asc')
+                ->get();
+
+            $datesarray = [];
+            foreach ($incomestatus as $item) {
+                $datesarray[] = $item->date;
+            }
+            $limiteddatesarray = [];
+            foreach ($incomestatus as $item) {
+                $date = Carbon::parse($item->date);
+                $limiteddatesarray[] = $date->day;
+            }
+            $revenuearray = [];
+            foreach ($incomestatus as $item) {
+                $revenuearray[] = $item->revenue;
+            }
+            $costarray = [];
+            foreach ($incomestatus as $item) {
+                $costarray[] = $item->cost;
+            }
+            $profitarray = [];
+            foreach ($incomestatus as $item) {
+                $profitarray[] = $item->profit;
+            }
+
+            return view('financeview',[
+                'username'=>$username,
+                'userLastName'=>$userLastName,
+                'userFirstName'=>$userFirstName,
+                'userRole'=>$userRole,
+                'userRoleId'=>$userRoleId,
+                'userLevel'=>$userLevel,
+                'userLevelName'=>$userLevelName,
+                'datesarray'=>$datesarray,
+                'limiteddatesarray'=>$limiteddatesarray,
+                'revenuearray'=>$revenuearray,
+                'costarray'=>$costarray,
+                'profitarray'=>$profitarray,
+            ]);
+        }
+        
     }
 
     function viewpurchasing(Request $request){
