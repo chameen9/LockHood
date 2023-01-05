@@ -399,12 +399,52 @@
             <div class="col-lg-7 md-7">
                 <div class="card">
 
-                    <div class="filter">
-                    
-                    </div>
-
                     <div class="card-body">
                     <h5 class="card-title">Stock Levels <span>| Current</span></h5>
+
+                    <div class="filter"> <!--pdf,excel -->
+                
+                    <a class="icon" href="" data-bs-toggle="dropdown" title="Filters and Downloald options" data-toggle="tooltip" data-placement="top"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+                      <li class="dropdown-header text-start">
+                        <h6>Downloald</h6>
+                      </li>
+                      <li>
+                        <form action="{{ url('/download/pdf/stocks') }}" method="post">
+                          {{csrf_field()}}
+                          <input type="hidden" name="created_by" value="{{$username}}">
+                          <input type="hidden" name="role" value="{{$userRole}}">
+                          <input type="hidden" name="reportstatus" value="Current">
+                          @if(2 >= $userLevel)
+                          <button type="submit" class="dropdown-item" title="Downloald as pdf" data-toggle="tooltip" data-placement="top">
+                            <i class="bi bi-filetype-pdf"></i>pdf
+                          </button>
+                          @else
+                          <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                            <i class="bi bi-filetype-pdf"></i>pdf
+                          </button>
+                          @endif
+                        </form>
+                      </li>
+                      <li>
+                        <form action="{{ url('/download/excel/stock') }}" method="post">
+                          {{csrf_field()}}
+                          <input type="hidden" name="created_by" value="{{$username}}">
+                          <input type="hidden" name="role" value="{{$userRole}}">
+                          @if(2 >= $userLevel)
+                          <button type="submit" class="dropdown-item" title="Downloald as Excel sheet" data-toggle="tooltip" data-placement="top">
+                            <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
+                          </button>
+                          @else
+                          <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                            <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
+                          </button>
+                          @endif
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
 
                     <!-- Line Chart -->
                     <div id="reportsChart"></div>
@@ -483,6 +523,49 @@
 
               <div class="card-body">
                 <h5 class="card-title">Materials <span>| By Id</span></h5>
+                <div class="filter"> <!--pdf,excel -->
+                
+                  <a class="icon" href="" data-bs-toggle="dropdown" title="Filters and Downloald options" data-toggle="tooltip" data-placement="top"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+                    <li class="dropdown-header text-start">
+                      <h6>Downloald</h6>
+                    </li>
+                    <li>
+                      <form action="{{ url('/download/pdf/marerials') }}" method="post">
+                        {{csrf_field()}}
+                        <input type="hidden" name="created_by" value="{{$username}}">
+                        <input type="hidden" name="role" value="{{$userRole}}">
+                        <input type="hidden" name="reportstatus" value="By Id">
+                        @if(2 >= $userLevel)
+                        <button type="submit" class="dropdown-item" title="Downloald as pdf" data-toggle="tooltip" data-placement="top">
+                          <i class="bi bi-filetype-pdf"></i>pdf
+                        </button>
+                        @else
+                        <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                          <i class="bi bi-filetype-pdf"></i>pdf
+                        </button>
+                        @endif
+                      </form>
+                    </li>
+                    <li>
+                      <form action="{{ url('/download/excel/marerials') }}" method="post">
+                        {{csrf_field()}}
+                        <input type="hidden" name="created_by" value="{{$username}}">
+                        <input type="hidden" name="role" value="{{$userRole}}">
+                        @if(2 >= $userLevel)
+                        <button type="submit" class="dropdown-item" title="Downloald as Excel sheet" data-toggle="tooltip" data-placement="top">
+                          <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
+                        </button>
+                        @else
+                        <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                          <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
+                        </button>
+                        @endif
+                      </form>
+                    </li>
+                  </ul>
+                </div>
 
                 <table class="table table-borderless datatable">
                   <thead>

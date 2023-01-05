@@ -12,6 +12,8 @@ use App\Exports\Selling20ProductsExport;
 use App\Exports\bestsalesexcetivesbysoldquantity;
 use App\Exports\bestsalesexcetivesbystatus;
 use App\Exports\bestsalesexcetivesbydepartment;
+use App\Exports\material;
+use App\Exports\stocks;
 use Maatwebsite\Excel\Facades\Excel;
 
 class excelController extends Controller
@@ -60,5 +62,27 @@ class excelController extends Controller
         $name = $topic.' ['.$date.' - '.$time.']'.$format;
 
         return Excel::download(new bestsalesexcetivesbydepartment, $name);
+    }
+    public function downloadmaterialsexcel(Request $request){
+        $date = Carbon::today('Asia/Colombo')->toDateString();
+        $time = Carbon::now('Asia/Colombo')->toTimeString();
+        $topic = 'Materials (By Id)';
+        $createdby = $request->input('created_by');
+        $role = $request->input('role');
+        $format = '.xlsx';
+        $name = $topic.' ('.$createdby.'-'.$role.') ['.$date.' - '.$time.']'.$format;
+
+        return Excel::download(new material, $name);
+    }
+    public function downloadstocksexcel(Request $request){
+        $date = Carbon::today('Asia/Colombo')->toDateString();
+        $time = Carbon::now('Asia/Colombo')->toTimeString();
+        $topic = 'Current Stock Levels';
+        $createdby = $request->input('created_by');
+        $role = $request->input('role');
+        $format = '.xlsx';
+        $name = $topic.' ('.$createdby.'-'.$role.') ['.$date.' - '.$time.']'.$format;
+
+        return Excel::download(new stocks, $name);
     }
 }

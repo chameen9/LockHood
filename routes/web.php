@@ -71,7 +71,7 @@ Route::get('/404', function () {
 });
 //----------------------------------------------------------------------------------------------------
 
-// create  downloadtopsellingproductspdf------------------------------------------------------------
+// create  downloadtopsellingproductspdf--------------------------------------------------------------
 Route::post('/downloadtopsellingproductspdf','App\http\controllers\PdfController@downloadtopsellingproductspdf');
 //----------------------------------------------------------------------------------------------------
 
@@ -119,4 +119,20 @@ Route::get('/viewpurchasingwithparameters','App\http\controllers\PageController@
 // send purchasing order mail-------------------------------------------------------------------------
 Route::post('/send/mail/purchasingorder/request','App\http\controllers\MailController@sendpurchasingorder');
 Route::get('/send/mail/purchasingorder/request','App\http\controllers\MailController@sendpurchasingorder');
+//----------------------------------------------------------------------------------------------------
+
+// create  downloadmaterialspdf-----------------------------------------------------------------------
+Route::post('/download/pdf/marerials','App\http\controllers\PdfController@downloadmaterialspdf');
+//----------------------------------------------------------------------------------------------------
+
+// create  downloadmaterialsexcel---------------------------------------------------------------------
+Route::post('/download/excel/marerials','App\http\controllers\excelController@downloadmaterialsexcel');
+//----------------------------------------------------------------------------------------------------
+
+// create  downloadstockspdf--------------------------------------------------------------------------
+Route::post('/download/pdf/stocks','App\http\controllers\PdfController@downloadstockspdf');
+//----------------------------------------------------------------------------------------------------
+
+// create  downloadstocksexcel------------------------------------------------------------------------
+Route::post('/download/excel/stock','App\http\controllers\excelController@downloadstocksexcel');
 //----------------------------------------------------------------------------------------------------

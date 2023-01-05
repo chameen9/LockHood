@@ -95,4 +95,57 @@ class PdfController extends Controller
         ]);
         return $pdf->download($pdfName);
     }
+    public function downloadmaterialspdf(Request $request){
+        $name = $request->input('created_by');
+        $role = $request->input('role');
+        $date = Carbon::today('Asia/Colombo')->toDateString();
+        $time = Carbon::now('Asia/Colombo')->toTimeString();
+        $reportstatus = $request->input('reportstatus');
+        $materials = DB::Table('stock')
+            ->join('material_item', 'material_item.id', '=', 'stock.material_item_id')
+            ->join('default_suppliers','default_suppliers.id','=','material_item.id')
+            ->join('suppliers','suppliers.id','=','default_suppliers.supplier_id')
+            ->select('material_item.id','material_item.name','stock.reorder_level','stock.available_qty','suppliers.id as sup_id')
+            ->get();
+
+        $topic = 'Materials By Id';
+        $format = '.pdf';
+        $pdfName = $topic.' ['.$date.' '.$time.']'.$format;
+
+        $pdf = Pdf::loadview('pdf.materials',[
+            'materials'=>$materials,
+            'date'=>$date,
+            'time'=>$time,
+            'role'=>$role,
+            'name'=>$name,
+            'reportstatus'=>$reportstatus
+        ]);
+        return $pdf->download($pdfName);
+    }
+    public function downloadstockspdf(Request $request){
+        $name = $request->input('created_by');
+        $role = $request->input('role');
+        $date = Carbon::today('Asia/Colombo')->toDateString();
+        $time = Carbon::now('Asia/Colombo')->toTimeString();
+        $reportstatus = $request->input('reportstatus');
+
+        $stocks = DB::Table('stock')
+            ->join('material_item','material_item.id','=','stock.material_item_id')
+            ->select('stock.material_item_id','material_item.name','stock.max_stock_limit','stock.available_qty','stock.reorder_level')
+            ->get();
+
+        $topic = 'Current Stock Levels';
+        $format = '.pdf';
+        $pdfName = $topic.' ['.$date.' '.$time.']'.$format;
+
+        $pdf = Pdf::loadview('pdf.stocks',[
+            'stocks'=>$stocks,
+            'date'=>$date,
+            'time'=>$time,
+            'role'=>$role,
+            'name'=>$name,
+            'reportstatus'=>$reportstatus
+        ]);
+        return $pdf->download($pdfName);
+    }
 }
