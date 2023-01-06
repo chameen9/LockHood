@@ -434,6 +434,7 @@
                       {{csrf_field()}}
                       <input type="hidden" name="created_by" value="{{$username}}">
                       <input type="hidden" name="role" value="{{$userRole}}">
+                      <input type="hidden" name="reportstatus" value="Weekly">
                       @if(2 >= $userLevel)
                       <button type="submit" class="dropdown-item" title="Downloald as Excel sheet" data-toggle="tooltip" data-placement="top">
                         <i class="bi bi-filetype-xls"></i>Excel (.xlsx)

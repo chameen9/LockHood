@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2023 at 07:20 PM
+-- Generation Time: Jan 06, 2023 at 07:45 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -66,19 +66,19 @@ INSERT INTO `attendance_log` (`id`, `user_id`, `date`, `in_time`, `out_time`, `s
 (19, 19, '2023-01-07', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:27:02', NULL, '2023-01-05 14:45:13'),
 (20, 20, '2023-01-07', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:27:02', NULL, '2023-01-05 14:45:13'),
 (21, 21, '2023-01-07', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:27:02', NULL, '2023-01-05 14:45:13'),
-(23, 2, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(24, 3, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(25, 4, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(26, 5, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(27, 6, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(36, 15, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(37, 16, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(38, 17, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(39, 18, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(40, 19, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(41, 20, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(42, 21, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-05 14:45:44'),
-(43, 13, '2023-01-06', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:37:14', NULL, '2023-01-05 14:45:44');
+(23, 2, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(24, 3, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(25, 4, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(26, 5, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(27, 6, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(36, 15, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(37, 16, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(38, 17, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(39, 18, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(40, 19, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(41, 20, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(42, 21, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:29:26', NULL, '2023-01-06 04:57:49'),
+(43, 13, '2023-01-08', '08:30', '17:00', 'ACTIVE', NULL, '2023-01-02 13:37:14', NULL, '2023-01-06 04:57:49');
 
 -- --------------------------------------------------------
 
@@ -572,6 +572,48 @@ CREATE TABLE `product_sale_legder` (
 INSERT INTO `product_sale_legder` (`id`, `product_id`, `department_user_id`, `selling_price`, `discount`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
 (1, 1, 1, '10.00', '0.00', NULL, '2022-12-27 17:06:19', NULL, '2022-12-27 17:06:19'),
 (2, 4, 1, '650.00', '2.20', NULL, '2022-12-29 05:27:19', NULL, '2022-12-29 05:27:19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reports_log`
+--
+
+CREATE TABLE `reports_log` (
+  `id` int(11) NOT NULL,
+  `report_name` varchar(200) NOT NULL,
+  `report_status` varchar(200) NOT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  `created_by` varchar(200) NOT NULL,
+  `created_at` varchar(200) NOT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `reports_log`
+--
+
+INSERT INTO `reports_log` (`id`, `report_name`, `report_status`, `type`, `created_by`, `created_at`, `user_id`) VALUES
+(1, 'Top Selling Products', 'Top 10', 'pdf', 'admin', '2023-01-06 06:02:21', 1),
+(2, 'Top Selling Products', 'Top 20', 'pdf', 'admin', '2023-01-06 11:33:10', 1),
+(3, 'Best sales Execetives', 'By User Status', 'pdf', 'admin', '2023-01-06 11:36:15', 1),
+(4, 'Materials By Id', 'By Id', 'pdf', 'admin', '2023-01-06 11:37:51', 1),
+(5, 'Current Stock Levels', 'Current', 'pdf', 'admin', '2023-01-06 11:38:32', 1),
+(6, 'Default Suppliers', 'Default', 'pdf', 'admin', '2023-01-06 11:39:14', 1),
+(7, 'Inome Report', 'Weekly', 'pdf', 'admin', '2023-01-06 11:39:51', 1),
+(8, 'Inome Report', 'Weekly', 'pdf', 'admin', '2023-01-06 11:43:16', 1),
+(9, 'Top 10 Selling Products', 'Top 10', 'excel', 'admin', '2023-01-06 11:46:57', 1),
+(10, 'Top 10 Selling Products', 'Top 10', 'excel', 'admin', '2023-01-06 11:49:01', 1),
+(11, 'Top 10 Selling Products', 'Top 10', 'excel', 'admin', '2023-01-06 11:49:40', 1),
+(12, 'Top 20 Selling Products', 'Top 20', 'excel', 'admin', '2023-01-06 11:50:58', 1),
+(13, 'Best sales Execetives', 'By Count', 'pdf', 'admin', '2023-01-06 11:53:50', 1),
+(14, 'Best Sales Execetives', 'Sold Quantity', 'excel', 'admin', '2023-01-06 11:54:15', 1),
+(15, 'Best Sales Execetives', 'Status', 'excel', 'admin', '2023-01-06 12:05:15', 1),
+(16, 'Best Sales Execetives', 'Department', 'excel', 'admin', '2023-01-06 12:06:10', 1),
+(17, 'Materials', 'By Id', 'excel', 'admin', '2023-01-06 12:09:57', 1),
+(18, 'Stock Levels', 'Current', 'excel', 'admin', '2023-01-06 12:10:42', 1),
+(19, 'Suppliers', 'Default', 'excel', 'admin', '2023-01-06 12:12:41', 1),
+(20, 'Income Report', 'Weekly', 'excel', 'admin', '2023-01-06 12:13:58', 1);
 
 -- --------------------------------------------------------
 
@@ -1154,6 +1196,13 @@ ALTER TABLE `product_sale_legder`
   ADD KEY `product_sale_led_fk_2` (`department_user_id`) USING BTREE;
 
 --
+-- Indexes for table `reports_log`
+--
+ALTER TABLE `reports_log`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `sales`
 --
 ALTER TABLE `sales`
@@ -1371,6 +1420,12 @@ ALTER TABLE `product_sale_legder`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `reports_log`
+--
+ALTER TABLE `reports_log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT for table `standard_process`
 --
 ALTER TABLE `standard_process`
@@ -1565,6 +1620,12 @@ ALTER TABLE `product_components`
 ALTER TABLE `product_sale_legder`
   ADD CONSTRAINT `product_sale_led_fk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `product_sale_led_fk_2` FOREIGN KEY (`department_user_id`) REFERENCES `department_users` (`id`);
+
+--
+-- Constraints for table `reports_log`
+--
+ALTER TABLE `reports_log`
+  ADD CONSTRAINT `reports_log_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_accounts` (`id`);
 
 --
 -- Constraints for table `sales`

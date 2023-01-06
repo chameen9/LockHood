@@ -12,6 +12,7 @@ use DB;
 use App\Models\product;
 use App\Models\product_sale;
 use App\Models\sale;
+use App\Models\reportsLog;
 use Illuminate\Support\Js;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -41,7 +42,17 @@ class PdfController extends Controller
             ->orderBy('sales.quantity','DESC')
             ->take($takeNumber)
              ->get();
-        
+
+        $userid = DB::Table('user_accounts')->where('user_name',$name)->value('id');
+        $report = new reportsLog;
+        $report->report_name = 'Top Selling Products';
+        $report->report_status = 'Top '.$takeNumber;
+        $report->type = 'pdf';
+        $report->created_by = $name;
+        $report->created_at = Carbon::Now('Asia/Colombo');
+        $report->user_id = $userid;
+        $report->save();
+
         $pdf = Pdf::loadview('pdf.topsellingproductspdf',[
             'topSellingProducts'=>$topSellingProducts,
             'date'=>$date,
@@ -61,14 +72,17 @@ class PdfController extends Controller
 
         if($BeastSalesExecetivesFilterstaus == 'Sold Quantity'){
             $orderBy = 'count';
+            $reportstat = 'By Count';
             $order = 'desc';
         }
         else if($BeastSalesExecetivesFilterstaus == 'Department'){
             $orderBy = 'departments.name';
+            $reportstat = 'By Department';
             $order = 'asc';
         }
         else{
             $orderBy = 'users.status';
+            $reportstat = 'By User Status';
             $order = 'asc';
         }
 
@@ -84,6 +98,16 @@ class PdfController extends Controller
             ->groupBy('users.id')
             ->orderBy($orderBy, $order)
             ->get();
+
+            $userid = DB::Table('user_accounts')->where('user_name',$name)->value('id');
+            $report = new reportsLog;
+            $report->report_name = $topic;
+            $report->report_status = $reportstat;
+            $report->type = 'pdf';
+            $report->created_by = $name;
+            $report->created_at = Carbon::Now('Asia/Colombo');
+            $report->user_id = $userid;
+            $report->save();
 
         $pdf = Pdf::loadview('pdf.bestsalesexecetives',[
             'saleEmployees'=>$saleEmployees,
@@ -112,6 +136,16 @@ class PdfController extends Controller
         $format = '.pdf';
         $pdfName = $topic.' ['.$date.' '.$time.']'.$format;
 
+        $userid = DB::Table('user_accounts')->where('user_name',$name)->value('id');
+        $report = new reportsLog;
+        $report->report_name = $topic;
+        $report->report_status = $reportstatus;
+        $report->type = 'pdf';
+        $report->created_by = $name;
+        $report->created_at = Carbon::Now('Asia/Colombo');
+        $report->user_id = $userid;
+        $report->save();
+
         $pdf = Pdf::loadview('pdf.materials',[
             'materials'=>$materials,
             'date'=>$date,
@@ -137,6 +171,16 @@ class PdfController extends Controller
         $topic = 'Current Stock Levels';
         $format = '.pdf';
         $pdfName = $topic.' ['.$date.' '.$time.']'.$format;
+
+        $userid = DB::Table('user_accounts')->where('user_name',$name)->value('id');
+        $report = new reportsLog;
+        $report->report_name = $topic;
+        $report->report_status = $reportstatus;
+        $report->type = 'pdf';
+        $report->created_by = $name;
+        $report->created_at = Carbon::Now('Asia/Colombo');
+        $report->user_id = $userid;
+        $report->save();
 
         $pdf = Pdf::loadview('pdf.stocks',[
             'stocks'=>$stocks,
@@ -165,6 +209,16 @@ class PdfController extends Controller
         $format = '.pdf';
         $pdfName = $topic.' ['.$date.' '.$time.']'.$format;
 
+        $userid = DB::Table('user_accounts')->where('user_name',$name)->value('id');
+        $report = new reportsLog;
+        $report->report_name = $topic;
+        $report->report_status = $reportstatus;
+        $report->type = 'pdf';
+        $report->created_by = $name;
+        $report->created_at = Carbon::Now('Asia/Colombo');
+        $report->user_id = $userid;
+        $report->save();
+
         $pdf = Pdf::loadview('pdf.suppliers',[
             'defaultsuppliers'=>$defaultsuppliers,
             'date'=>$date,
@@ -191,6 +245,16 @@ class PdfController extends Controller
         $format = '.pdf';
         $pdfName = $topic.' ('.$reportstatus.') ['.$date.' '.$time.']'.$format;
 
+        $userid = DB::Table('user_accounts')->where('user_name',$name)->value('id');
+        $report = new reportsLog;
+        $report->report_name = $topic;
+        $report->report_status = $reportstatus;
+        $report->type = 'pdf';
+        $report->created_by = $name;
+        $report->created_at = Carbon::Now('Asia/Colombo');
+        $report->user_id = $userid;
+        $report->save();
+        
         $pdf = Pdf::loadview('pdf.income',[
             'incomestatus'=>$incomestatus,
             'date'=>$date,
