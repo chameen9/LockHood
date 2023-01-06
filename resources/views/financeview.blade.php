@@ -404,6 +404,50 @@
             <div class="card-body">
               <h5 class="card-title">Income Status <span>| Weekly</span></h5>
 
+              <div class="filter"> <!--pdf,excel -->
+                
+                <a class="icon" href="" data-bs-toggle="dropdown" title="Filters and Downloald options" data-toggle="tooltip" data-placement="top"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+                  <li class="dropdown-header text-start">
+                    <h6>Downloald</h6>
+                  </li>
+                  <li>
+                    <form action="{{ url('/download/pdf/income') }}" method="post">
+                      {{csrf_field()}}
+                      <input type="hidden" name="created_by" value="{{$username}}">
+                      <input type="hidden" name="role" value="{{$userRole}}">
+                      <input type="hidden" name="reportstatus" value="Weekly">
+                      @if(2 >= $userLevel)
+                      <button type="submit" class="dropdown-item" title="Downloald as pdf" data-toggle="tooltip" data-placement="top">
+                        <i class="bi bi-filetype-pdf"></i>pdf
+                      </button>
+                      @else
+                      <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                        <i class="bi bi-filetype-pdf"></i>pdf
+                      </button>
+                      @endif
+                    </form>
+                  </li>
+                  <li>
+                    <form action="{{ url('/download/excel/income') }}" method="post">
+                      {{csrf_field()}}
+                      <input type="hidden" name="created_by" value="{{$username}}">
+                      <input type="hidden" name="role" value="{{$userRole}}">
+                      @if(2 >= $userLevel)
+                      <button type="submit" class="dropdown-item" title="Downloald as Excel sheet" data-toggle="tooltip" data-placement="top">
+                        <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
+                      </button>
+                      @else
+                      <button type="submit" disabled class="dropdown-item" title="Downloald Disabled" data-toggle="tooltip" data-placement="top">
+                        <i class="bi bi-filetype-xls"></i>Excel (.xlsx)
+                      </button>
+                      @endif
+                    </form>
+                  </li>
+                </ul>
+              </div>
+
               <!-- Line Chart -->
               <div id="lineChart"></div>
 
@@ -439,6 +483,7 @@
                     stroke: {
                       curve: 'straight'
                     },
+                    colors: ['#008FFB', '#F14F74'],
                     grid: {
                       row: {
                         colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
@@ -489,7 +534,7 @@
                       markers: {
                       size: 4
                       },
-                      colors: ['#F14F74', '#2eca6a', '#FF4069'],
+                      colors: ['#00E396'],
                       fill: {
                       type: "gradient",
                       gradient: {

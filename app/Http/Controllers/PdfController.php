@@ -175,4 +175,30 @@ class PdfController extends Controller
         ]);
         return $pdf->download($pdfName);
     }
+    public function downloadincomepdf (Request $request){
+        $name = $request->input('created_by');
+        $role = $request->input('role');
+        $date = Carbon::today('Asia/Colombo')->toDateString();
+        $time = Carbon::now('Asia/Colombo')->toTimeString();
+        $reportstatus = $request->input('reportstatus');
+
+        $incomestatus = DB::table('income_lastweek')
+            ->where('date', '>=', DB::raw('DATE_SUB(CURDATE(), INTERVAL 7 DAY)'))
+            ->orderBy('date', 'asc')
+            ->get();
+
+        $topic = 'Inome Report';
+        $format = '.pdf';
+        $pdfName = $topic.' ('.$reportstatus.') ['.$date.' '.$time.']'.$format;
+
+        $pdf = Pdf::loadview('pdf.income',[
+            'incomestatus'=>$incomestatus,
+            'date'=>$date,
+            'time'=>$time,
+            'role'=>$role,
+            'name'=>$name,
+            'reportstatus'=>$reportstatus
+        ]);
+        return $pdf->download($pdfName);
+    }
 }

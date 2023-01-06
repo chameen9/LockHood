@@ -15,6 +15,7 @@ use App\Exports\bestsalesexcetivesbydepartment;
 use App\Exports\material;
 use App\Exports\stocks;
 use App\Exports\suppliers;
+use App\Exports\income;
 use Maatwebsite\Excel\Facades\Excel;
 
 class excelController extends Controller
@@ -96,5 +97,16 @@ class excelController extends Controller
         $name = $topic.' ('.$createdby.'-'.$role.') ['.$date.' - '.$time.']'.$format;
 
         return Excel::download(new suppliers, $name);
+    }
+    public function downloadincomeexcel (Request $request){
+        $date = Carbon::today('Asia/Colombo')->toDateString();
+        $time = Carbon::now('Asia/Colombo')->toTimeString();
+        $topic = 'Income Report (Weekly)';
+        $createdby = $request->input('created_by');
+        $role = $request->input('role');
+        $format = '.xlsx';
+        $name = $topic.' ('.$createdby.'-'.$role.') ['.$date.' - '.$time.']'.$format;
+
+        return Excel::download(new income, $name);
     }
 }
