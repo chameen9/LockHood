@@ -158,6 +158,12 @@ class PageController extends Controller
                     ->select('user_levels.level_name')
                     ->where('user_roles.id', $userRoleId)
                     ->value('level_name');
+            $userdepartment =  DB::Table('user_accounts')
+                ->join('users','users.id','=','user_accounts.user_id')
+                ->join('department_users','department_users.user_id','=','users.id')
+                ->join('departments','departments.id','=','department_users.department_id')
+                ->where('user_accounts.user_name',$username)
+                ->value('departments.name');
             //cards
             $activekanbancards = DB::Table('kanban_card')
                 ->join('workshops_units','workshops_units.id','=','kanban_card.workshop_unit_id')
@@ -195,6 +201,7 @@ class PageController extends Controller
                 'todokanbancards'=>$todokanbancards,
                 'activekanbancards'=>$activekanbancards,
                 'inreviewkanbancards'=>$inreviewkanbancards,
+                'userdepartment'=>$userdepartment,
             ]);
         }
         
