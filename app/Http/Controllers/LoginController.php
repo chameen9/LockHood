@@ -32,6 +32,14 @@ class LoginController extends Controller
         $userFirstName = DB::Table('users')->where('id',$userId)->value('first_name');
         $userLevel = DB::Table('user_roles')->where('id',$userRoleId)->value('user_level');
         $userRole = DB::Table('user_roles')->where('id',$userRoleId)->value('role');
+
+        $userdepartment =  DB::Table('user_accounts')
+            ->join('users','users.id','=','user_accounts.user_id')
+            ->join('department_users','department_users.user_id','=','users.id')
+            ->join('departments','departments.id','=','department_users.department_id')
+            ->where('user_accounts.user_name',$reqUsername)
+            ->value('departments.name');
+
         $userLevelName = DB::table('user_roles')
                 ->join('user_levels', 'user_levels.level_id', '=', 'user_roles.user_level')
                 ->select('user_levels.level_name')
@@ -82,6 +90,7 @@ class LoginController extends Controller
                     'todokanbancards'=>$todokanbancards,
                     'activekanbancards'=>$activekanbancards,
                     'inreviewkanbancards'=>$inreviewkanbancards,
+                    'userdepartment'=>$userdepartment,
                 ]); 
                    
             }

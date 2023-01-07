@@ -41,7 +41,7 @@ class PdfController extends Controller
             ->select('sales.product_id','sales.quantity','sales.sold_price','products.name','products.price')
             ->orderBy('sales.quantity','DESC')
             ->take($takeNumber)
-             ->get();
+            ->get();
 
         $userid = DB::Table('user_accounts')->where('user_name',$name)->value('id');
         $report = new reportsLog;

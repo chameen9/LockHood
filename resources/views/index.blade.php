@@ -218,7 +218,8 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>{{$userFirstName}} {{$userLastName}}</h6>
-              <span>{{$userRole}} ({{$userLevel}})</span>
+              <span>{{$userRole}} ({{$userLevel}})</span><br>
+              <span>[{{$userdepartment}}]</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -320,24 +321,56 @@
                 <form action="{{url('/viewfactory')}}" method="post">
                   {{csrf_field()}}
                   <input type="hidden" name="username" value="{{$username}}">
-                  <button type="submit"  class="btn btn-navstyle">
+                  @if($userdepartment == 'Factory Management')
+                  <button type="submit"  class="btn btn-navstyle" style="border: none;">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <i class="bi bi-buildings"></i>
                     &nbsp;&nbsp;&nbsp;
                     <span>Factory</span>
                   </button>
+                  @elseif($userLevel == 1)
+                  <button type="submit"  class="btn btn-navstyle" style="border: none;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="bi bi-buildings"></i>
+                    &nbsp;&nbsp;&nbsp;
+                    <span>Factory</span>
+                  </button>
+                  @else
+                  <button type="submit"  class="btn btn-navstyle" style="border: none;" Disabled>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="bi bi-buildings"></i>
+                    &nbsp;&nbsp;&nbsp;
+                    <span>Factory</span>
+                  </button>
+                  @endif
                 </form>
               </li>
               <li>
                 <form action="{{url('/viewpurchasing')}}" method="post">
                   {{csrf_field()}}
                   <input type="hidden" name="username" value="{{$username}}">
-                  <button type="submit"  class="btn btn-navstyle">
+                  @if($userdepartment == 'Purchasing')
+                  <button type="submit"  class="btn btn-navstyle" style="border: none;">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <i class="bi bi-cart-plus"></i>
                     &nbsp;&nbsp;&nbsp;
                     <span>Purchasing</span>
                   </button>
+                  @elseif($userLevel == 1)
+                  <button type="submit"  class="btn btn-navstyle" style="border: none;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="bi bi-cart-plus"></i>
+                    &nbsp;&nbsp;&nbsp;
+                    <span>Purchasing</span>
+                  </button>
+                  @else
+                  <button type="submit"  class="btn btn-navstyle" style="border: none;" Disabled>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="bi bi-cart-plus"></i>
+                    &nbsp;&nbsp;&nbsp;
+                    <span>Purchasing</span>
+                  </button>
+                  @endif
                 </form>
               </li>
         </ul>
