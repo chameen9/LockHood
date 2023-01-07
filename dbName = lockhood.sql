@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2023 at 07:45 AM
+-- Generation Time: Jan 07, 2023 at 02:57 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -613,7 +613,10 @@ INSERT INTO `reports_log` (`id`, `report_name`, `report_status`, `type`, `create
 (17, 'Materials', 'By Id', 'excel', 'admin', '2023-01-06 12:09:57', 1),
 (18, 'Stock Levels', 'Current', 'excel', 'admin', '2023-01-06 12:10:42', 1),
 (19, 'Suppliers', 'Default', 'excel', 'admin', '2023-01-06 12:12:41', 1),
-(20, 'Income Report', 'Weekly', 'excel', 'admin', '2023-01-06 12:13:58', 1);
+(20, 'Income Report', 'Weekly', 'excel', 'admin', '2023-01-06 12:13:58', 1),
+(21, 'Top 10 Selling Products', 'Top 10', 'excel', 'admin', '2023-01-06 19:41:46', 1),
+(22, 'Suppliers', 'Default', 'excel', 'admin', '2023-01-06 20:08:45', 1),
+(23, 'Best Sales Execetives', 'Sold Quantity', 'excel', 'admin', '2023-01-06 20:11:10', 1);
 
 -- --------------------------------------------------------
 
@@ -1423,7 +1426,7 @@ ALTER TABLE `product_sale_legder`
 -- AUTO_INCREMENT for table `reports_log`
 --
 ALTER TABLE `reports_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `standard_process`
